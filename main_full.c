@@ -111,6 +111,7 @@
 #include "state_core.h"
 #include "net_state.h"
 #include "global_defines.h"
+#include "at_parser.h"
 
 
 #define NEW_LINE_DELIMITER   (0)  // Found an EOL
@@ -121,7 +122,7 @@
 #define BUFF_SIZE         (2048)
 #define MAX_LINE_SIZE     (1024)
 #define MAX_QUEUED_ITEMS  (2)
-#define LONG_DELIMITER_LEN (19) // 19 == len(--EOF--Patter---)
+#define LONG_DELIMITER_LEN (16) // 18 == len(--EOF--Pattern--)
 
 static uint8_t   line_found[MAX_LINE_SIZE];
 static uint8_t   buffer[BUFF_SIZE];
@@ -138,19 +139,24 @@ void digest_lines(uint8_t* line, size_t len){
   char fakebuf[100];
   memset(fakebuf, 0, 100);
   memcpy(fakebuf, line, len);
-  printf("new line (len = %d), : %s \n", len, fakebuf);
+  
+  if (len == 0){
+    return;
+  }
+  printf("new line (len = %d), :%s \n", len, fakebuf);
+  parse_at_string(line, len);
 }
 
 // Hunts for two "EOL" delimiters
 //  1) '\n' [ for normal URC, response]
 //  2) '---EOF---Pattern---' , for TCP/UDP data pushes
 int at_parser_delimiter_hunter(const uint8_t c){
-  static char long_del[LONG_DELIMITER_LEN] = "---EOF---Pattern---";
+  static char long_del[LONG_DELIMITER_LEN] = "--EOF--Pattern--";
   static char current_hunt[LONG_DELIMITER_LEN];
   static int iter = 0; 
 
-  if ( c == '\n'){
-    ESP_LOGI(TAG, "Found new-line delimiter");
+  if ( c == '\n' || c== '\r'){
+    //ESP_LOGI(TAG, "Found new-line delimiter");
     memset(current_hunt, 0, sizeof(current_hunt));
     iter = 0;
     return NEW_LINE_DELIMITER;  
@@ -162,7 +168,6 @@ int at_parser_delimiter_hunter(const uint8_t c){
     iter++;
     if (iter == LONG_DELIMITER_LEN){
       iter = 0;
-      ESP_LOGI(TAG, "Found new long delimiter!");
       return LONG_DELIMITER_FOUND;
     } else {
       return PARTIAL_DELIMETER_SCANNING;
@@ -217,7 +222,6 @@ void at_parser_main(void * pv){
           continue;
         }
         iter_lead++;
-        iter_lag = iter_lead;
 
         memcpy(buffer + iter_lead, new_line.buf, new_line.len);
         len = len + new_line.len;
@@ -234,7 +238,7 @@ void at_parser_main(void * pv){
     }
 
     const int parse_status = at_parser_delimiter_hunter(buffer[iter_lead]);
-    printf("%d, len = %d, iter_lead = %d \n", parse_status, len, iter_lead);
+    //printf("%d, len = %d, iter_lead = %d \n", parse_status, len, iter_lead);
     
     if ( NEW_LINE_DELIMITER == parse_status ){
       // -1 strips the newline character
@@ -254,8 +258,14 @@ void at_parser_main(void * pv){
       iter_lag = 0;
       found_line = true;
     }else if ( PARTIAL_DELIMETER_SCANNING == parse_status ) {
+      if (iter_lead == len){
+        continue;
+      }
       iter_lead++;  
     } else {
+      if (iter_lead == len){
+        continue;
+      }
       // neither a partial or complete delimiter found
       iter_lag++;
       iter_lead++;
@@ -270,20 +280,14 @@ void init_parser_freertos_objects(){
 
 void driver (void * arg){
   ESP_LOGI(TAG, "Starting AT driver");
-  static char foo[512] = "go such a dick! \n";
   new_line_t bar;
  
-  bar.len = 1;
-  //memcpy(bar.buf, "\n", 1);
-  bar.buf[0] = 0;
-  BaseType_t xStatus = xQueueSendToBack(line_feed_q, &bar, 0);
-  xStatus = xQueueSendToBack(line_feed_q, &bar, 0);
+  bar.len = 26;
+  memcpy(bar.buf, "\r\nI like--EOF--Pattern--\r\n", 26);
+  xQueueSendToBack(line_feed_q, &bar, 0);
+  xQueueSendToBack(line_feed_q, &bar, 0);
+  vTaskDelay(100/portTICK_PERIOD_MS);
   
-    if (xStatus != pdTRUE) {
-      ESP_LOGE(TAG, "Failed to send on event queue (net)");
-      ASSERT(0);
-    }
-    vTaskDelay(100/portTICK_PERIOD_MS);
   
   
    vTaskDelete(NULL);
@@ -301,8 +305,8 @@ int main_full( void )
   
   init_parser_freertos_objects();
   
-  xTaskCreate ( driver, "test", 2048, NULL, 4, NULL);
-  //spawn_uart_thread();
+  //xTaskCreate ( driver, "test", 2048, NULL, 4, NULL);
+  spawn_uart_thread();
   vTaskStartScheduler();
 }
 	
