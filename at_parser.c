@@ -11,7 +11,7 @@
 *                                       STATIC VARIABLES *
 *********************************************************/
 static const char        TAG[] = "AT_PARSER";
-static  at_parsed_s parsed;
+static  at_parsed_s parsed;    // Warning, extremely large!
 
 /**********************************************************
 *                                          IMPLEMENTATION *
@@ -60,7 +60,7 @@ static at_type_t get_type(char *s){
 	return -1;
 }
 
-int parse_at_string(char *str, size_t len) {
+int parse_at_string(at_response_t response) {
   char type[MAX_LEN_TYPE];
   const char c[2] = ",";
   int lead = 0;
@@ -147,4 +147,8 @@ int parse_at_string(char *str, size_t len) {
 	}
 #endif 
   return(1);
+}
+
+at_parsed_s * get_response_arr(){
+  return &parsed;
 }

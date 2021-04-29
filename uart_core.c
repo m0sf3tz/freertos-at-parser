@@ -10,7 +10,7 @@
 #include <errno.h>
 
 #include "global_defines.h"
-#include "state_core.h"
+#include "uart_core.h"
 
 /**********************************************************
 *                                        GLOBAL VARIABLES *
@@ -23,17 +23,20 @@
 /**********************************************************
 *                                        STATIC VARIABLES *
 **********************************************************/
-static const char        TAG[] = "UART_CORE";
-static const char AT_PORT[] = "/dev/ttyUSB0";
+static const char      TAG[] = "UART_CORE";
+static const char  AT_PORT[] = "/dev/ttyUSB1";
 static int atfd;
 
-typedef struct {                                     
+typedef struct {                               
      uint16_t len;
      uint8_t  buf[1024];
 } new_line_t;
 
+static new_command_buff[MAX_WRITE_COMMAND_LEN];
 static new_line_t new_line;
-extern QueueSetHandle_t line_feed_q;
+static QueueSetHandle_t command_issue_q;
+
+extern QueueSetHandle_t line_feed_q; //todo move into proper place!
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
@@ -53,54 +56,33 @@ void at_parser(void *arg){
   }
 }
 
-void at_writter(void *arg){
-  for(;;){
-
-    int len; 
- 
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-    char ateoff[50] = "ATE0";
-    len = strnlen(ateoff, 100);
-    ateoff[len] = '\r';
-    write(atfd, ateoff, len+1);
-
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-    char command[50] = "AT+KCNXCFG=1,\"GPRS\",\"m2minternet.apn\"";
-    len = strnlen(command, 100);
-    command[len] = '\r';
-    int rc = write(atfd, command, len+1);
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-  
-    char command2[50] = "AT+KUDPCFG=1,0";
-    len = strnlen(command2, 100);
-    command2[len] = '\r';
-    write(atfd, command2, len+1);
-
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-    char command3[100] = "AT+KUDPSND=1,\"54.189.156.244\",3333,50";
-    len = strnlen(command3, 100);
-    command3[len] = '\r';
-    write(atfd, command3, len+1);
-
-
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-    char command4[100] = "go suck my dick dude \n --EOF--Pattern--";
-    len = strnlen(command4, 100);
-    command4[len] = '\r';
-    write(atfd, command4, len+1);
- 
-    vTaskDelay(2500/portTICK_PERIOD_MS);
-    char command5[100] = "AT+KUDPRCV=1,17";
-    len = strnlen(command5, 100);
-    command5[len] = '\r';
-    write(atfd, command5, len+1);
-
-    vTaskDelay(250000/portTICK_PERIOD_MS);
+void at_command_issue_hal(char *cmd){
+  if(!cmd){
+    ESP_LOGE(TAG, "CMD == null!");
+    ASSERT(0);
   }
+
+#ifdef POSTIX_FREERTOS_SIM     
+  int rc = write(atfd, cmd, MAX_WRITE_COMMAND_LEN);
+  if (rc == -1){
+    ESP_LOGE(TAG, "Failed to write to UART HAL!");
+    return UART_HAL_WRITE_ERROR; 
+  }
+  else{
+    return UART_HAL_WRITE_OK;
+  }
+#endif POSTIX_FREERTOS_SIM
 }
 
+void init_cellular_freertos_objects (){
+ command_issue_q = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, MAX_WRITE_COMMAND_LEN);
+ 
+ ASSERT(command_issue_q);
+}
+
+
 void spawn_uart_thread(){
-  atfd = open( "/dev/ttyUSB0", O_RDWR);
+  atfd = open( AT_PORT, O_RDWR);
   if (atfd == -1){
      ESP_LOGE(TAG, "Failed to open UART PORT!"); 
      ASSERT(0);
