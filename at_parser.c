@@ -60,11 +60,13 @@ static at_type_t get_type(char *s){
 	return -1;
 }
 
-int parse_at_string(at_response_t response) {
+int parse_at_string(at_response_s * raw_response, const int items) {
+/*
   char type[MAX_LEN_TYPE];
   const char c[2] = ",";
   int lead = 0;
   int lag  = 0;  
+  int curret_line = 0;
   memset(type, 0, sizeof(type));
   
   if (!str){
@@ -72,6 +74,7 @@ int parse_at_string(at_response_t response) {
     ASSERT(0);
   }
 
+  while(curret_line != items){
   if (len == 0){
     ESP_LOGE(TAG, "WRONG PARAM INPUT!");
     ASSERT(0);
@@ -147,8 +150,172 @@ int parse_at_string(at_response_t response) {
 	}
 #endif 
   return(1);
+*/
 }
 
 at_parsed_s * get_response_arr(){
   return &parsed;
+}
+
+// checks for command terminating line
+// (OK, +CME ERROR: <N>, ERROR)
+at_status_t is_status_line(char * line, size_t len, int *cme_error){
+  if (!line){
+    ESP_LOGE(TAG, "NULL line!");
+    ASSERT(0);
+  }
+
+  if (strlen(line) < strlen("OK")){
+    // too short to be a line termination, probably an error condition...
+    ESP_LOGW(TAG, "line was really short!");
+    return LINE_TERMINATION_INDICATION_NONE; 
+  }
+
+  if ( strncmp(line, "OK", len) == 0 ) return LINE_TERMINATION_INDICATION_OK; 
+}
+
+// Hunts for two "EOL" delimiters
+//  1) '\n' [ for normal URC, response]
+//  2) '---EOF---Pattern---' , for TCP/UDP data pushes
+int at_parser_delimiter_hunter(const uint8_t c){
+  static char long_del[LONG_DELIMITER_LEN] = "--EOF--Pattern--";
+  static char current_hunt[LONG_DELIMITER_LEN];
+  static int iter = 0; 
+
+  if ( c == '\n' || c== '\r'){
+    //ESP_LOGI(TAG, "Found new-line delimiter");
+    memset(current_hunt, 0, sizeof(current_hunt));
+    iter = 0;
+    return NEW_LINE_DELIMITER;  
+  }
+
+  current_hunt[iter] = c;
+  int rc = memcmp(long_del, current_hunt, iter + 1); //must test at least one character
+  if (rc == 0) {
+    iter++;
+    if (iter == LONG_DELIMITER_LEN){
+      iter = 0;
+      return LONG_DELIMITER_FOUND;
+    } else {
+      return PARTIAL_DELIMETER_SCANNING;
+    }
+  } else {
+    iter = 0;
+  }
+
+  return NO_DELIMITER;
+}
+
+void at_parser_main(void * pv){
+  static int iter_lead; // Reads ahead until all of end delimiter is hit 
+  static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
+  static int len;       // current length of line being parsed
+  static bool found_line;
+
+  ESP_LOGI(TAG, "Starting AT parser!");
+  while(true){
+    if(iter_lead == len){ // exhausted current buffer 
+      // two sub cases
+      // -> Failed to find EOL, exhausted current buffer
+      // -> Still hunting for EOL
+      BaseType_t xStatus =  xQueueReceive(line_feed_q, &new_line, portMAX_DELAY);
+      if (xStatus != pdTRUE) {
+        ESP_LOGE(TAG, "Failed to RX line!");
+        ASSERT(0);
+      }
+      
+      if (found_line){ 
+        len = len - iter_lead;
+        found_line = false;
+      }
+
+      if (len < 0){
+        ESP_LOGE(TAG, "Negative len!!");
+        ASSERT(0);
+      }
+
+      if(len == 0){
+        memset(buffer, 0, sizeof(buffer));
+        memcpy(buffer, new_line.buf, new_line.len);
+        len = new_line.len;
+        iter_lead = 0;
+        iter_lag = 0;
+      } else {
+        if ( len + new_line.len > BUFF_SIZE){
+          ESP_LOGE(TAG, "Exceeded buffer size... error! Resetting!");
+          memset(buffer, 0, sizeof(buffer));
+          iter_lag = 0;
+          iter_lead = 0;
+          continue;
+        }
+        iter_lead++;
+
+        memcpy(buffer + iter_lead, new_line.buf, new_line.len);
+        len = len + new_line.len;
+      }
+    }
+  
+    if (iter_lead > MAX_LINE_SIZE){
+       ESP_LOGE(TAG, "Exceeded buffer size... error! Resetting!");
+       memset(buffer, 0, sizeof(buffer));
+       iter_lag = 0;
+       iter_lead = 0;
+       abort();
+       continue;
+    }
+
+    const int parse_status = at_parser_delimiter_hunter(buffer[iter_lead]);
+    //printf("%d, len = %d, iter_lead = %d \n", parse_status, len, iter_lead);
+    
+    if ( NEW_LINE_DELIMITER == parse_status ){
+      // -1 strips the newline character
+      memcpy(line_found, buffer, iter_lead); 
+      at_digest_lines(line_found, iter_lead);
+      memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
+      len = len - iter_lead - 1; // iter_lead "zero" based, len not 
+      iter_lead = 0;
+      iter_lag = 0;
+      found_line = true;
+    } else if (LONG_DELIMITER_FOUND == parse_status){
+      memcpy(line_found, buffer, iter_lag);
+      at_digest_lines(line_found, iter_lag);
+      memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
+      len = len - iter_lead - 1; // iter_lead "zero" based, len not 
+      iter_lead = 0;
+      iter_lag = 0;
+      found_line = true;
+    }else if ( PARTIAL_DELIMETER_SCANNING == parse_status ) {
+      if (iter_lead == len){
+        continue;
+      }
+      iter_lead++;  
+    } else {
+      if (iter_lead == len){
+        continue;
+      }
+      // neither a partial or complete delimiter found
+      iter_lag++;
+      iter_lead++;
+    }
+  }
+}
+
+void init_parser_freertos_objects(){
+    line_feed_q = xQueueCreate(MAX_QUEUED_ITEMS, 500); 
+    ASSERT(line_feed_q);
+}
+
+void driver (void * arg){
+  ESP_LOGI(TAG, "Starting AT driver");
+  new_line_t bar;
+ 
+  bar.len = 26;
+  memcpy(bar.buf, "\r\nI like--EOF--Pattern--\r\n", 26);
+  xQueueSendToBack(line_feed_q, &bar, 0);
+  xQueueSendToBack(line_feed_q, &bar, 0);
+  vTaskDelay(100/portTICK_PERIOD_MS);
+  
+  
+  
+   vTaskDelete(NULL);
 }

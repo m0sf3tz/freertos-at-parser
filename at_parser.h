@@ -15,6 +15,19 @@
 #define MAX_DELIMITERS (5)
 #define MAX_LEN_TYPE   (50)
 #define MAX_LEN_PARAM  (100)
+#define MAX_LEN_RAW    (150)
+
+#define LINE_TERMINATION_INDICATION_NONE (0)
+#define LINE_TERMINATION_INDICATION_OK (1)
+#define LINE_TERMINATION_INDICATION_ERROR (2)
+#define LINE_TERMINATION_INDICATION_CME_ERROR (3)
+
+#define NEW_LINE_DELIMITER         (0)  // Found an EOL
+#define NO_DELIMITER               (1)  // No EOL character
+#define PARTIAL_DELIMETER_SCANNING (2)  // Partial EOL [returned when partial ---EOF--Pattern detected]
+#define LONG_DELIMITER_FOUND       (3)  // returned when full long (--EOF...) delimiter found
+
+
 
 /*********************************************************
 *                                               TYPEDEFS *
@@ -24,11 +37,9 @@ typedef int at_status_t;
 
 //This stores an individual line of an AT response
 typedef struct{ 
-  char * str;
+  char  str[MAX_LEN_RAW];
   size_t len;
 }at_response_s; 
-// This stores the entirety of an AT response
-typedef at_response_s[MAX_LINES] at_response_t;
 
 // IE)
 //  AT+KBNDCFG?
@@ -72,7 +83,7 @@ typedef struct {
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-int parse_at_string(char *s, size_t len);
+int parse_at_string(at_response_s *raw_response, const int items);
 at_parsed_s * get_response_arr();
 
 /**********************************************************

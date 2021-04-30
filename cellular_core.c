@@ -16,7 +16,7 @@
 *********************************************************/
 static const char        TAG[] = "CELLULAR_CORE";
 QueueSetHandle_t         issue_command_q;
-static char              new_command_buff[MAX_WRITE_COMMAND_LEN];
+//static char              new_command_buff[MAX_WRITE_COMMAND_LEN];
 
 /**********************************************************
 *                                    FORWARD DECLARATIONS *
@@ -25,7 +25,7 @@ static char              new_command_buff[MAX_WRITE_COMMAND_LEN];
 /**********************************************************
 *                                         STATE FUNCTIONS *
 **********************************************************/
-
+/*
 static void at_command_issue_thread(void * arg) {
     for (;;){
       memset(new_command_buff, 0, sizeof(new_command_buff));
@@ -49,4 +49,4 @@ static void cellular_core_init_freertos_objects() {
 
 void cellular_core_spawner() {
     cellular_core_init_freertos_objects();
-}
+}*/

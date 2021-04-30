@@ -11,6 +11,10 @@
 
 #include "global_defines.h"
 #include "uart_core.h"
+#include "at_parser.h"
+
+
+#define MAX_WRITE_COMMAND_LEN (150)
 
 /**********************************************************
 *                                        GLOBAL VARIABLES *
@@ -32,7 +36,6 @@ typedef struct {
      uint8_t  buf[1024];
 } new_line_t;
 
-static new_command_buff[MAX_WRITE_COMMAND_LEN];
 static new_line_t new_line;
 static QueueSetHandle_t command_issue_q;
 
@@ -56,13 +59,13 @@ void at_parser(void *arg){
   }
 }
 
-void at_command_issue_hal(char *cmd){
+int at_command_issue_hal(char *cmd){
   if(!cmd){
     ESP_LOGE(TAG, "CMD == null!");
     ASSERT(0);
   }
 
-#ifdef POSTIX_FREERTOS_SIM     
+#ifdef POSIX_FREERTOS_SIM     
   int rc = write(atfd, cmd, MAX_WRITE_COMMAND_LEN);
   if (rc == -1){
     ESP_LOGE(TAG, "Failed to write to UART HAL!");
@@ -71,11 +74,11 @@ void at_command_issue_hal(char *cmd){
   else{
     return UART_HAL_WRITE_OK;
   }
-#endif POSTIX_FREERTOS_SIM
+#endif
 }
 
 void init_cellular_freertos_objects (){
- command_issue_q = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, MAX_WRITE_COMMAND_LEN);
+ command_issue_q = xQueueCreate(2, MAX_WRITE_COMMAND_LEN); //TODO: make constant
  
  ASSERT(command_issue_q);
 }
@@ -89,5 +92,5 @@ void spawn_uart_thread(){
   }
 
   xTaskCreate(at_parser, "AT_PARSER", 2048, NULL, 5, NULL); 
-  xTaskCreate(at_writter, "AT_WRITTER", 2048, NULL, 5, NULL); 
+  //xTaskCreate(at_writter, "AT_WRITTER", 2048, NULL, 5, NULL); 
 }

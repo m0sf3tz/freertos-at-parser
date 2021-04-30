@@ -134,17 +134,73 @@ typedef struct {
 } new_line_t;
 
 static new_line_t new_line;
+static at_response_s reponses_raw;
 
-void digest_lines(uint8_t* line, size_t len){
+/*
+// checks for command terminating line
+// (OK, +CME ERROR: <N>, ERROR)
+at_status_t is_status_line(char * line, size_t len, int *cme_error){
+  if (!line){
+    ESP_LOGE(TAG, "NULL line!");
+    ASSERT(0);
+  }
+
+  if (strlen(line) < strlen("OK")){
+    // too short to be a line termination, probably an error condition...
+    ESP_LOGW(TAG, "line was really short!");
+    return LINE_TERMINATION_INDICATION_NONE; 
+  }
+
+  if ( strncmp(line, "OK", len) == 0 ) return LINE_TERMINATION_INDICATION_OK; 
+
+}
+*/
+// this function digests lines,
+// it will piece together a command  sequence
+// for example after issueing
+// AT+CFUN?
+//
+// we execpt to read
+//
+//  AT+CFUN? (echo)
+//  +CFUN: 1
+//  
+//  OK
+//
+//  Every AT message has a repsonse, either
+//  OK,
+//  +CME error <N>,
+//  ERROR,
+//
+//  we hunt for these to know that we found a full response
+void at_digest_lines(uint8_t* line, size_t len){
+/*
+  static int current_response_lines = 0;
+  static char buff[MAX_LINES][MAX_LINE_SIZE];
+
   char fakebuf[100];
   memset(fakebuf, 0, 100);
   memcpy(fakebuf, line, len);
+  printf("new line (len = %d), :%s \n", len, fakebuf);
   
   if (len == 0){
     return;
   }
-  printf("new line (len = %d), :%s \n", len, fakebuf);
-  parse_at_string(line, len);
+ 
+  // checks to see if the modem is finished responding
+  // to an AT command 
+  at_status_t isl = is_status_line(line, len, 0);
+  printf("todo! \n");
+  abort();
+
+  if(isl){
+    // done parsing
+    parse_at_string(buff);
+  } else {
+   memcpy(buff[current_response_lines], fakebuf, len);
+   current_response_lines++; 
+  }
+  */
 }
 
 // Hunts for two "EOL" delimiters
@@ -178,7 +234,7 @@ int at_parser_delimiter_hunter(const uint8_t c){
 
   return NO_DELIMITER;
 }
-
+/*
 void at_parser_main(void * pv){
   static int iter_lead; // Reads ahead until all of end delimiter is hit 
   static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
@@ -243,7 +299,7 @@ void at_parser_main(void * pv){
     if ( NEW_LINE_DELIMITER == parse_status ){
       // -1 strips the newline character
       memcpy(line_found, buffer, iter_lead); 
-      digest_lines(line_found, iter_lead);
+      at_digest_lines(line_found, iter_lead);
       memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
       len = len - iter_lead - 1; // iter_lead "zero" based, len not 
       iter_lead = 0;
@@ -251,7 +307,7 @@ void at_parser_main(void * pv){
       found_line = true;
     } else if (LONG_DELIMITER_FOUND == parse_status){
       memcpy(line_found, buffer, iter_lag);
-      digest_lines(line_found, iter_lag);
+      at_digest_lines(line_found, iter_lag);
       memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
       len = len - iter_lead - 1; // iter_lead "zero" based, len not 
       iter_lead = 0;
@@ -277,21 +333,8 @@ void init_parser_freertos_objects(){
     line_feed_q = xQueueCreate(MAX_QUEUED_ITEMS, 500); 
     ASSERT(line_feed_q);
 }
+*/
 
-void driver (void * arg){
-  ESP_LOGI(TAG, "Starting AT driver");
-  new_line_t bar;
- 
-  bar.len = 26;
-  memcpy(bar.buf, "\r\nI like--EOF--Pattern--\r\n", 26);
-  xQueueSendToBack(line_feed_q, &bar, 0);
-  xQueueSendToBack(line_feed_q, &bar, 0);
-  vTaskDelay(100/portTICK_PERIOD_MS);
-  
-  
-  
-   vTaskDelete(NULL);
-}
 
 
 void spawn_uart_thread();

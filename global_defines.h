@@ -6,7 +6,7 @@
 #define RTOS_DONT_WAIT      (0)
 
 // Set this flag to one for POSIX FreeRTOS simulation
-#define POSTIX_FREERTOS_SIM     
+#define POSIX_FREERTOS_SIM     
 
 /**********************************************************
 *                       HELPERS 
@@ -21,6 +21,8 @@
 #define TRUE  (1)
 #define FALSE (0)
 
-#define ESP_LOGE( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
-#define ESP_LOGI( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
-
+#ifdef POSIX_FREERTOS_SIM
+ #define ESP_LOGE( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
+ #define ESP_LOGI( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
+ #define ESP_LOGW( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
+#endif 
