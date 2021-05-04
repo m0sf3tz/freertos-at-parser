@@ -109,7 +109,6 @@
 #include "console.h"
 
 #include "state_core.h"
-#include "net_state.h"
 #include "global_defines.h"
 #include "at_parser.h"
 

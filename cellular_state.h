@@ -5,14 +5,14 @@
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
 void state_post_event(state_event_t event);
-void net_state_spawner();
-void set_net_state(bool state);
-bool get_net_state();
+void cellular_state_spawner();
+void set_cellular_state(bool state);
+bool get_cellular_state();
 
 /*********************************************************
 *                                                GLOBALS *
 *********************************************************/
-extern QueueHandle_t outgoing_events_net_q;
+extern QueueHandle_t outgoing_events_cellular_q;
 
 /*********************************************************
 *                                               TYPEDEFS *
@@ -22,12 +22,12 @@ extern QueueHandle_t outgoing_events_net_q;
 *                                                  ENUMS *
 *********************************************************/
 typedef enum {
-    net_waiting_wifi = 0,
-    net_waiting_prov,
-    net_running,
+    cellular_waiting_wifi = 0,
+    cellular_waiting_prov,
+    cellular_running,
 
-    net_state_len //LEAVE AS LAST!
-} net_state_e;
+    cellular_state_len //LEAVE AS LAST!
+} cellular_state_e;
 
 
 typedef enum {
@@ -35,7 +35,7 @@ typedef enum {
     EVENT_B,
 
     wifi_event_len //LEAVE AS LAST!
-} net_event_e;
+} cellular_event_e;
 
 /**********************************************************
 *                                                 DEFINES *
