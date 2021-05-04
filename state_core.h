@@ -37,6 +37,11 @@ typedef struct {
     // This function reads events to this state machine
     state_event_t (*get_event)(uint32_t);
 
+    // This must never be set by the user! This is a pointer to the queue 
+    // which reads events into the state machine. If get_event is not provided, this 
+    // queue will be used internally with a generic event receive function
+    QueueHandle_t state_queue_input_handle_private;  
+
     // Translates a state_e item to a state_array_s object
     state_array_s (*translator)(state_t);
 
@@ -70,6 +75,7 @@ extern QueueHandle_t events_net_q;
 /**********************************************************
 *                      DEFINES
 **********************************************************/
+#define GENERIC_QUEUE_TIMEOUT (2500 / portTICK_PERIOD_MS)
 #define INVALID_EVENT         (0xFFFFFFFF)
 #define EVENT_QUEUE_MAX_DEPTH (16)
 #define SATE_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)

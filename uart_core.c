@@ -31,11 +31,6 @@ static const char      TAG[] = "UART_CORE";
 static const char  AT_PORT[] = "/dev/ttyUSB1";
 static int atfd;
 
-typedef struct {                               
-     uint16_t len;
-     uint8_t  buf[1024];
-} new_line_t;
-
 static new_line_t new_line;
 static QueueSetHandle_t command_issue_q;
 

@@ -122,8 +122,8 @@ static bool event_filter_func(state_event_t event) {
 static state_init_s* get_net_state_handle() {
     static state_init_s net_state = {
         .next_state        = next_state_func,
-        .send_event        = send_event_func,
-        .get_event         = get_event_func,
+        //.send_event        = send_event_func,
+        //.get_event         = get_event_func,
         .translator        = get_state_func,
         .event_print       = event_print_func,
         .starting_state    = net_waiting_wifi,
@@ -139,3 +139,28 @@ void net_state_spawner() {
     // State the state machine
     start_new_state_machine(get_net_state_handle());
 }
+
+
+//// all bellow is test, you can delete!
+//
+static void driver (void * arg){
+  ESP_LOGI(TAG, "Starting AT driver");
+  net_state_spawner();
+  
+  vTaskDelay(2000/portTICK_PERIOD_MS);
+  
+  puts("posint EVNAA"); 
+  state_post_event(EVENT_A);
+
+  vTaskDelay(2000/portTICK_PERIOD_MS);
+  
+  puts("posint EVNAAB"); 
+  state_post_event(EVENT_B);
+}
+
+void net_state_test(){
+  printf("doing a test \n");
+  xTaskCreate(driver, "", 3000, NULL, 3, NULL);
+  vTaskStartScheduler();
+}
+

@@ -137,7 +137,13 @@ int main( void )
 
     console_init();
     console_print("Starting full demo\n");
-    main_full();
+    //main_full();
+    
+    extern void net_state_test();
+    extern void main_test();
+    extern void state_core_spawner();
+    state_core_spawner();
+    net_state_test();
 
     return 0;
 }

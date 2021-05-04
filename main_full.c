@@ -113,29 +113,28 @@
 #include "global_defines.h"
 #include "at_parser.h"
 
-
+#if 0
+/*
 #define NEW_LINE_DELIMITER   (0)  // Found an EOL
 #define NO_DELIMITER      (1)  // No EOL character
 #define PARTIAL_DELIMETER_SCANNING (2)  // Partial EOL [returned when partial ---EOF--Pattern detected]
 #define LONG_DELIMITER_FOUND (3) // returned when full long (--EOF...) delimiter found
-
-#define BUFF_SIZE         (2048)
-#define MAX_LINE_SIZE     (1024)
-#define MAX_QUEUED_ITEMS  (2)
+*/
+/*
+#define BUFF_SIZE          (2048) // Intermediate buffer
+#define MAX_LINE_SIZE      (1024) // Maximum AT parsed line (includes reads/writes)
+#define MAX_QUEUED_ITEMS   (2)
 #define LONG_DELIMITER_LEN (16) // 18 == len(--EOF--Pattern--)
-
+*/
+/*
 static uint8_t   line_found[MAX_LINE_SIZE];
 static uint8_t   buffer[BUFF_SIZE];
 QueueSetHandle_t line_feed_q;
 
-typedef struct {                                     
-     uint16_t len;
-     uint8_t  buf[MAX_LINE_SIZE];
-} new_line_t;
-
 static new_line_t new_line;
 static at_response_s reponses_raw;
 
+*/
 /*
 // checks for command terminating line
 // (OK, +CME ERROR: <N>, ERROR)
@@ -352,4 +351,4 @@ int main_full( void )
   spawn_uart_thread();
   vTaskStartScheduler();
 }
-	
+#endif 

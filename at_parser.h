@@ -22,12 +22,19 @@
 #define LINE_TERMINATION_INDICATION_ERROR (2)
 #define LINE_TERMINATION_INDICATION_CME_ERROR (3)
 
+#define LINE_WAS_NOT_DATA_RELATED (0)
+#define LINE_WAS_DATA_RELATED (1)
+#define LINE_WAS_CONNECT (2)
+
 #define NEW_LINE_DELIMITER         (0)  // Found an EOL
 #define NO_DELIMITER               (1)  // No EOL character
 #define PARTIAL_DELIMETER_SCANNING (2)  // Partial EOL [returned when partial ---EOF--Pattern detected]
 #define LONG_DELIMITER_FOUND       (3)  // returned when full long (--EOF...) delimiter found
 
-
+#define BUFF_SIZE          (2048) // Intermediate buffer
+#define MAX_LINE_SIZE      (1024) // Maximum AT parsed line (includes reads/writes)
+#define MAX_QUEUED_ITEMS   (2)
+#define LONG_DELIMITER_LEN (16) // 18 == len(--EOF--Pattern--)
 
 /*********************************************************
 *                                               TYPEDEFS *
@@ -79,6 +86,11 @@ typedef struct {
 	at_param_s param_arr[MAX_LINES][MAX_DELIMITERS];
 }at_parsed_s;
 
+// How uart_core packs responses to send to at_parser
+typedef struct {                                     
+     uint16_t len;
+     uint8_t  buf[MAX_LINE_SIZE];
+} new_line_t;
 
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
