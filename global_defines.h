@@ -1,15 +1,17 @@
 #pragma once
 
 /**********************************************************
-*                      DEFINES
+*                                                 DEFINES *
 **********************************************************/
 #define RTOS_DONT_WAIT      (0)
 
 // Set this flag to one for POSIX FreeRTOS simulation
 #define POSIX_FREERTOS_SIM     
 
+#define PARSER_CORE_EVENT_START (100)
+
 /**********************************************************
-*                       HELPERS 
+*                                                 HELPERS *
 **********************************************************/
 #define ASSERT(x)                                                       \
     do {                                                                \
@@ -26,3 +28,7 @@
  #define ESP_LOGI( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
  #define ESP_LOGW( tag, format, ... ) printf(format, ##__VA_ARGS__); printf("\n")
 #endif 
+
+/**********************************************************
+*                                                TYPEDEFS *
+**********************************************************/

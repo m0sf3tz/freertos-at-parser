@@ -8,18 +8,17 @@
 #include <errno.h>
 
 #include "global_defines.h"
-#include "cellular_state.h"
+#include "parser_state.h"
 #include "state_core.h"
-
-#if 0
+#include "at_parser.h"
 
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
 static const char        TAG[] = "NET_STATE";
-static SemaphoreHandle_t cellular_state_mutex;
-static bool              cellular_state;
-QueueSetHandle_t         events_cellular_q;
+static SemaphoreHandle_t parser_state_mutex;
+static bool              parser_state;
+QueueSetHandle_t         events_parser_q;
 
 /**********************************************************
 *                                    FORWARD DECLARATIONS *
@@ -28,16 +27,21 @@ QueueSetHandle_t         events_cellular_q;
 /**********************************************************
 *                                         STATE FUNCTIONS *
 **********************************************************/
-static state_t state_wait_for_wifi_func() {
-  vTaskDelay(1000/portTICK_PERIOD_MS);
-
-  return cellular_waiting_wifi;
+static state_t state_idle() {
+  ESP_LOGI(TAG, "Entering Idle state");
+/*
+  if (at_incomming_peek() ) {
+    // Data availible
+    return EVENT_NEW_UART_DATA_F; 
+  }
+  */
+  return NULL_STATE;
 }
 
-static state_t state_wait_for_wifi_func() {
-  vTaskDelay(1000/portTICK_PERIOD_MS);
+static state_t state_handle_urc() {
+  ESP_LOGI(TAG, "Handling URC!");
+  
 
-  return cellular_waiting_wifi;
 }
 
 static state_t state_wait_for_provisions_func() {
@@ -46,27 +50,29 @@ static state_t state_wait_for_provisions_func() {
 
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
-    if (!curr_state) {
+#if 0
+  if (!curr_state) {
         ESP_LOGE(TAG, "ARG= NULL!");
         ASSERT(0);
     }
 
-    if (*curr_state == cellular_waiting_wifi) {
+    if (*curr_state == parser_waiting_wifi) {
         if (event == EVENT_A) {
-            ESP_LOGI(TAG, "Old State: cellular_waiting_wifi, Next: cellular_waiting_prov");
-            *curr_state = cellular_waiting_prov;
+            ESP_LOGI(TAG, "Old State: parser_waiting_wifi, Next: parser_waiting_prov");
+            *curr_state = parser_waiting_prov;
             return;
         }
     }
 
-    if (*curr_state == cellular_waiting_prov) {
+    if (*curr_state == parser_waiting_prov) {
         if (event == EVENT_B) {
-            ESP_LOGI(TAG, "Old State: cellular_waitin_prov, Next: cellular_waiting_wifi");
-            *curr_state = cellular_waiting_wifi;
+            ESP_LOGI(TAG, "Old State: parser_waitin_prov, Next: parser_waiting_wifi");
+            *curr_state = parser_waiting_wifi;
         }
     }
 
     // Stay in the same state
+#endif 
 }
 
 static char* event_print_func(state_event_t event) {
@@ -86,12 +92,13 @@ static char* event_print_func(state_event_t event) {
 
 // Returns the state function, given a state
 static state_array_s get_state_func(state_t state) {
-    static state_array_s func_table[cellular_state_len] = {
+  static state_array_s func_table[parser_state_len] = {
+#if 0
         { state_wait_for_wifi_func      ,        portMAX_DELAY      },
         { state_wait_for_provisions_func, 2500 / portTICK_PERIOD_MS },
+#endif 
     };
-
-    if (state >= cellular_state_len) {
+    if (state >= parser_state_len) {
         ESP_LOGE(TAG, "Current state out of bounds!");
         ASSERT(0);
     }
@@ -103,60 +110,62 @@ static state_array_s get_state_func(state_t state) {
 *                NON-STATE  FUNCTIONS
 **********************************************************/
 
-static void cellular_state_init_freertos_objects() {
-    cellular_state_mutex = xSemaphoreCreateMutex();
-    events_cellular_q    = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> cellular-sm
+static void parser_state_init_freertos_objects() {
+    parser_state_mutex = xSemaphoreCreateMutex();
+    events_parser_q    = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> parser-sm
 
     // make sure we init all the rtos objects
-    ASSERT(cellular_state_mutex);
-    ASSERT(events_cellular_q);
+    ASSERT(parser_state_mutex);
+    ASSERT(events_parser_q);
 }
 
 static bool event_filter_func(state_event_t event) {
-    return true;
+#if 0
+  switch(event){
+      case(
+    }
+#endif 
 }
 
-static state_init_s* get_cellular_state_handle() {
-    static state_init_s cellular_state = {
+static state_init_s* get_parser_state_handle() {
+    static state_init_s parser_state = {
         .next_state        = next_state_func,
         .translator        = get_state_func,
         .event_print       = event_print_func,
-        .starting_state    = cellular_waiting_wifi,
-        .state_name_string = "cellular_state",
+        .starting_state    = parser_waiting_wifi,
+        .state_name_string = "parser_state",
         .filter_event      = event_filter_func,
     };
-    return &(cellular_state);
+    return &(parser_state);
 }
 
-void cellular_state_spawner() {
-    cellular_state_init_freertos_objects();
+void parser_state_spawner() {
+    parser_state_init_freertos_objects();
 
     // State the state machine
-    start_new_state_machine(get_cellular_state_handle());
+    start_new_state_machine(get_parser_state_handle());
 }
 
 
 //// all bellow is test, you can delete!
 //
 static void driver (void * arg){
-  ESP_LOGI(TAG, "Starting AT driver");
-  cellular_state_spawner();
-  
-  vTaskDelay(2000/portTICK_PERIOD_MS);
-  
-  puts("posint EVNAA"); 
-  //state_post_event(EVENT_A);
+  bool status;
+  int size; 
+  for(;;){
+    char * line = at_parser_main(false, &status, &size);
 
-  vTaskDelay(100000000/portTICK_PERIOD_MS);
-  
-  puts("posint EVNAAB"); 
-  //state_post_event(EVENT_B);
+    if(status){
+      at_digest_lines(line,size);
+    } else {
+      ESP_LOGE(TAG, "Found nothing!");
+    }
+  }
 }
 
-void cellular_state_test(){
+void parser_state_test(){
   printf("doing a test \n");
   xTaskCreate(driver, "", 3000, NULL, 3, NULL);
   vTaskStartScheduler();
 }
 
-#endif 

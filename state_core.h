@@ -11,7 +11,7 @@ typedef uint32_t state_event_t; // Which event
 typedef uint32_t state_t;       // Which state in a state machine
 
 // Individual state functions in a state machine
-typedef void (*func_ptr)(void);
+typedef state_t (*func_ptr)(void);
 
 // Defines the individual states, and if those states are reinterant,
 // for example, if a state has loop_timer set to 1 second, after 1 second
@@ -30,12 +30,6 @@ typedef struct {
 
     // This is the function that calculates the next state, based on input
     void (*next_state)(state_t*, state_event_t);
-
-    // This function sends events to the state machine (internal use only!)
-    void (*send_event)(state_event_t);
-
-    // This function reads events to this state machine
-    state_event_t (*get_event)(uint32_t);
 
     // This must never be set by the user! This is a pointer to the queue 
     // which reads events into the state machine. If get_event is not provided, this 
@@ -79,3 +73,4 @@ extern QueueHandle_t events_net_q;
 #define INVALID_EVENT         (0xFFFFFFFF)
 #define EVENT_QUEUE_MAX_DEPTH (16)
 #define SATE_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)
+#define NULL_STATE            (0xFFFF)

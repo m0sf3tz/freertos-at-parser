@@ -122,14 +122,7 @@ static void event_multiplexer(void* v) {
             ESP_LOGI(TAG, "Checking to see if %s is interested in event...", iter->thread_info->state_name_string);
             if (iter->thread_info->filter_event(event)) {
                 ESP_LOGI(TAG, "sending event %d to %s", event, iter->thread_info->state_name_string);
-                
-                // State machine registered for event, send it!
-                if(iter->thread_info->send_event){
-                  iter->thread_info->send_event(event);
-                } else {
-                  // no send_func registered, use generic 
-                  send_event_generic(iter->thread_info->state_queue_input_handle_private, event, iter->thread_info->state_name_string);
-                }
+                send_event_generic(iter->thread_info->state_queue_input_handle_private, event, iter->thread_info->state_name_string);
             }
             iter = iter->next;
         }
@@ -155,6 +148,20 @@ void state_post_event(state_event_t event) {
     }
 }
 
+static void drain_events(state_init_s * state_ptr){
+    if (!state_ptr) {
+        ESP_LOGE(TAG, "ARG = NULL!");
+        ASSERT(0);
+    }
+    state_event_t event;
+    for(;;){
+      BaseType_t xStatus = get_event_generic(state_ptr->state_queue_input_handle_private, 0);
+      if (xStatus == pdPASS) continue;
+    
+      break;
+    }
+}
+
 static void state_machine(void* arg) {
     if (!arg) {
         ESP_LOGE(TAG, "ARG = NULL!");
@@ -164,6 +171,7 @@ static void state_machine(void* arg) {
     state_init_s* state_init_ptr = (state_init_s*)(arg);
     state_t       state          = state_init_ptr->starting_state;
     state_event_t new_event;
+    state_t       forced_state   = NULL_STATE;
 
     for (;;) {
         // Get the current state information
@@ -172,14 +180,17 @@ static void state_machine(void* arg) {
         func_ptr      state_func = state_info.state_function_pointer;
 
         // Run the current state;
-        state_func();
+        forced_state = state_func();
+
+        if (forced_state != NULL_STATE){
+          // Previous state is forcing next state, don't read from queue
+          ESP_LOGI(TAG, "State %s is forcing next state", state_init_ptr->state_name_string );
+          
+          continue;
+        }
 
         // Wait until a new event comes
-        if(state_init_ptr->get_event){
-          new_event = state_init_ptr->get_event(timeout);
-        } else {
-          new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
-        }
+        new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
 
         // Recieved an event, see if we need to change state
         state_init_ptr->next_state(&state, new_event);
@@ -222,20 +233,16 @@ void start_new_state_machine(state_init_s* state_ptr) {
         ASSERT(0);
     }
 
-    // no event function, create and use a generic one
-    if (state_ptr->get_event == NULL) {
-      // make sure that if get_event func is null, 
-      // user has not set state_queue_input_handle
-      if(state_ptr->state_queue_input_handle_private){
-        ESP_LOGE(TAG, "User should not set state_queue_input_handle_private!");
-        ASSERT(0);
-      }
-      
-      state_ptr->state_queue_input_handle_private = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> net-sm
-
-      // make sure we init all the rtos objects
-      ASSERT(state_ptr->state_queue_input_handle_private);
+    // user has not set state_queue_input_handle
+    if(state_ptr->state_queue_input_handle_private){
+       ESP_LOGE(TAG, "User should not set state_queue_input_handle_private!");
+       ASSERT(0);
     }
+      
+    state_ptr->state_queue_input_handle_private = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> net-sm
+
+    // make sure we init all the rtos objects
+    ASSERT(state_ptr->state_queue_input_handle_private);
 
     // Register new state machine with event multiplexer
     add_event_consumer(state_ptr);

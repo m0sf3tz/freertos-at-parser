@@ -121,7 +121,6 @@ static BaseType_t xTraceRunning = pdTRUE;
 int main( void )
 {
     /* Do not include trace code when performing a code coverage analysis. */
-    #if ( projCOVERAGE_TEST != 1 )
     {
         /* Initialise the trace recorder.  Use of the trace recorder is optional.
         See http://www.FreeRTOS.org/trace for more information. */
@@ -133,18 +132,18 @@ int main( void )
         printf( "\r\nThe trace will be dumped to disk if Enter is hit.\r\n" );
         uiTraceStart();
     }
-    #endif
 
     console_init();
     console_print("Starting full demo\n");
     //main_full();
     
-    extern void cellular_state_test();
     extern void main_test();
     extern void state_core_spawner();
+    extern void parser_state_test();
+    extern void spawn_uart_thread();
+    spawn_uart_thread();
     state_core_spawner();
-    cellular_state_test();
-
+    parser_state_test();
     return 0;
 }
 /*-----------------------------------------------------------*/

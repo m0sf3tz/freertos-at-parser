@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+#include "uart_core.h"
 #include "at_parser.h"
 #include "global_defines.h"
 
@@ -11,12 +12,11 @@
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
-static const char        TAG[] = "AT_PARSER";
-static  at_parsed_s parsed;    // Warning, extremely large!
-static uint8_t   buffer[BUFF_SIZE];
-QueueSetHandle_t line_feed_q;
-static new_line_t new_line; 
-static uint8_t   line_found[MAX_LINE_SIZE];
+static const char   TAG[] = "AT_PARSER";
+static  at_parsed_s parsed;
+static uint8_t      buffer[1024];              // Internal
+static uint8_t      line_found[MAX_LINE_SIZE]; // Returned to higher layers
+
 /**********************************************************
 *                                          IMPLEMENTATION *
 **********************************************************/
@@ -95,12 +95,12 @@ void at_digest_lines(uint8_t* line, size_t len){
     return;
   }
  
+#if 0
   // checks to see if the modem is finished responding
   // to an AT command 
   at_status_t isl = is_status_line(line, len, 0);
   printf("todo! \n");
   abort();
-#if 0
   if(isl){
     // done parsing
     parse_at_string(buff);
@@ -279,25 +279,46 @@ int at_parser_delimiter_hunter(const uint8_t c, bool data_mode){
   return NO_DELIMITER;
 }
 
-void at_parser_main(void * pv){
+uint8_t * at_parser_main(bool data_mode, bool * status, int * size){
   static int iter_lead; // Reads ahead until all of end delimiter is hit 
   static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
   static int len;       // current length of line being parsed
   static bool found_line;
-  static bool data_mode; //if set, parsing data
+  TickType_t start_time_ms = xTaskGetTickCount()/portTICK_PERIOD_MS;
+  TickType_t max_time_ms = start_time_ms + 2000;
+  int new_line_size = 0;;
+
+
+  if(!status){
+    ESP_LOGE(TAG, "Null param!");
+    ASSERT(0);
+  }
 
   ESP_LOGI(TAG, "Starting AT parser!");
   for(;;){
     if(iter_lead == len){ // exhausted current buffer 
-      // two sub cases
-      // -> Failed to find EOL, exhausted current buffer
-      // -> Still hunting for EOL
-      BaseType_t xStatus =  xQueueReceive(line_feed_q, &new_line, portMAX_DELAY);
-      if (xStatus != pdTRUE) {
-        ESP_LOGE(TAG, "Failed to RX line!");
-        ASSERT(0);
+
+      vTaskDelay(1000/portTICK_PERIOD_MS);
+      int new_len = 0;
+      uint8_t * new_buff = at_incomming_get_stream(&new_len);
+      if(new_len == -1){
+        if ( xTaskGetTickCount()/portTICK_PERIOD_MS > max_time_ms){
+          *status = false;
+          return NULL;
+        }
+        vTaskDelay(250/portTICK_PERIOD_MS);
+        continue;
       }
-      
+      if (!new_buff){
+          ESP_LOGE(TAG, "Logic error!");
+          ASSERT(0);
+      }
+     
+
+      vTaskDelay(1000/portTICK_PERIOD_MS);
+      printf("len == %d", new_len);
+      sleep(2);
+
       if (found_line){ 
         len = len - iter_lead;
         found_line = false;
@@ -305,62 +326,57 @@ void at_parser_main(void * pv){
 
       if (len < 0){
          ESP_LOGE(TAG, "Negative len!!");
-         memset(buffer, 0, sizeof(buffer));
-         iter_lag = 0;
-         iter_lead = 0;
-         continue;
+         ASSERT(0);
       }
 
       if(len == 0){
         memset(buffer, 0, sizeof(buffer));
-        memcpy(buffer, new_line.buf, new_line.len);
-        len = new_line.len;
+        memcpy(buffer, new_buff, new_len);
+        len = new_len;
         iter_lead = 0;
         iter_lag = 0;
       } else {
-        if ( len + new_line.len > BUFF_SIZE){
+        if ( len + new_len > BUFF_SIZE){
           ESP_LOGE(TAG, "Exceeded buffer size... error! Resetting!");
-          memset(buffer, 0, sizeof(buffer));
-          iter_lag = 0;
-          iter_lead = 0;
-          continue;
+          *status = false;
+          return NULL;
         }
         iter_lead++;
 
-        memcpy(buffer + iter_lead, new_line.buf, new_line.len);
-        len = len + new_line.len;
+        memcpy(buffer + iter_lead, new_buff, new_len);
+        len = len + new_len;
       }
     }
-  
+
+    // Logic error - no recovery
     if (iter_lead > MAX_LINE_SIZE){
        ESP_LOGE(TAG, "Exceeded buffer size... error! Resetting!");
-       memset(buffer, 0, sizeof(buffer));
-       iter_lag = 0;
-       iter_lead = 0;
-       abort();
-       continue;
+       ASSERT(0);
     }
 
-    const int parse_status = at_parser_delimiter_hunter(buffer[iter_lead], data_mode);
+    int parse_status = at_parser_delimiter_hunter(buffer[iter_lead], data_mode);
     //printf("%d, len = %d, iter_lead = %d \n", parse_status, len, iter_lead);
     
     if ( NEW_LINE_DELIMITER == parse_status ){
-      // -1 strips the newline character
       memcpy(line_found, buffer, iter_lead); 
-      at_digest_lines(line_found, iter_lead);
       memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
       len = len - iter_lead - 1; // iter_lead "zero" based, len not 
+      *size = iter_lead;      
       iter_lead = 0;
       iter_lag = 0;
       found_line = true;
+      *status = true;
+      return line_found;
     } else if (LONG_DELIMITER_FOUND == parse_status){
       memcpy(line_found, buffer, iter_lag);
-      at_digest_lines(line_found, iter_lag);
       memcpy(buffer, buffer + iter_lead + 1,  len - iter_lead);
       len = len - iter_lead - 1; // iter_lead "zero" based, len not 
+      *size = iter_lag;
       iter_lead = 0;
       iter_lag = 0;
       found_line = true;
+      *status = true;
+      return line_found;
     }else if ( PARTIAL_DELIMETER_SCANNING == parse_status ) {
       if (iter_lead == len){
         continue;
@@ -377,23 +393,5 @@ void at_parser_main(void * pv){
   }
 }
 
-void init_parser_freertos_objects(){
-    line_feed_q = xQueueCreate(MAX_QUEUED_ITEMS, 500); 
-    ASSERT(line_feed_q);
-}
 
-void driver (void * arg){
-  ESP_LOGI(TAG, "Starting AT driver");
-  new_line_t bar;
- 
-  bar.len = 26;
-  memcpy(bar.buf, "\r\nI like--EOF--Pattern--\r\n", 26);
-  xQueueSendToBack(line_feed_q, &bar, 0);
-  xQueueSendToBack(line_feed_q, &bar, 0);
-  vTaskDelay(100/portTICK_PERIOD_MS);
-  
-   vTaskDelete(NULL);
-}
-
-void main_test(){}
 

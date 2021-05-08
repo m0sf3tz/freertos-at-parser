@@ -3,6 +3,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "FreeRTOS.h"
 #include "semphr.h"
@@ -13,6 +14,9 @@
 #include "uart_core.h"
 #include "at_parser.h"
 
+#ifdef POSIX_FREERTOS_SIM
+ #include <sys/ioctl.h> 
+#endif 
 
 #define MAX_WRITE_COMMAND_LEN (150)
 
@@ -28,30 +32,70 @@
 *                                        STATIC VARIABLES *
 **********************************************************/
 static const char      TAG[] = "UART_CORE";
-static const char  AT_PORT[] = "/dev/ttyUSB1";
+static const char  AT_PORT[] = "/dev/ttyUSB3";
 static int atfd;
-
-static new_line_t new_line;
 static QueueSetHandle_t command_issue_q;
-
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!
+static uint8_t buff_s[512];
+
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
 
 
-void at_parser(void *arg){
+uint8_t * wtf(){
+  return buff_s;
+}
+
+
+// On POISX, this uses ioctl to see incomming bytes
+// on ESP32, we hook into the UART interrupts
+bool at_incomming_peek(){
+#ifdef POSIX_FREERTOS_SIM     
   for(;;){
-    vTaskDelay(100/portTICK_PERIOD_MS);
-    memset(&new_line, 0, sizeof(new_line_t));
-    int count = read(atfd, new_line.buf, 1024);
-    new_line.len = count;
-
-
-    if(count > 0){
-      BaseType_t xStatus = xQueueSendToBack(line_feed_q, &new_line, 0);
+    
+    int count = 0;        
+    if ( ioctl(atfd, FIONREAD, &count) < 0 )  {
+      ESP_LOGE(TAG, "Failed to issue ioctl!");
     }
+
+    if(count > 0) return true;
+
+    return false;
   }
+#endif
+}
+
+// Returns a refernce to a bunffer,
+// len == -1 on error, data read otherwise
+uint8_t* at_incomming_get_stream(int *len){
+/*
+  static bool s;
+  if (s){
+    puts("No no data");
+    *len = -1;
+    return NULL;
+  }
+  memcpy(buff_s, "hey sam --EOF--Pattern--", 24); 
+  *len = 10;
+  s = true;
+  return buff_s;
+*/
+
+  if (!len){
+    ESP_LOGE(TAG, "Null parameter!");
+    ASSERT(0);
+  }
+
+  int rc = read(atfd, buff_s, sizeof(buff_s));
+  if ( rc > 0 ){
+    puts("read some shit boss");
+    *len = rc;
+    return buff_s;
+  }
+
+  *len = -1;
+  return NULL;
 }
 
 int at_command_issue_hal(char *cmd){
@@ -86,6 +130,16 @@ void spawn_uart_thread(){
      ASSERT(0);
   }
 
-  xTaskCreate(at_parser, "AT_PARSER", 2048, NULL, 5, NULL); 
-  //xTaskCreate(at_writter, "AT_WRITTER", 2048, NULL, 5, NULL); 
+  // set to non-blocking 
+  int flags = fcntl(atfd, F_GETFL, 0);
+  fcntl(atfd, F_SETFL, flags | O_NONBLOCK);
+
+/*
+  char buff[512];
+  for(;;){
+    memset(buff, 0, 512);
+    read(atfd, buff, 200);
+    printf("read = %s \n", buff);
+  }
+  */
 }
