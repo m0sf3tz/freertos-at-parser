@@ -279,7 +279,7 @@ int at_parser_delimiter_hunter(const uint8_t c, bool data_mode){
   return NO_DELIMITER;
 }
 
-uint8_t * at_parser_main(bool data_mode, bool * status, int * size){
+uint8_t * at_parser_stringer(bool data_mode, bool * status, int * size){
   static int iter_lead; // Reads ahead until all of end delimiter is hit 
   static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
   static int len;       // current length of line being parsed

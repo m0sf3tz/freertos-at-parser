@@ -12,36 +12,52 @@
 #include "state_core.h"
 #include "at_parser.h"
 
+/**********************************************************
+*                                    FORWARD DECLARATIONS *
+**********************************************************/
+static state_t state_idle();
+static state_t state_urc_handle();
+
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
 static const char        TAG[] = "NET_STATE";
 static SemaphoreHandle_t parser_state_mutex;
-static bool              parser_state;
 QueueSetHandle_t         events_parser_q;
 
-/**********************************************************
-*                                    FORWARD DECLARATIONS *
-**********************************************************/
+// Translation Table
+static state_array_s parser_translation_table[parser_state_len] = {
+       { state_idle       ,  1000},
+       { state_urc_handle ,  0   }, 
+};
+
 
 /**********************************************************
 *                                         STATE FUNCTIONS *
 **********************************************************/
 static state_t state_idle() {
   ESP_LOGI(TAG, "Entering Idle state");
-/*
+
   if (at_incomming_peek() ) {
     // Data availible
-    return EVENT_NEW_UART_DATA_F; 
+    return parser_urc_state; 
   }
-  */
+
   return NULL_STATE;
 }
 
-static state_t state_handle_urc() {
+static state_t state_urc_handle() {
   ESP_LOGI(TAG, "Handling URC!");
-  
 
+  int len = 0;
+  bool status;
+  uint8_t* buff = at_parser_stringer(false, &status, &len);
+
+  if(len != -1){
+    at_digest_lines(buff, len);
+  }
+
+  return parser_idle_state; 
 }
 
 static state_t state_wait_for_provisions_func() {
@@ -90,22 +106,6 @@ static char* event_print_func(state_event_t event) {
     return NULL;
 }
 
-// Returns the state function, given a state
-static state_array_s get_state_func(state_t state) {
-  static state_array_s func_table[parser_state_len] = {
-#if 0
-        { state_wait_for_wifi_func      ,        portMAX_DELAY      },
-        { state_wait_for_provisions_func, 2500 / portTICK_PERIOD_MS },
-#endif 
-    };
-    if (state >= parser_state_len) {
-        ESP_LOGE(TAG, "Current state out of bounds!");
-        ASSERT(0);
-    }
-
-    return func_table[state];
-}
-
 /*********************************************************
 *                NON-STATE  FUNCTIONS
 **********************************************************/
@@ -120,21 +120,21 @@ static void parser_state_init_freertos_objects() {
 }
 
 static bool event_filter_func(state_event_t event) {
-#if 0
   switch(event){
-      case(
-    }
-#endif 
+    case(EVENT_URC_F): return true; 
+    case(EVENT_DONE_URC_F): return true;
+  }
 }
 
 static state_init_s* get_parser_state_handle() {
     static state_init_s parser_state = {
         .next_state        = next_state_func,
-        .translator        = get_state_func,
+        .translation_table = parser_translation_table,
         .event_print       = event_print_func,
-        .starting_state    = parser_waiting_wifi,
+        .starting_state    = parser_idle_state,
         .state_name_string = "parser_state",
         .filter_event      = event_filter_func,
+        .total_states      = parser_state_len,  
     };
     return &(parser_state);
 }
@@ -153,7 +153,7 @@ static void driver (void * arg){
   bool status;
   int size; 
   for(;;){
-    char * line = at_parser_main(false, &status, &size);
+    char * line = at_parser_stringer(false, &status, &size);
 
     if(status){
       at_digest_lines(line,size);
@@ -164,8 +164,8 @@ static void driver (void * arg){
 }
 
 void parser_state_test(){
-  printf("doing a test \n");
-  xTaskCreate(driver, "", 3000, NULL, 3, NULL);
+  parser_state_spawner();
+
   vTaskStartScheduler();
 }
 

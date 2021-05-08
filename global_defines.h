@@ -13,12 +13,24 @@
 /**********************************************************
 *                                                 HELPERS *
 **********************************************************/
-#define ASSERT(x)                                                       \
-    do {                                                                \
-        if (!(x)) {                                                     \
-            ESP_LOGE(TAG, "ASSERT! error %s %u\n", __FILE__, __LINE__); \
-        }                                                               \
-    } while (0)
+
+#ifdef POSIX_FREERTOS_SIM
+ #define ASSERT(x)                                                       \
+     do {                                                                \
+         if (!(x)) {                                                     \
+             ESP_LOGE(TAG, "ASSERT! error %s %u\n", __FILE__, __LINE__); \
+            abort();                                                     \  
+         }                                                               \
+     } while (0)
+    
+#else 
+ #define ASSERT(x)                                                       \
+     do {                                                                \
+         if (!(x)) {                                                     \
+             ESP_LOGE(TAG, "ASSERT! error %s %u\n", __FILE__, __LINE__); \
+         }                                                               \
+     } while (0) error lol fix it 
+#endif 
 
 #define TRUE  (1)
 #define FALSE (0)

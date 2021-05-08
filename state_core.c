@@ -68,6 +68,16 @@ void add_event_consumer(state_init_s* thread_info) {
     xSemaphoreGive(consumer_sem);
 }
 
+// Returns the state function, given a state
+static state_array_s get_state_table(state_init_s * state_ptr, state_t state) {
+    
+    if (state >= state_ptr->total_states) {
+        ESP_LOGE(TAG, "Current state out of bounds in %s", state_ptr->state_name_string);
+        ASSERT(0);
+    }
+    return state_ptr->translation_table[state];
+}
+
 // If the state does not define a get event fucntion, a generic one is provided
 static state_event_t get_event_generic(QueueHandle_t q_handle, uint32_t timeout) {
     if (!q_handle){
@@ -170,13 +180,13 @@ static void state_machine(void* arg) {
 
     state_init_s* state_init_ptr = (state_init_s*)(arg);
     state_t       state          = state_init_ptr->starting_state;
-    state_event_t new_event;
     state_t       forced_state   = NULL_STATE;
-
+    state_event_t new_event;
+    
     for (;;) {
         // Get the current state information
-        state_array_s state_info = state_init_ptr->translator(state);
-        uint32_t      timeout    = state_info.loop_timer;
+        state_array_s state_info = get_state_table(state_init_ptr, state);
+        uint32_t      timeout    = state_info.loop_timer / portTICK_PERIOD_MS;
         func_ptr      state_func = state_info.state_function_pointer;
 
         // Run the current state;
@@ -185,7 +195,7 @@ static void state_machine(void* arg) {
         if (forced_state != NULL_STATE){
           // Previous state is forcing next state, don't read from queue
           ESP_LOGI(TAG, "State %s is forcing next state", state_init_ptr->state_name_string );
-          
+          state = forced_state;
           continue;
         }
 
@@ -222,24 +232,30 @@ void start_new_state_machine(state_init_s* state_ptr) {
         ASSERT(0);
     }
 
-    // Sanity check...
+    // Sanity check(s)
     if (state_ptr->event_print == NULL || state_ptr->next_state == NULL) {
         ESP_LOGE(TAG, "ERROR! event_print / next_state func was NULL!");
         ASSERT(0);
     }
 
-    if (state_ptr->translator == NULL || state_ptr->state_name_string == NULL) {
-        ESP_LOGE(TAG, "ERROR! translator / state_name_string  was NULL!");
+    // Sanity check(s)
+    if (state_ptr->translation_table == NULL || state_ptr->state_name_string == NULL) {
+        ESP_LOGE(TAG, "ERROR! translation_table / state_name_string  was NULL!");
         ASSERT(0);
     }
 
-    // user has not set state_queue_input_handle
+    // user has set state_queue_input_handle?
     if(state_ptr->state_queue_input_handle_private){
        ESP_LOGE(TAG, "User should not set state_queue_input_handle_private!");
        ASSERT(0);
     }
+
+    if(state_ptr->total_states == 0){
+       ESP_LOGE(TAG, "Total states len == 0!");
+       ASSERT(0);
+    }
       
-    state_ptr->state_queue_input_handle_private = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> net-sm
+    state_ptr->state_queue_input_handle_private = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); 
 
     // make sure we init all the rtos objects
     ASSERT(state_ptr->state_queue_input_handle_private);

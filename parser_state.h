@@ -23,16 +23,16 @@ extern QueueHandle_t outgoing_events_parser_q;
 *                                                  ENUMS *
 *********************************************************/
 typedef enum {
-    parser_waiting_wifi = 0,
-    parser_waiting_prov,
-    parser_running,
+    parser_idle_state = 0,
+    parser_urc_state,
 
     parser_state_len //LEAVE AS LAST!
 } parser_state_e;
 
 
 typedef enum {
-    EVENT_NEW_UART_DATA_F = PARSER_CORE_EVENT_START,
+    EVENT_URC_F = PARSER_CORE_EVENT_START,
+    EVENT_DONE_URC_F,
 
     parser_event_len //LEAVE AS LAST!
 } parser_event_e;

@@ -95,7 +95,7 @@ typedef struct {
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-uint8_t     * at_parser_main(bool data_mode, bool * status, int * size);
+uint8_t     * at_parser_stringer(bool data_mode, bool * status, int * size);
 int           parse_at_string(at_response_s *raw_response, const int items);
 at_parsed_s * get_response_arr();
 
