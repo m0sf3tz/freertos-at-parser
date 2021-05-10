@@ -134,7 +134,6 @@ int main( void )
     }
 
     console_init();
-    console_print("Starting full demo\n");
     //main_full();
     
     extern void main_test();
@@ -144,14 +143,13 @@ int main( void )
     extern void spawn_uart_thread();
     extern void network_driver(); 
     extern void testDriver();
-    testDriver();
-   
-    /*
+
+    
     spawn_uart_thread();
     state_core_spawner();
     parser_state_spawner();
     network_driver();
-    */
+    
     vTaskStartScheduler();
     return 0;
 }

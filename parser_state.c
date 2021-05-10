@@ -71,15 +71,21 @@ static state_t state_handle_cmd_start () {
   
   int len = 0;
   bool status;
+  int cme_err;
   
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    printf("%d lenX \n", len);
+    printf("%d ECHO len \n", len);
     if(buff)
     {
-      int d = parse_at_string(buff,len,PARSER_CMD_MODE);
-      if (d == 6){ // check with main parsr for correct cmd
+      if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Done parsing!");
+        return parser_idle_state;  
+      }
+
+      int d = parse_at_string(buff,len,PARSER_QRY_MODE, 0);
+      if (d != -1){ // check with main parsr for correct cmd
           puts("shit working");
           return parser_handle_cmd_state;
       } else {
@@ -93,14 +99,19 @@ static state_t state_handle_cmd_start () {
 static state_t state_handle_cmd () {
   ESP_LOGI(TAG, "entering handle_cmd_!");
   
+  int cme_err;
   int len = 0;
   bool status;
   
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    if (!buff) return NULL_STATE;
-    printf("%s %d len+wtf \n", buff, len);
+    if (!buff){
+      if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Done parsing!");
+        return state_idle;  
+      }
+    }
   } 
   return NULL_STATE;
 }
@@ -195,9 +206,9 @@ static void driver (void * arg){
 }
 
 void parser_state_test(){
-  parser_state_spawner();
-  char test[] = "AT+CFUN=";
-  int d = parse_at_string(test,9,PARSER_CMD_MODE);
+  //parser_state_spawner();
+  char test[] = "+CFUN: 1,2,3";
+  int d = parse_at_string(test,9,PARSER_FULL_MODE, 0);
   printf("%d \n", d);
 }
 

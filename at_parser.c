@@ -174,7 +174,7 @@ bool check_for_type(char *str,int len, parser_mode_e mode){
   }
 }
 
-int parse_at_string(char * str, int len, parser_mode_e mode) {
+int parse_at_string(char * str, int len, parser_mode_e mode, int line) {
   char internal_buff[512]; //used in strtok_r
   char type[MAX_LEN_TYPE];
   const char c[2] = ",";
@@ -202,7 +202,7 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
       strncpy(del, "=", 2);
     }
 
-    // first check to see if the last char is a "?"
+    // If we are trying to determine type
     if ( mode == PARSER_CMD_MODE){
       if(!check_for_type(str, len, PARSER_CMD_MODE)){
         ESP_LOGE(TAG, "Can't find command!");
@@ -220,13 +220,13 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
     char *saveptr = NULL;
     char *ret = strtok_r(str, del, &saveptr);
     // ret should be AT+CFUN
-    printf("%s 'sd", ret);
     if(ret){
-        puts("found new line");
+        ESP_LOGI(TAG, "found new line (%s)", ret);
         return get_type_cmd(str);
       }
     }
-  
+ 
+    // Cant parse termination 
     if (str[lead] != '+'){
         ESP_LOGE(TAG, "can't handle, leading not +");
         return -1; 
@@ -237,7 +237,7 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
     // searches for the first ":" 
     while (lead != '\0'){
       if (lead > len - 1){ // lead is zero based!
-        ESP_LOGE(TAG, "Parsing failed!");
+        ESP_LOGE(TAG, "Parsing failed! cant find :");
         return -1;
       }
       if (str[lead] == ':'){
@@ -259,7 +259,7 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
         return 1;
       }
     }
-#if 0
+
     // if we get here, we will do a full parse of the string
 
     // move it up to the first delimiter
@@ -272,12 +272,15 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
 
     // seperate the individual parameters
     int param = 0;
-    char * token = strtok(str+lead, c);
-    strncpy(parsed.param_arr[param].str, token, MAX_LEN_TYPE - 1);
-    param++;
+    char * token = NULL;
     for(;;)
     {
-        token = strtok(NULL, c);
+        if (param==0){
+          token = strtok(str+lead, ",");
+        } else {
+          token = strtok(NULL, c);
+        }   
+
         if (token == NULL){
           break;
         }
@@ -286,27 +289,25 @@ int parse_at_string(char * str, int len, parser_mode_e mode) {
           ESP_LOGE(TAG, "Exceed max params!");
           break;
         }
-        strncpy(parsed.param_arr[param].str, token, MAX_LEN_PARAM);
+        strncpy(parsed.param_arr[line][param].str, token, MAX_LEN_PARAM);
         // check to see if we can convert the parameter into an number
         int test_atoi;
-        if( myatoi(parsed.param_arr[param].str, &test_atoi)) {
+        if( myatoi(parsed.param_arr[line][param].str, &test_atoi)) {
           // dealing with a number!
-          parsed.param_arr[param].is_number = true;
-          parsed.param_arr[param].val = test_atoi;
+          parsed.param_arr[line][param].is_number = true;
+          parsed.param_arr[line][param].val = test_atoi;
         }	else {
-          parsed.param_arr[param].is_number = false;
+          parsed.param_arr[line][param].is_number = false;
         }
         param++;
     }
-  }
-if 1
+#if 1
   printf("type = %d \n", parsed.type);
 	for (int i = 0; i < MAX_DELIMITERS; i ++){
-		printf("%s %d %d \n", parsed.param_arr[i].str, parsed.param_arr[i].is_number, parsed.param_arr[i].val);
+		printf("%s %d %d \n", parsed.param_arr[0][i].str, parsed.param_arr[0][i].is_number, parsed.param_arr[0][i].val);
 	}
-endif 
 #endif 
-  return(1);
+  return(NULL);
   
 }
 
@@ -439,8 +440,7 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
      
 
       vTaskDelay(1000/portTICK_PERIOD_MS);
-      printf("len == %d \n", new_len);
-      sleep(2);
+      printf("raw read  == %d \n", new_len);
 
       if (found_line){ 
         len = len - iter_lead;

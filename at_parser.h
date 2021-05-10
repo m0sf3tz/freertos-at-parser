@@ -14,6 +14,7 @@
 #define CGREG        (5)
 #define KUDPCFG      (6)
 #define KALTCFG      (7)
+#define BNDCFG       (8)
 #define UNKNOWN_TYPE (-1)
 
 #define MAX_LINES      (10)
@@ -114,7 +115,7 @@ typedef enum {
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
 uint8_t     * at_parser_stringer(parser_del_e mode, bool * status, int * len);
-int           parse_at_string(char * str, int len, parser_mode_e mode);
+int           parse_at_string(char * str, int len, parser_mode_e mode, int line);
 at_parsed_s * get_response_arr();
 
 

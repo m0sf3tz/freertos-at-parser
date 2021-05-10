@@ -38,6 +38,11 @@ void create_mailbox_freertos_objects(){
 
 // Returns true if event set
 bool wait_mail_box(){
+
+  // Don't care about current state - clear it!
+  xEventGroupClearBits(event_group, EVENT_GROUP_BITS);
+
+  ESP_LOGI(TAG, "Waiting for mailbox ring!");
   EventBits_t uxBits = xEventGroupWaitBits(event_group,
                       EVENT_GROUP_BITS,
                       pdTRUE,          // clear bit on exit
@@ -46,10 +51,10 @@ bool wait_mail_box(){
       );
  
   if (uxBits == EVENT_GROUP_BITS){
-    ESP_LOGI(TAG, "Event group set!");
+    ESP_LOGI(TAG, "Event group set! (%d)", uxBits);
     return true;
   } else {
-    ESP_LOGI(TAG, "Event group TO");
+    ESP_LOGI(TAG, "Event group TO %d", uxBits);
     return false;
   }                 
 }
@@ -59,15 +64,22 @@ bool wait_mail_ring(){
 }
 
 void driver_a(void * arg){
-  wait_mail_box();
+  for(;;){
+    wait_mail_box();
+  }
 }
 
 void driver_b(void * arg){
-  vTaskDelay(10);
+  for(;;){
+  vTaskDelay(EVENT_WAIT_PERIOD + 4);
+  puts("Ringing mailbox!");
   wait_mail_ring();
+  }
+
 }
 
 void testDriver(){
+  puts("Starting mailbox test");
   create_mailbox_freertos_objects();
   xTaskCreate(driver_a, "", 1024, NULL, 5, NULL);
   xTaskCreate(driver_b, "", 1024, NULL, 5, NULL);
