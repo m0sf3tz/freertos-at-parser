@@ -9,6 +9,11 @@
 **********************************************************/
 #define KUDP_RCV     (1)
 #define KUDP_NOTIF   (2)
+#define CFUN         (3)
+#define CEREG        (4)
+#define CGREG        (5)
+#define KUDPCFG      (6)
+#define KALTCFG      (7)
 #define UNKNOWN_TYPE (-1)
 
 #define MAX_LINES      (10)
@@ -31,8 +36,8 @@
 #define PARTIAL_DELIMETER_SCANNING (2)  // Partial EOL [returned when partial ---EOF--Pattern detected]
 #define LONG_DELIMITER_FOUND       (3)  // returned when full long (--EOF...) delimiter found
 
-#define BUFF_SIZE          (2048) // Intermediate buffer
-#define MAX_LINE_SIZE      (1024) // Maximum AT parsed line (includes reads/writes)
+#define BUFF_SIZE          (1024) // Intermediate buffer
+#define MAX_LINE_SIZE      (512) // Maximum AT parsed line (includes reads/writes)
 #define MAX_QUEUED_ITEMS   (2)
 #define LONG_DELIMITER_LEN (16) // 18 == len(--EOF--Pattern--)
 
@@ -81,7 +86,7 @@ typedef struct {
   size_t num_lines;
 
   // Parameters, for example on,
-	// +KUDP_RCV: \"54.189.156.244\"
+	// +KUDP_RCV: "54.189.156.244",...
   // the first param is "54.1...", etc
 	at_param_s param_arr[MAX_LINES][MAX_DELIMITERS];
 }at_parsed_s;
@@ -92,12 +97,30 @@ typedef struct {
      uint8_t  buf[MAX_LINE_SIZE];
 } new_line_t;
 
+typedef enum {
+  PARSER_FULL_MODE,
+  PARSER_CMD_MODE,
+  PARSER_QRY_MODE,
+  PARSER_URC_MODE
+} parser_mode_e;
+
+typedef enum {
+  PARSER_CMD_DEL,
+  PARSER_DATA_DEL,
+} parser_del_e;
+
+
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-uint8_t     * at_parser_stringer(bool data_mode, bool * status, int * size);
-int           parse_at_string(at_response_s *raw_response, const int items);
+uint8_t     * at_parser_stringer(parser_del_e mode, bool * status, int * len);
+int           parse_at_string(char * str, int len, parser_mode_e mode);
 at_parsed_s * get_response_arr();
+
+
+at_type_t get_type(char *s);
+bool is_urc(at_type_t type);
+
 
 /**********************************************************
 *                                                 GLOBALS *   

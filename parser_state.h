@@ -25,6 +25,8 @@ extern QueueHandle_t outgoing_events_parser_q;
 typedef enum {
     parser_idle_state = 0,
     parser_urc_state,
+    parser_handle_cmd_start_state,
+    parser_handle_cmd_state,
 
     parser_state_len //LEAVE AS LAST!
 } parser_state_e;
@@ -33,6 +35,8 @@ typedef enum {
 typedef enum {
     EVENT_URC_F = PARSER_CORE_EVENT_START,
     EVENT_DONE_URC_F,
+    EVENT_ISSUE_CMD,
+    EVENT_HANDLE_CMD_F,
 
     parser_event_len //LEAVE AS LAST!
 } parser_event_e;

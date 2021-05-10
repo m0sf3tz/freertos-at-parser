@@ -19,10 +19,9 @@
      do {                                                                \
          if (!(x)) {                                                     \
              ESP_LOGE(TAG, "ASSERT! error %s %u\n", __FILE__, __LINE__); \
-            abort();                                                     \  
+            abort();                                                     \
          }                                                               \
      } while (0)
-    
 #else 
  #define ASSERT(x)                                                       \
      do {                                                                \

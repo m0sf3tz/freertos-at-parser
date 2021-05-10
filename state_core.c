@@ -186,7 +186,7 @@ static void state_machine(void* arg) {
     for (;;) {
         // Get the current state information
         state_array_s state_info = get_state_table(state_init_ptr, state);
-        uint32_t      timeout    = state_info.loop_timer / portTICK_PERIOD_MS;
+        uint32_t      timeout    = state_info.loop_timer != portTICK_PERIOD_MS ? state_info.loop_timer/portTICK_PERIOD_MS : portTICK_PERIOD_MS;
         func_ptr      state_func = state_info.state_function_pointer;
 
         // Run the current state;

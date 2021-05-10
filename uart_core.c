@@ -32,7 +32,7 @@
 *                                        STATIC VARIABLES *
 **********************************************************/
 static const char      TAG[] = "UART_CORE";
-static const char  AT_PORT[] = "/dev/ttyUSB3";
+static const char  AT_PORT[] = "/dev/ttyUSB2";
 static int atfd;
 static QueueSetHandle_t command_issue_q;
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!
@@ -89,8 +89,18 @@ uint8_t* at_incomming_get_stream(int *len){
 
   int rc = read(atfd, buff_s, sizeof(buff_s));
   if ( rc > 0 ){
-    puts("read some shit boss");
     *len = rc;
+
+    { // test. can remov
+    char test[200];
+    memset(test, 0 , 200);
+    memcpy(test, buff_s, rc);
+    printf("ECHO (%d):> %s \n", rc, test);
+    for(int i =0 ; i < rc; i++){
+      printf("%d: (%d) %c \n", i, test[i], test[i]);
+    }
+  
+    }
     return buff_s;
   }
 
@@ -98,14 +108,14 @@ uint8_t* at_incomming_get_stream(int *len){
   return NULL;
 }
 
-int at_command_issue_hal(char *cmd){
+int at_command_issue_hal(char *cmd, int len){
   if(!cmd){
     ESP_LOGE(TAG, "CMD == null!");
     ASSERT(0);
   }
 
 #ifdef POSIX_FREERTOS_SIM     
-  int rc = write(atfd, cmd, MAX_WRITE_COMMAND_LEN);
+  int rc = write(atfd, cmd, len);
   if (rc == -1){
     ESP_LOGE(TAG, "Failed to write to UART HAL!");
     return UART_HAL_WRITE_ERROR; 
@@ -136,7 +146,7 @@ void spawn_uart_thread(){
 
 /*
   char buff[512];
-  for(;;){
+  for(;;){T
     memset(buff, 0, 512);
     read(atfd, buff, 200);
     printf("read = %s \n", buff);

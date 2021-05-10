@@ -17,6 +17,8 @@
 **********************************************************/
 static state_t state_idle();
 static state_t state_urc_handle();
+static state_t state_handle_cmd_start();
+static state_t state_handle_cmd();
 
 /*********************************************************
 *                                       STATIC VARIABLES *
@@ -27,8 +29,10 @@ QueueSetHandle_t         events_parser_q;
 
 // Translation Table
 static state_array_s parser_translation_table[parser_state_len] = {
-       { state_idle       ,  1000},
-       { state_urc_handle ,  0   }, 
+       { state_idle             ,  1000},
+       { state_urc_handle       ,  0   }, 
+       { state_handle_cmd_start ,  portMAX_DELAY }, 
+       { state_handle_cmd       ,  portMAX_DELAY }, 
 };
 
 
@@ -53,42 +57,68 @@ static state_t state_urc_handle() {
   bool status;
   uint8_t* buff = at_parser_stringer(false, &status, &len);
 
-  if(len != -1){
-    at_digest_lines(buff, len);
+  vTaskDelay(100);
+  if(buff){
+     at_digest_lines(buff, len);
+     //parse_at_string(buff, len, true, false);
   }
-
+  
   return parser_idle_state; 
 }
 
-static state_t state_wait_for_provisions_func() {
+static state_t state_handle_cmd_start () {
+  ESP_LOGI(TAG, "entering handle_cmd_start!");
+  
+  int len = 0;
+  bool status;
+  
+  for(;;)
+  {
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    printf("%d lenX \n", len);
+    if(buff)
+    {
+      int d = parse_at_string(buff,len,PARSER_CMD_MODE);
+      if (d == 6){ // check with main parsr for correct cmd
+          puts("shit working");
+          return parser_handle_cmd_state;
+      } else {
+           ESP_LOGE(TAG, "%d =d ", d);
+      }
+    }
+  }
+  return NULL_STATE;
+}
+
+static state_t state_handle_cmd () {
+  ESP_LOGI(TAG, "entering handle_cmd_!");
+  
+  int len = 0;
+  bool status;
+  
+  for(;;)
+  {
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    if (!buff) return NULL_STATE;
+    printf("%s %d len+wtf \n", buff, len);
+  } 
   return NULL_STATE;
 }
 
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
-#if 0
   if (!curr_state) {
         ESP_LOGE(TAG, "ARG= NULL!");
         ASSERT(0);
     }
 
-    if (*curr_state == parser_waiting_wifi) {
-        if (event == EVENT_A) {
-            ESP_LOGI(TAG, "Old State: parser_waiting_wifi, Next: parser_waiting_prov");
-            *curr_state = parser_waiting_prov;
+    if (*curr_state == parser_idle_state) {
+        if (event == EVENT_ISSUE_CMD) {
+            ESP_LOGI(TAG, "Old State: parser_idle_state, Next: parser_handle_cmd_start_state");
+            *curr_state = parser_handle_cmd_start_state;
             return;
         }
     }
-
-    if (*curr_state == parser_waiting_prov) {
-        if (event == EVENT_B) {
-            ESP_LOGI(TAG, "Old State: parser_waitin_prov, Next: parser_waiting_wifi");
-            *curr_state = parser_waiting_wifi;
-        }
-    }
-
-    // Stay in the same state
-#endif 
 }
 
 static char* event_print_func(state_event_t event) {
@@ -121,8 +151,9 @@ static void parser_state_init_freertos_objects() {
 
 static bool event_filter_func(state_event_t event) {
   switch(event){
-    case(EVENT_URC_F): return true; 
-    case(EVENT_DONE_URC_F): return true;
+    case(EVENT_URC_F)      : return true; 
+    case(EVENT_DONE_URC_F) : return true;
+    case(EVENT_ISSUE_CMD)  : return true;
   }
 }
 
@@ -165,7 +196,8 @@ static void driver (void * arg){
 
 void parser_state_test(){
   parser_state_spawner();
-
-  vTaskStartScheduler();
+  char test[] = "AT+CFUN=";
+  int d = parse_at_string(test,9,PARSER_CMD_MODE);
+  printf("%d \n", d);
 }
 
