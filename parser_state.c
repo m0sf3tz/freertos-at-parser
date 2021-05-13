@@ -80,16 +80,20 @@ static state_t state_handle_cmd_start () {
     if(buff)
     {
       if(is_status_line(buff, len, &cme_err)){
-        ESP_LOGI(TAG, "Done parsing!");
-        return parser_idle_state;  
+        ESP_LOGI(TAG, "Error - unexpected status line!");
+        return parser_idle_state;
+        //TODO: handle  
       }
 
-      int d = parse_at_string(buff,len,PARSER_QRY_MODE, 0);
-      if (d != -1){ // check with main parsr for correct cmd
-          puts("shit working");
-          return parser_handle_cmd_state;
+      if(is_urc(buff, len)){
+        //TODO: handle URC
+      }
+
+      if( !at_line_explode(buff,len, 0)){
+        //good! 
+        return parser_handle_cmd_state;
       } else {
-           ESP_LOGE(TAG, "%d =d ", d);
+        //TODO: handle error!
       }
     }
   }
@@ -97,20 +101,32 @@ static state_t state_handle_cmd_start () {
 }
 
 static state_t state_handle_cmd () {
-  ESP_LOGI(TAG, "entering handle_cmd_!");
+  ESP_LOGI(TAG, "entering handle_cmd!");
   
-  int cme_err;
+  int cme_err =0;
   int len = 0;
-  bool status;
+  int line = 0;
+  bool status = false;
   
-  for(;;)
+  for(line =1; line < MAX_LINES_AT; line++)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    if (!buff){
-      if(is_status_line(buff, len, &cme_err)){
-        ESP_LOGI(TAG, "Done parsing!");
-        return state_idle;  
+    if (buff){
+      if (len == 0){
+         ESP_LOGE(TAG, "Failed to pars!");
+        // TODO: handle...
       }
+        
+      if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
+        print_parsed();
+        return parser_idle_state;  
+      }
+
+      if(at_line_explode(buff,len, 1)){
+        ESP_LOGE(TAG, "Failed to pars!");
+        // TODO: handle...
+      } 
     }
   } 
   return NULL_STATE;

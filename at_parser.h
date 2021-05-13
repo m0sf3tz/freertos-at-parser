@@ -14,13 +14,15 @@
 #define CGREG        (5)
 #define KUDPCFG      (6)
 #define KALTCFG      (7)
-#define BNDCFG       (8)
+#define KBNDCFG      (8)
+#define ATI          (9)
+#define CESQ         (10)
 #define UNKNOWN_TYPE (-1)
 
-#define MAX_LINES      (10)
-#define MAX_DELIMITERS (5)
+#define MAX_LINES_AT   (10)
+#define MAX_DELIMITERS (7)
 #define MAX_LEN_TYPE   (50)
-#define MAX_LEN_PARAM  (100)
+#define MAX_LEN_PARAM  (35)
 #define MAX_LEN_RAW    (150)
 
 #define LINE_TERMINATION_INDICATION_NONE (0)
@@ -81,6 +83,9 @@ typedef struct {
   // set to either OK or ERROR based on the command status.
   at_status_t status;
 
+  // READ/WRITE/EXEC
+  discovered_type d_type;
+
   // The number of lines the command returned
   // IE, for the KBNDCFG example above, this would
   // be set to 2
@@ -89,8 +94,22 @@ typedef struct {
   // Parameters, for example on,
 	// +KUDP_RCV: "54.189.156.244",...
   // the first param is "54.1...", etc
-	at_param_s param_arr[MAX_LINES][MAX_DELIMITERS];
+	at_param_s param_arr[MAX_LINES_AT][MAX_DELIMITERS];
 }at_parsed_s;
+
+
+// Holds URC which are parsed
+typedef struct {
+	// holds the type of the AT response
+	// for example, for URC +CREG: 1,
+  // type is CREG
+	at_type_t type;
+
+  // Parameters, for example on,
+	// +KUDP_RCV: "54.189.156.244",...
+  // the first param is "54.1...", etc
+	at_param_s param_arr[MAX_DELIMITERS];
+}at_urc_parsed_s;
 
 // How uart_core packs responses to send to at_parser
 typedef struct {                                     
@@ -110,6 +129,13 @@ typedef enum {
   PARSER_DATA_DEL,
 } parser_del_e;
 
+typedef enum {
+  READ_CMD,
+  WRITE_CMD,
+  EXEC_CMD,
+  TEST_CMD
+} discovered_type;
+
 
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
@@ -117,12 +143,11 @@ typedef enum {
 uint8_t     * at_parser_stringer(parser_del_e mode, bool * status, int * len);
 int           parse_at_string(char * str, int len, parser_mode_e mode, int line);
 at_parsed_s * get_response_arr();
-
+bool          check_for_type(char *str,int len, parser_mode_e mode);
 
 at_type_t get_type(char *s);
-bool is_urc(at_type_t type);
-
-
+bool is_urc(char * str, int len);
+void print_parsed(); //debug
 /**********************************************************
 *                                                 GLOBALS *   
 **********************************************************/

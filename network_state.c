@@ -115,7 +115,7 @@ void network_driver(){
   puts("Test");
   net_context.curr_cmd = 3;
   //char str[] = "AT+KALTCFG=1,\"RRC_INACTIVITY_TIMER\"\r\n";
-  char str[] = "AT+KBNDCFG?\r\n";
+  char str[] = "AT+CESQ\r\n";
   int len = strlen(str);
   state_post_event(EVENT_ISSUE_CMD); 
   at_command_issue_hal(str, len);

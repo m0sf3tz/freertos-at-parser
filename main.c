@@ -143,12 +143,14 @@ int main( void )
     extern void spawn_uart_thread();
     extern void network_driver(); 
     extern void testDriver();
+    extern void parser_test();
 
-    
     spawn_uart_thread();
     state_core_spawner();
     parser_state_spawner();
     network_driver();
+
+    //parser_test();
     
     vTaskStartScheduler();
     return 0;

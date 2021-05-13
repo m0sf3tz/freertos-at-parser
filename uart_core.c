@@ -32,7 +32,7 @@
 *                                        STATIC VARIABLES *
 **********************************************************/
 static const char      TAG[] = "UART_CORE";
-static const char  AT_PORT[] = "/dev/ttyUSB2";
+static const char  AT_PORT[] = "/dev/ttyUSB0";
 static int atfd;
 static QueueSetHandle_t command_issue_q;
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!
@@ -113,6 +113,7 @@ int at_command_issue_hal(char *cmd, int len){
     ESP_LOGE(TAG, "CMD == null!");
     ASSERT(0);
   }
+  ESP_LOGI(TAG, "Sending command %s", cmd);
 
 #ifdef POSIX_FREERTOS_SIM     
   int rc = write(atfd, cmd, len);
