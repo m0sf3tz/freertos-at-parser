@@ -50,6 +50,13 @@
 typedef int at_type_t;
 typedef int at_status_t;
 
+typedef enum {
+  READ_CMD,
+  WRITE_CMD,
+  EXEC_CMD,
+  TEST_CMD
+} discovered_form;
+
 //This stores an individual line of an AT response
 typedef struct{ 
   char  str[MAX_LEN_RAW];
@@ -84,7 +91,7 @@ typedef struct {
   at_status_t status;
 
   // READ/WRITE/EXEC
-  discovered_type d_type;
+  discovered_form form;
 
   // The number of lines the command returned
   // IE, for the KBNDCFG example above, this would
@@ -129,14 +136,6 @@ typedef enum {
   PARSER_DATA_DEL,
 } parser_del_e;
 
-typedef enum {
-  READ_CMD,
-  WRITE_CMD,
-  EXEC_CMD,
-  TEST_CMD
-} discovered_type;
-
-
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
@@ -148,6 +147,3 @@ bool          check_for_type(char *str,int len, parser_mode_e mode);
 at_type_t get_type(char *s);
 bool is_urc(char * str, int len);
 void print_parsed(); //debug
-/**********************************************************
-*                                                 GLOBALS *   
-**********************************************************/

@@ -94,13 +94,10 @@ bool is_urc(char * str, int len){
    const char c[2] = ",";
    int lead = 0;
    int lag  = 0;  
-   int curret_line = 0;
    int type_int;
    char * iter = str;
-   discovered_type extended_at;
    int param = 0;
    char * token = NULL;
- 
 
   if (!str){
     ESP_LOGE(TAG, "NULL INPUT!");
@@ -266,7 +263,7 @@ int at_line_explode (const char * str, const int len, int line) {
   int curret_line = 0;
   int type_int;
   char * iter = str;
-  discovered_type extended_at;
+  discovered_form extended_at;
   int param = 0;
   char * token = NULL;
 
@@ -325,7 +322,7 @@ int at_line_explode (const char * str, const int len, int line) {
   return 1;
 
 exit:
- parsed.d_type = extended_at;
+ parsed.form = extended_at;
  parsed.type = get_type_cmd(str);
 
  if (extended_at == WRITE_CMD){
@@ -533,12 +530,6 @@ int parse_at_string(char * str, int len, parser_mode_e mode, int line) {
         }
         param++;
     }
-#if 1
-  printf("type = %d \n", parsed.type);
-	for (int i = 0; i < MAX_DELIMITERS; i ++){
-		printf("%s %d %d \n", parsed.param_arr[0][i].str, parsed.param_arr[0][i].is_number, parsed.param_arr[0][i].val);
-	}
-#endif 
 #endif 
   return 1;
 }
@@ -669,9 +660,6 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
           ESP_LOGE(TAG, "Logic error!");
           ASSERT(0);
       }
-     
-
-      vTaskDelay(1000/portTICK_PERIOD_MS);
       printf("raw read  == %d \n", new_len);
 
       if (found_line){ 
@@ -776,6 +764,7 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
 
 void print_parsed(){
   printf("type == (%d) \n", parsed.type);
+  printf("form == (%d) \n", parsed.form);
 
   for (int j = 0; j < MAX_LINES_AT ; j++){
       ESP_LOGI(TAG, "Printing line %d", j);
@@ -796,10 +785,10 @@ void parser_test(){
   at_line_explode (test3, strlen(test3), 2);
   print_parsed();
 
-  if(parsed.d_type != CFUN){
+  if(parsed.form != WRITE_CMD){
     ASSERT(0);
   }
-  if(parsed. != CFUN){
+  if(parsed.type != CFUN){
     ASSERT(0);
   }
   if(parsed.param_arr[1][0].val != 4){
@@ -810,12 +799,16 @@ void parser_test(){
   }
  
   memset(&parsed, 0, sizeof(at_parsed_s));
-  puts("testing AT+ATI");
+  ESP_LOGI(TAG, "testing AT+CESQ");
   char CESQ_START[] = "AT+CESQ";
   char CESQ_RSP[]   = "+CESQ: 99,99,255,255,03,72";
   at_line_explode(CESQ_START, sizeof(CESQ_START), 0);
   at_line_explode(CESQ_RSP, sizeof(CESQ_RSP), 1);
   print_parsed();
+
+  if(parsed.form != EXEC_CMD){
+    ASSERT(0);
+  }
   if(parsed.type != CESQ){
     ASSERT(0);
   }
@@ -835,7 +828,10 @@ void parser_test(){
   at_line_explode(CFUN_READ, sizeof(CFUN_READ), 0);
   at_line_explode(CFUN_READ_RSP, sizeof(CFUN_READ_RSP), 1);
   print_parsed();
-
+  
+  if(parsed.form != READ_CMD){
+    ASSERT(0);
+  }
   if(parsed.type != CFUN){
     ASSERT(0);
   }

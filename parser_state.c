@@ -19,20 +19,23 @@ static state_t state_idle();
 static state_t state_urc_handle();
 static state_t state_handle_cmd_start();
 static state_t state_handle_cmd();
+static state_t state_handle_write_start();
+static state_t state_handle_write();
 
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
 static const char        TAG[] = "NET_STATE";
 static SemaphoreHandle_t parser_state_mutex;
-QueueSetHandle_t         events_parser_q;
 
 // Translation Table
 static state_array_s parser_translation_table[parser_state_len] = {
-       { state_idle             ,  1000},
-       { state_urc_handle       ,  0   }, 
-       { state_handle_cmd_start ,  portMAX_DELAY }, 
-       { state_handle_cmd       ,  portMAX_DELAY }, 
+       { state_idle               ,  1000},
+       { state_urc_handle         ,  0   }, 
+       { state_handle_cmd_start   ,  portMAX_DELAY }, 
+       { state_handle_cmd         ,  portMAX_DELAY }, 
+       { state_handle_write       ,  portMAX_DELAY }, 
+       { state_handle_write_start ,  portMAX_DELAY }, 
 };
 
 
@@ -132,6 +135,51 @@ static state_t state_handle_cmd () {
   return NULL_STATE;
 }
 
+static state_t state_handle_write_start() {
+  ESP_LOGI(TAG, "entering handle_write_start!");
+  
+  int len = 0;
+  bool status;
+  int cme_err;
+  
+  for(;;)
+  {
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    printf("%d ECHO len \n", len);
+    if(buff)
+    {
+      if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Error - unexpected status line!");
+        return parser_idle_state;
+        //TODO: handle  
+      }
+
+      if(is_urc(buff, len)){
+        //TODO: handle URC
+      }
+
+      if( !at_line_explode(buff,len, 0)){
+
+        return parser_handle_cmd_state;
+      } else {
+        //TODO: handle error!
+      }
+    }
+  }
+  return NULL_STATE;
+
+}
+
+static state_t state_handle_write() {
+
+  if (at_incomming_peek() ) {
+    // Data availible
+    return parser_urc_state; 
+  }
+
+  return NULL_STATE;
+}
+
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
   if (!curr_state) {
@@ -169,11 +217,9 @@ static char* event_print_func(state_event_t event) {
 
 static void parser_state_init_freertos_objects() {
     parser_state_mutex = xSemaphoreCreateMutex();
-    events_parser_q    = xQueueCreate(EVENT_QUEUE_MAX_DEPTH, sizeof(state_event_t)); // state-core     -> parser-sm
 
     // make sure we init all the rtos objects
     ASSERT(parser_state_mutex);
-    ASSERT(events_parser_q);
 }
 
 static bool event_filter_func(state_event_t event) {
@@ -181,6 +227,7 @@ static bool event_filter_func(state_event_t event) {
     case(EVENT_URC_F)      : return true; 
     case(EVENT_DONE_URC_F) : return true;
     case(EVENT_ISSUE_CMD)  : return true;
+    case(EVENT_ISSUE_SEND) : return true;
   }
 }
 
