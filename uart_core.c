@@ -41,13 +41,6 @@ static uint8_t buff_s[512];
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
-
-
-uint8_t * wtf(){
-  return buff_s;
-}
-
-
 // On POISX, this uses ioctl to see incomming bytes
 // on ESP32, we hook into the UART interrupts
 bool at_incomming_peek(){
@@ -69,18 +62,7 @@ bool at_incomming_peek(){
 // Returns a refernce to a bunffer,
 // len == -1 on error, data read otherwise
 uint8_t* at_incomming_get_stream(int *len){
-/*
-  static bool s;
-  if (s){
-    puts("No no data");
-    *len = -1;
-    return NULL;
-  }
-  memcpy(buff_s, "hey sam --EOF--Pattern--", 24); 
-  *len = 10;
-  s = true;
-  return buff_s;
-*/
+  puts("here");
 
   if (!len){
     ESP_LOGE(TAG, "Null parameter!");

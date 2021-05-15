@@ -36,44 +36,29 @@ void create_mailbox_freertos_objects(){
   ASSERT(mailbox_sem);
 }
 
-bool mailbox_wait_for_ready() {
-  // Don't care about current state - clear it!
-  xEventGroupClearBits(event_group, MAILBOX_WAIT_FOR_READY);
+bool mailbox_wait(EventBits_t wait_bits) {
+  if (wait_bits != MAILBOX_WAIT_READY     &&
+      wait_bits != MAILBOX_WAIT_CONNECT   &&
+      wait_bits != MAILBOX_WAIT_PROCESSED &&
+      wait_bits != MAILBOX_WAIT_CONSUME ) {
+    
+    ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
+    ASSERT(0);
+  }  
 
-  ESP_LOGI(TAG, "Waiting for mailbox ready!");
+
+  // Don't care about current state - clear it!
+  xEventGroupClearBits(event_group, wait_bits);
+
+  ESP_LOGI(TAG, "Waiting for event (%d)", wait_bits);
   EventBits_t uxBits = xEventGroupWaitBits(event_group,
-                      MAILBOX_WAIT_FOR_READY,
+                      wait_bits,
                       pdTRUE,          // clear bit on exit
-                      pdTRUE,          // Just wait for 1 bit ( we only have 1 bit)
+                      pdFALSE,         // Just wait for 1 bit ( we only have 1 bit)
                       EVENT_WAIT_PERIOD
       );
  
-  if (uxBits == MAILBOX_WAIT_FOR_READY){
-    ESP_LOGI(TAG, "Event group set! (%d)", uxBits);
-    return true;
-  } else {
-    ESP_LOGI(TAG, "Event group TO %d", uxBits);
-    return false;
-  } 
-}
-
-bool mailbox_post_ready(){
-  xEventGroupSetBits( event_group, MAILBOX_POST_READY);
-}
-
-bool mailbox_wait_for_work_request() {
-  // Don't care about current state - clear it!
-  xEventGroupClearBits(event_group, MAILBOX_WAIT_FOR_POST_WORK_REQUEST);
-
-  ESP_LOGI(TAG, "Waiting for mailbox work request!");
-  EventBits_t uxBits = xEventGroupWaitBits(event_group,
-                      MAILBOX_WAIT_FOR_POST_WORK_REQUEST ,
-                      pdTRUE,          // clear bit on exit
-                      pdTRUE,          // Just wait for 1 bit ( we only have 1 bit)
-                      EVENT_WAIT_PERIOD
-      );
- 
-  if (uxBits == MAILBOX_WAIT_FOR_POST_WORK_REQUEST ){
+  if (uxBits == wait_bits){
     ESP_LOGI(TAG, "Event group set! (%d)", (int)uxBits);
     return true;
   } else {
@@ -82,58 +67,17 @@ bool mailbox_wait_for_work_request() {
   } 
 }
 
-bool mailbox_post_work_request(){
-  xEventGroupSetBits( event_group, MAILBOX_POST_WORK_REQUEST);
-}
+bool mailbox_post(EventBits_t post_bits){
+  if (post_bits != MAILBOX_POST_READY     &&
+      post_bits != MAILBOX_POST_CONNECT   &&
+      post_bits != MAILBOX_POST_PROCESSED &&
+      post_bits != MAILBOX_POST_CONSUME ) {
+    
+    ESP_LOGE(TAG, "Unknown bits posted!");
+    ASSERT(0);
+  }  
 
-bool mailbox_wait_for_work_done() {
-  // Don't care about current state - clear it!
-  xEventGroupClearBits(event_group, MAILBOX_WAIT_FOR_WORK_DONE);
-
-  ESP_LOGI(TAG, "Waiting for mailbox work done!");
-  EventBits_t uxBits = xEventGroupWaitBits(event_group,
-                      MAILBOX_WAIT_FOR_WORK_DONE,
-                      pdTRUE,          // clear bit on exit
-                      pdTRUE,          // Just wait for 1 bit ( we only have 1 bit)
-                      EVENT_WAIT_PERIOD
-      );
- 
-  if (uxBits == MAILBOX_WAIT_FOR_WORK_DONE){
-    ESP_LOGI(TAG, "Event group set! (%d)", (int)uxBits);
-    return true;
-  } else {
-    ESP_LOGI(TAG, "Event group TO %d", (int)uxBits);
-    return false;
-  } 
-}
-
-bool mailbox_post_work_done(){
-  xEventGroupSetBits( event_group, MAILBOX_POST_WORK_DONE);
-}
-
-bool mailbox_wait_for_consume() {
-  // Don't care about current state - clear it!
-  xEventGroupClearBits(event_group, MAILBOX_WAIT_FOR_CONSUME);
-
-  ESP_LOGI(TAG, "Waiting for mailbox ready!");
-  EventBits_t uxBits = xEventGroupWaitBits(event_group,
-                      MAILBOX_WAIT_FOR_CONSUME,
-                      pdTRUE,          // clear bit on exit
-                      pdTRUE,          // Just wait for 1 bit ( we only have 1 bit)
-                      EVENT_WAIT_PERIOD
-      );
- 
-  if (uxBits == MAILBOX_WAIT_FOR_CONSUME){
-    ESP_LOGI(TAG, "Event group set! (%d)", uxBits);
-    return true;
-  } else {
-    ESP_LOGI(TAG, "Event group TO %d", uxBits);
-    return false;
-  } 
-}
-
-bool mailbox_post_consumed(){
-  xEventGroupSetBits( event_group, MAILBOX_POST_CONSUME);
+  xEventGroupSetBits(event_group, post_bits);
 }
 
 void get_mailbox_sem(){
@@ -147,33 +91,27 @@ void put_mailbox_sem(){
     xSemaphoreGive(mailbox_sem);
 }
 
-void driver_a(void * arg){
-  mailbox_wait_for_ready();
-  mailbox_wait_for_work_request();
-  mailbox_wait_for_work_done();
-  mailbox_post_consumed();
+
+void a(void * arg){
+  mailbox_wait(MAILBOX_WAIT_CONSUME);
+  puts("done!");
+  vTaskDelay(1000000);
 }
 
-void driver_b(void * arg){
-  puts("here");
-  vTaskDelay(100/portTICK_PERIOD_MS);
-  ESP_LOGI(TAG, "Posting ready!");
-  mailbox_post_ready();
-  vTaskDelay(10/portTICK_PERIOD_MS);
-  ESP_LOGI(TAG, "Posting work request!");
-  mailbox_post_work_request();
-  vTaskDelay(10);
-  mailbox_post_work_done();
-  vTaskDelay(10);
-  mailbox_wait_for_consume();
+void b(void * arg){
+  vTaskDelay(100);
+  mailbox_post(MAILBOX_POST_READY);
+
+  puts("oisted");
+  vTaskDelay(1000000);
 }
 
 
-void testDriver(){
-  puts("Starting mailbox test");
+
+void mailbox_test(){
+  puts("Starting mailbo");
   create_mailbox_freertos_objects();
-  xTaskCreate(driver_a, "", 2024, NULL, 5, NULL);
-  puts("Starting mailbox test");
-  xTaskCreate(driver_b, "", 2024, NULL, 6, NULL);
-  puts("Starting mailbox test");
+
+  xTaskCreate(a, "", 1024, "", 5, NULL); 
+  xTaskCreate(b, "", 1024, "", 5, NULL); 
 }

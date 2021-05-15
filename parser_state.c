@@ -11,6 +11,7 @@
 #include "parser_state.h"
 #include "state_core.h"
 #include "at_parser.h"
+#include "mailbox.h"
 
 /**********************************************************
 *                                    FORWARD DECLARATIONS *
@@ -105,12 +106,39 @@ static state_t state_handle_cmd_start () {
 
 static state_t state_handle_cmd () {
   ESP_LOGI(TAG, "entering handle_cmd!");
-  
+  mailbox_post(MAILBOX_POST_READY); 
+
   int cme_err =0;
   int len = 0;
   int line = 0;
   bool status = false;
-  
+
+  for(;;)
+  {
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    printf("%d ECHO len \n", len);
+    if(buff)
+    {
+      if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Error - unexpected status line!");
+        return parser_idle_state;
+        //TODO: handle  
+      }
+
+      if(is_urc(buff, len)){
+        //TODO: handle URC
+      }
+
+      if( !at_line_explode(buff,len, 0)){
+        // Foudn new command
+        break;
+      } else {
+        //TODO: handle error!
+      }
+    }
+  }
+
+  // parse the lines of a command (not including first)
   for(line =1; line < MAX_LINES_AT; line++)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
@@ -123,6 +151,11 @@ static state_t state_handle_cmd () {
       if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
         print_parsed();
+        puts("ready to consume"); 
+        mailbox_post(MAILBOX_POST_PROCESSED);
+        puts("watiing for done!");
+        mailbox_wait(MAILBOX_WAIT_CONSUME);
+        puts("done comsuing "); 
         return parser_idle_state;  
       }
 
@@ -137,7 +170,7 @@ static state_t state_handle_cmd () {
 
 static state_t state_handle_write_start() {
   ESP_LOGI(TAG, "entering handle_write_start!");
-  
+#if 0 
   int len = 0;
   bool status;
   int cme_err;
@@ -159,15 +192,18 @@ static state_t state_handle_write_start() {
       }
 
       if( !at_line_explode(buff,len, 0)){
-
+        if (true){
         return parser_handle_cmd_state;
+        } else {
+          // TODO: handle
+        }
       } else {
         //TODO: handle error!
       }
     }
   }
   return NULL_STATE;
-
+#endif 
 }
 
 static state_t state_handle_write() {
@@ -190,7 +226,7 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
     if (*curr_state == parser_idle_state) {
         if (event == EVENT_ISSUE_CMD) {
             ESP_LOGI(TAG, "Old State: parser_idle_state, Next: parser_handle_cmd_start_state");
-            *curr_state = parser_handle_cmd_start_state;
+            *curr_state = parser_handle_cmd_state;
             return;
         }
     }

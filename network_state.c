@@ -12,6 +12,7 @@
 #include "state_core.h"
 #include "network_state.h"
 #include "at_parser.h" //TODO; RM - not needed
+#include "mailbox.h"
 
 /**********************************************************
 *                                    FORWARD DECLARATIONS *
@@ -111,18 +112,36 @@ static state_init_s* get_parser_state_handle() {
 }
 
 // test parser 
-void network_driver(){
+
+void driver_b(void * arg){
 
   puts("Test");
-/*
+
   net_context.curr_cmd = 3;
   //char str[] = "AT+KALTCFG=1,\"RRC_INACTIVITY_TIMER\"\r\n";
   char str[] = "AT+CESQ\r\n";
   int len = strlen(str);
-  state_post_event(EVENT_ISSUE_CMD); 
-  at_command_issue_hal(str, len);
-*/
+
+  vTaskDelay(100);
   get_mailbox_sem();
-  state_post_event(EVENT_ISSUE_SEND); 
+  state_post_event(EVENT_ISSUE_CMD); 
+  puts("issue");
+  mailbox_wait(MAILBOX_WAIT_READY);
+  puts("wait");
+
+  at_command_issue_hal(str, len);
+  mailbox_wait(MAILBOX_WAIT_PROCESSED);
+  puts("posting consume");
+  mailbox_post(MAILBOX_POST_CONSUME);
+  puts("done!");
+  put_mailbox_sem();
+
+  vTaskDelay(1000000);
 }
+
+void network_driver(){
+  xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
+}
+
+
 

@@ -203,8 +203,10 @@ static void state_machine(void* arg) {
         new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
 
         // Recieved an event, see if we need to change state
-        state_init_ptr->next_state(&state, new_event);
-
+        // Don't run if we had a timeout (looping)
+        if (new_event != INVALID_EVENT){
+          state_init_ptr->next_state(&state, new_event);
+        }
         // Reset new_event
         new_event = INVALID_EVENT;
     }
