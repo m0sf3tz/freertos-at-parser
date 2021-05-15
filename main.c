@@ -146,14 +146,14 @@ int main( void )
     extern void parser_test();
     extern void create_mailbox_freertos_objects();
     extern void mailbox_test();
-#if 1
+#if 0
     create_mailbox_freertos_objects();
     spawn_uart_thread();
     state_core_spawner();
     parser_state_spawner();
     network_driver();
 #else
-    mailbox_test();
+    network_driver();
 #endif 
     vTaskStartScheduler();
     return 0;

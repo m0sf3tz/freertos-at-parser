@@ -11,7 +11,7 @@
 #include "parser_state.h"
 #include "state_core.h"
 #include "network_state.h"
-#include "at_parser.h" //TODO; RM - not needed
+#include "at_parser.h"
 #include "mailbox.h"
 
 /**********************************************************
@@ -25,6 +25,7 @@ static state_t state_urc_handle();
 *********************************************************/
 static const char        TAG[] = "NET_STATE";
 network_state_s          net_context;
+static  at_urc_parsed_s  urc_parsed;
 
 // Translation Table
 static state_array_s parser_translation_table[parser_state_len] = {
@@ -111,7 +112,15 @@ static state_init_s* get_parser_state_handle() {
     return &(parser_state);
 }
 
-// test parser 
+
+static void urc_hanlder(void * arg){
+  for(;;){
+    xQueueReceive(outgoing_urc_queue, &urc_parsed, portMAX_DELAY);
+    ESP_LOGI(TAG, "Got a new URC!");
+    print_parsed_urc(&urc_parsed);
+  }
+}
+
 
 void driver_b(void * arg){
 
@@ -140,7 +149,13 @@ void driver_b(void * arg){
 }
 
 void network_driver(){
-  xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
+  char str[] = "+CEREG: 1\r\n";
+  int len = strlen(str);
+  verify_urc_and_parse(str, len);
+  print_parsed_urc(get_urc_parsed_struct());
+  
+  //xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
+  //xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
 }
 
 

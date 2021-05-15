@@ -13,7 +13,7 @@ uint8_t * at_parser_main(bool data_mode, bool * status, int * size);
 /*********************************************************
 *                                                GLOBALS *
 *********************************************************/
-extern QueueHandle_t outgoing_events_parser_q;
+extern QueueHandle_t outgoing_urc_queue;
 
 /*********************************************************
 *                                               TYPEDEFS *

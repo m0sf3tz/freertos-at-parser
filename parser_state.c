@@ -13,15 +13,21 @@
 #include "at_parser.h"
 #include "mailbox.h"
 
-/**********************************************************
-*                                    FORWARD DECLARATIONS *
-**********************************************************/
+/*********************************************************
+*                                                GLOBALS *
+*********************************************************/
+QueueSetHandle_t  outgoing_urc_queue;
+
+/*********************************************************
+*                                   FORWARD DECLARATIONS *
+*********************************************************/
 static state_t state_idle();
 static state_t state_urc_handle();
 static state_t state_handle_cmd_start();
 static state_t state_handle_cmd();
 static state_t state_handle_write_start();
 static state_t state_handle_write();
+static void    post_urc_to_network_layer(at_urc_parsed_s * ptr);
 
 /*********************************************************
 *                                       STATIC VARIABLES *
@@ -45,10 +51,25 @@ static state_array_s parser_translation_table[parser_state_len] = {
 **********************************************************/
 static state_t state_idle() {
   ESP_LOGI(TAG, "Entering Idle state");
+  int cme_err;
+  bool status;
+  int len;
 
   if (at_incomming_peek() ) {
-    // Data availible
-    return parser_urc_state; 
+    
+    // read the new line
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    
+    if(is_status_line(buff, len, &cme_err)){
+       ESP_LOGI(TAG, "Error - unexpected status line!");
+       return parser_idle_state;
+       //TODO: handle  
+     }
+
+     if(verify_urc_and_parse(buff, len)){
+        ESP_LOGI(TAG, "Found URC, handling");
+        post_urc_to_network_layer(get_urc_parsed_struct());
+     } 
   }
 
   return NULL_STATE;
@@ -64,9 +85,8 @@ static state_t state_urc_handle() {
   vTaskDelay(100);
   if(buff){
      at_digest_lines(buff, len);
-     //parse_at_string(buff, len, true, false);
+     //parse_at_string(buff, len, true, false); 
   }
-  
   return parser_idle_state; 
 }
 
@@ -89,7 +109,7 @@ static state_t state_handle_cmd_start () {
         //TODO: handle  
       }
 
-      if(is_urc(buff, len)){
+      if(verify_urc_and_parse(buff, len)){
         //TODO: handle URC
       }
 
@@ -125,7 +145,7 @@ static state_t state_handle_cmd () {
         //TODO: handle  
       }
 
-      if(is_urc(buff, len)){
+      if(verify_urc_and_parse(buff, len)){
         //TODO: handle URC
       }
 
@@ -248,14 +268,29 @@ static char* event_print_func(state_event_t event) {
 }
 
 /*********************************************************
-*                NON-STATE  FUNCTIONS
-**********************************************************/
+                                    NON-STATE  FUNCTIONS *
+*********************************************************/
+static void post_urc_to_network_layer(at_urc_parsed_s * ptr){
+  if(!ptr){
+    ESP_LOGE(TAG, "NULL ARG!");
+    ASSERT(0);
+  }
+
+  BaseType_t xStatus = xQueueSendToBack(outgoing_urc_queue, (void*)ptr, RTOS_DONT_WAIT);
+  if(xStatus == pdFALSE){
+    ESP_LOGE(TAG, "ran out of space in queue");
+    ASSERT(0);
+    //TODO - handle gracefully?
+  }
+}
 
 static void parser_state_init_freertos_objects() {
     parser_state_mutex = xSemaphoreCreateMutex();
+    outgoing_urc_queue = xQueueCreate(MAX_URC_OUTSTANDING, sizeof(at_urc_parsed_s)); // parser_state -> network_state 
 
     // make sure we init all the rtos objects
     ASSERT(parser_state_mutex);
+    ASSERT(outgoing_urc_queue);
 }
 
 static bool event_filter_func(state_event_t event) {

@@ -39,10 +39,11 @@
 #define PARTIAL_DELIMETER_SCANNING (2)  // Partial EOL [returned when partial ---EOF--Pattern detected]
 #define LONG_DELIMITER_FOUND       (3)  // returned when full long (--EOF...) delimiter found
 
-#define BUFF_SIZE          (1024) // Intermediate buffer
-#define MAX_LINE_SIZE      (512) // Maximum AT parsed line (includes reads/writes)
-#define MAX_QUEUED_ITEMS   (2)
-#define LONG_DELIMITER_LEN (16) // 18 == len(--EOF--Pattern--)
+#define BUFF_SIZE           (1024) // Intermediate buffer
+#define MAX_LINE_SIZE       (512) // Maximum AT parsed line (includes reads/writes)
+#define MAX_QUEUED_ITEMS    (2)
+#define LONG_DELIMITER_LEN  (16) // 18 == len(--EOF--Pattern--)
+#define MAX_URC_OUTSTANDING (3) //TODO: calibrate (very large)
 
 /*********************************************************
 *                                               TYPEDEFS *
@@ -139,11 +140,12 @@ typedef enum {
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-uint8_t     * at_parser_stringer(parser_del_e mode, bool * status, int * len);
-int           parse_at_string(char * str, int len, parser_mode_e mode, int line);
-at_parsed_s * get_response_arr();
-bool          check_for_type(char *str,int len, parser_mode_e mode);
-
-at_type_t get_type(char *s);
-bool is_urc(char * str, int len);
-void print_parsed(); //debug
+uint8_t         * at_parser_stringer(parser_del_e mode, bool * status, int * len);
+int               parse_at_string(char * str, int len, parser_mode_e mode, int line);
+bool              check_for_type(char *str,int len, parser_mode_e mode);
+at_type_t         get_type(char *s);
+bool              verify_and_parse_urc(char * str, int len);
+void              print_parsed(); //debug
+void              print_parsed_urc(at_urc_parsed_s * urc);
+at_parsed_s     * get_parsed_struct();
+at_urc_parsed_s * get_urc_parsed_struct();

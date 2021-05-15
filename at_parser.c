@@ -12,11 +12,11 @@
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
-static const char   TAG[] = "AT_PARSER";
-static  at_parsed_s parsed;
-static  at_urc_parsed_s urc_parsed;
-static uint8_t      buffer[1024];              // Internal
-static uint8_t      line_found[MAX_LINE_SIZE]; // Returned to higher layers
+static const char      TAG[] = "AT_PARSER";
+static at_parsed_s     parsed;
+static at_urc_parsed_s urc_parsed;
+static uint8_t         buffer[1024];              // Internal
+static uint8_t         line_found[MAX_LINE_SIZE]; // Returned to higher layers
 
 /**********************************************************
 *                                          IMPLEMENTATION *
@@ -78,7 +78,7 @@ at_type_t get_type(char *s){
 	if (strcmp(s, "KUDP_NOTIF") == 0) return KUDP_NOTIF;
 	if (strcmp(s, "CFUN")       == 0) return CFUN;
 	if (strcmp(s, "CEREG")      == 0) return CEREG;
-	if (strcmp(s, "CGREG")      == 0) return CGREG;
+	if (strcmp(s, "CREG")       == 0) return CGREG;
   if (strcmp(s, "KUDPCFG")    == 0) return KUDPCFG;
   if (strcmp(s, "KALTCFG")    == 0) return KALTCFG;
   if (strcmp(s, "KBDNCFG")    == 0) return KBNDCFG;
@@ -89,7 +89,7 @@ at_type_t get_type(char *s){
 }
 
 
-bool is_urc(char * str, int len){
+bool verify_urc_and_parse(char * str, int len){
    char type[MAX_LEN_TYPE];
    const char c[2] = ",";
    int lead = 0;
@@ -98,6 +98,7 @@ bool is_urc(char * str, int len){
    char * iter = str;
    int param = 0;
    char * token = NULL;
+   memset(type, 0, MAX_LEN_TYPE);
 
   if (!str){
     ESP_LOGE(TAG, "NULL INPUT!");
@@ -133,6 +134,7 @@ bool is_urc(char * str, int len){
      return false;
    }
    memcpy(type, str+lag, lead-lag);
+   printf("s = %s \n", type);
    urc_parsed.type = get_type(type);
    
    // move it up to the first delimiter ":"
@@ -534,8 +536,12 @@ int parse_at_string(char * str, int len, parser_mode_e mode, int line) {
   return 1;
 }
 
-at_parsed_s * get_response_arr(){
+at_parsed_s * get_parsed_struct(){
   return &parsed;
+}
+
+at_urc_parsed_s * get_urc_parsed_struct(){
+  return &urc_parsed;
 }
 
 // checks for CONNECT
@@ -761,7 +767,6 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
   }
 }
 
-
 void print_parsed(){
   printf("type == (%d) \n", parsed.type);
   printf("form == (%d) \n", parsed.form);
@@ -771,6 +776,14 @@ void print_parsed(){
       for (int i = 0; i < MAX_DELIMITERS; i ++){
 		    printf("%s %d %d \n", parsed.param_arr[j][i].str, parsed.param_arr[j][i].is_number, parsed.param_arr[j][i].val);
 	    }
+  }
+}
+
+void print_parsed_urc(at_urc_parsed_s * urc){
+  ESP_LOGI(TAG, "type == (%d) \n", urc->type);
+
+  for (int i = 0 ; i < MAX_DELIMITERS; i++){
+	  ESP_LOGI(TAG, "%s %d %d \n", urc->param_arr[i].str, urc->param_arr[i].is_number, urc->param_arr[i].val);
   }
 }
 
@@ -842,7 +855,7 @@ void parser_test(){
 
  puts("");
  puts("TESTING URC ");
- bool urc_test = is_urc("+CEREG: 1", strlen("+CREG: 1"));
+ bool urc_test = verify_urc_and_parse("+CEREG: 1", strlen("+CREG: 1"));
  printf("%d == type \n", urc_parsed.type);
  for (int i = 0; i < MAX_DELIMITERS; i ++){
 		printf("%s %d %d \n", urc_parsed.param_arr[i].str, urc_parsed.param_arr[i].is_number, urc_parsed.param_arr[i].val);
