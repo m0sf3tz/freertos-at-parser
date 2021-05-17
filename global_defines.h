@@ -9,6 +9,7 @@
 #define POSIX_FREERTOS_SIM     
 
 #define PARSER_CORE_EVENT_START (100)
+#define NETWORK_EVENT_START     (200)
 
 /**********************************************************
 *                                                 HELPERS *

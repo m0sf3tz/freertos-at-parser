@@ -46,7 +46,7 @@ typedef enum {
 /**********************************************************
 *                                                 DEFINES *
 **********************************************************/
-#define MAX_QUEUE_DEPTH     (16)
+#define MAX_URC_OUTSTANDING (5) //TODO: calibrate (very large)
 #define INVALID_EVENT       (0xFFFFFFFF)
 #define NET_SATE_MUTEX_WAIT (2500 / portTICK_PERIOD_MS)
 #define NET_SATE_QUEUE_TO   (2500 / portTICK_PERIOD_MS)

@@ -37,7 +37,7 @@ static SemaphoreHandle_t parser_state_mutex;
 
 // Translation Table
 static state_array_s parser_translation_table[parser_state_len] = {
-       { state_idle               ,  1000},
+       { state_idle               ,  300 },
        { state_urc_handle         ,  0   }, 
        { state_handle_cmd_start   ,  portMAX_DELAY }, 
        { state_handle_cmd         ,  portMAX_DELAY }, 
@@ -50,7 +50,7 @@ static state_array_s parser_translation_table[parser_state_len] = {
 *                                         STATE FUNCTIONS *
 **********************************************************/
 static state_t state_idle() {
-  ESP_LOGI(TAG, "Entering Idle state");
+  ESP_LOGI(TAG, "Idle state!");
   int cme_err;
   bool status;
   int len;
@@ -59,7 +59,7 @@ static state_t state_idle() {
     
     // read the new line
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    
+#if 0
     if(is_status_line(buff, len, &cme_err)){
        ESP_LOGI(TAG, "Error - unexpected status line!");
        return parser_idle_state;
@@ -70,6 +70,7 @@ static state_t state_idle() {
         ESP_LOGI(TAG, "Found URC, handling");
         post_urc_to_network_layer(get_urc_parsed_struct());
      } 
+#endif 
   }
 
   return NULL_STATE;
@@ -84,7 +85,7 @@ static state_t state_urc_handle() {
 
   vTaskDelay(100);
   if(buff){
-     at_digest_lines(buff, len);
+     at_print_lines(buff, len);
      //parse_at_string(buff, len, true, false); 
   }
   return parser_idle_state; 
@@ -238,11 +239,6 @@ static state_t state_handle_write() {
 
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
-  if (!curr_state) {
-        ESP_LOGE(TAG, "ARG= NULL!");
-        ASSERT(0);
-    }
-
     if (*curr_state == parser_idle_state) {
         if (event == EVENT_ISSUE_CMD) {
             ESP_LOGI(TAG, "Old State: parser_idle_state, Next: parser_handle_cmd_start_state");
@@ -332,7 +328,7 @@ static void driver (void * arg){
     char * line = at_parser_stringer(false, &status, &size);
 
     if(status){
-      at_digest_lines(line,size);
+      at_print_lines(line,size);
     } else {
       ESP_LOGE(TAG, "Found nothing!");
     }

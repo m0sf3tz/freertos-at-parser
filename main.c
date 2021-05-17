@@ -146,7 +146,7 @@ int main( void )
     extern void parser_test();
     extern void create_mailbox_freertos_objects();
     extern void mailbox_test();
-#if 0
+#if 1
     create_mailbox_freertos_objects();
     spawn_uart_thread();
     state_core_spawner();

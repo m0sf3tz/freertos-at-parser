@@ -22,6 +22,22 @@ typedef struct{
   network_status_t net_state;  
 }network_state_s;
 
+typedef enum {
+    network_attaching_state = 0,
+    network_idle_state,
+
+    network_state_len //LEAVE AS LAST!
+} network_state_e;
+
+
+typedef enum {
+    NETWORK_ATTACHED = NETWORK_EVENT_START,
+    NETWORK_DETACHED,
+
+    network_event_len //LEAVE AS LAST!
+} network_event_e;
+
+
 /*********************************************************
 *                                                  ENUMS *
 *********************************************************/

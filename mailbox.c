@@ -59,10 +59,10 @@ bool mailbox_wait(EventBits_t wait_bits) {
       );
  
   if (uxBits == wait_bits){
-    ESP_LOGI(TAG, "Event group set! (%d)", (int)uxBits);
+    ESP_LOGI(TAG, "Event group set! (%d)", (int)wait_bits);
     return true;
   } else {
-    ESP_LOGI(TAG, "Event group TO %d", (int)uxBits);
+    ESP_LOGI(TAG, "Event group TO %d", (int)wait_bits);
     return false;
   } 
 }

@@ -43,7 +43,6 @@
 #define MAX_LINE_SIZE       (512) // Maximum AT parsed line (includes reads/writes)
 #define MAX_QUEUED_ITEMS    (2)
 #define LONG_DELIMITER_LEN  (16) // 18 == len(--EOF--Pattern--)
-#define MAX_URC_OUTSTANDING (3) //TODO: calibrate (very large)
 
 /*********************************************************
 *                                               TYPEDEFS *

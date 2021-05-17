@@ -24,32 +24,62 @@ static uint8_t         line_found[MAX_LINE_SIZE]; // Returned to higher layers
 
 // returns FALSE if s is not a number
 // result returned in... result =)
-static bool myatoi(char *s, int* result) {
-	 if (!result || !s){
-			ASSERT(0);
-	 }
+static bool myatoi(char *src, int* result) {
+  char buff[32];
 
+  if (!result || !src){
+      ESP_LOGE(TAG, "NULL INPUTS!");
+			ASSERT(0);
+	}
+  memset(buff, 0, sizeof(buff));
+
+  // dealing with a number in this format
+  // "NUMBER"
+  if (*src == '"'){
+    memcpy(buff, src+1, strlen(src) - 2); // strip the final "
+  } else {
+    memcpy(buff, src, strlen(src));
+  }
+
+   char * s = buff;
 	 int res = 0;
    int minus = *s == '-';
 	 if (minus){
 	 	s++;
 	 }
 	
-   // Iterate once, make sure we are dealing with a C string which is a number
+   // exect to be all numbers, and NULL termination
    char *t = s;
    while (isdigit(*t)) {
    		*t++;
    } 	
+   if(*t == '\0'){
+    //dealing with a number
+    goto number;
+   } 
+
+   // try again, pervious scan failed, checking for a hex number
+   // this time 
+   t = s;
+   while (isxdigit(*t)) {
+   		*t++;
+   } 	
    if(*t != '\0'){ // final character must be a NULL!
-	  	return false;
+     // final character was not NULL and also not HEX
+     return false;
    }
 
-   while (isdigit(*s)) {
-   		res= res*10 + (*s++ - '0');
-   }
-
+   res = strtol (s,NULL,16);
    *result = ( minus ? -res : res );
 	 return true;
+
+number:
+  while (isdigit(*s)) {
+    res= res*10 + (*s++ - '0');
+  }
+
+  *result = ( minus ? -res : res );
+  return true;
 }
 
 at_type_t get_type_cmd(char *s){
@@ -78,7 +108,7 @@ at_type_t get_type(char *s){
 	if (strcmp(s, "KUDP_NOTIF") == 0) return KUDP_NOTIF;
 	if (strcmp(s, "CFUN")       == 0) return CFUN;
 	if (strcmp(s, "CEREG")      == 0) return CEREG;
-	if (strcmp(s, "CREG")       == 0) return CGREG;
+	if (strcmp(s, "CGREG")      == 0) return CGREG;
   if (strcmp(s, "KUDPCFG")    == 0) return KUDPCFG;
   if (strcmp(s, "KALTCFG")    == 0) return KALTCFG;
   if (strcmp(s, "KBDNCFG")    == 0) return KBNDCFG;
@@ -134,7 +164,6 @@ bool verify_urc_and_parse(char * str, int len){
      return false;
    }
    memcpy(type, str+lag, lead-lag);
-   printf("s = %s \n", type);
    urc_parsed.type = get_type(type);
    
    // move it up to the first delimiter ":"
@@ -171,51 +200,20 @@ bool verify_urc_and_parse(char * str, int len){
     }
 return true;
 }
-// this function digests lines,
-// it will piece together a command  sequence
-// for example after issueing
-// AT+CFUN?
-//
-// we execpt to read
-//
-//  AT+CFUN? (echo)
-//  +CFUN: 1
-//  
-//  OK
-//
-//  Every AT message has a repsonse, either
-//  OK,
-//  +CME error <N>,
-//  ERROR,
-//
-//  we hunt for these to know that we found a full response
-void at_digest_lines(uint8_t* line, size_t len){
+
+// debug
+void at_print_lines(uint8_t* line, size_t len, uint8_t* rest){
   static int current_response_lines = 0;
   static char buff[MAX_LINES_AT][MAX_LINE_SIZE];
+
+  if (len == 0) return;
 
   char fakebuf[100];
   memset(fakebuf, 0, 100);
   memcpy(fakebuf, line, len);
-  printf("new line (len = %d), :%s \n", len, fakebuf);
-  
-  if (len == 0){
-    return;
-  }
- 
-#if 0
-  // checks to see if the modem is finished responding
-  // to an AT command 
-  at_status_t isl = is_status_line(line, len, 0);
-  printf("todo! \n");
-  abort();
-  if(isl){
-    // done parsing
-    parse_at_string(buff);
-  } else {
-   memcpy(buff[current_response_lines], fakebuf, len);
-   current_response_lines++; 
-  }
-#endif 
+  printf("---->new line (len = %d), :%s \n", len, fakebuf);
+  printf("---->rest %s \n", rest);
+
 }
 
 
@@ -257,7 +255,6 @@ bool check_for_type(char *str,int len, parser_mode_e mode){
 
 // Takes a line (AT+CFUN=1), and breaks it down into chunks
 int at_line_explode (const char * str, const int len, int line) {
-  puts("heeeeeeeeeeeeeeeeere");
   char type[MAX_LEN_TYPE];
   const char c[2] = ",";
   int lead = 0;
@@ -300,7 +297,6 @@ int at_line_explode (const char * str, const int len, int line) {
   // strlen does not return size including null, but we need to check against null
   // hence "i <= len"
   for(int i = 0; i <= len; i++){
-    printf("%c\n", *iter);
     switch (*iter){
       case('?'):
         ESP_LOGI(TAG, "Discovered a read");
@@ -666,7 +662,6 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
           ESP_LOGE(TAG, "Logic error!");
           ASSERT(0);
       }
-      printf("raw read  == %d \n", new_len);
 
       if (found_line){ 
         len = len - iter_lead;
@@ -715,6 +710,7 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
       iter_lag = 0;
       found_line = true;
       *status = true;
+      at_print_lines(line_found, *size, buffer);
       return line_found;
     } else if (LONG_DELIMITER_FOUND == parse_status){
       memcpy(line_found, buffer, iter_lag);
@@ -767,7 +763,14 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
   }
 }
 
+
+bool stream_availible(){
+  
+}
+
+
 void print_parsed(){
+#if 0
   printf("type == (%d) \n", parsed.type);
   printf("form == (%d) \n", parsed.form);
 
@@ -777,6 +780,7 @@ void print_parsed(){
 		    printf("%s %d %d \n", parsed.param_arr[j][i].str, parsed.param_arr[j][i].is_number, parsed.param_arr[j][i].val);
 	    }
   }
+#endif 
 }
 
 void print_parsed_urc(at_urc_parsed_s * urc){
@@ -867,6 +871,4 @@ void parser_test(){
  if(urc_parsed.type != CEREG){
   ASSERT(0);
  }
-
-
 }
