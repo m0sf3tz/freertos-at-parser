@@ -55,24 +55,24 @@ static state_t state_idle() {
   bool status;
   int len;
 
-  if (at_incomming_peek() ) {
     
-    // read the new line
-    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-#if 0
-    if(is_status_line(buff, len, &cme_err)){
-       ESP_LOGI(TAG, "Error - unexpected status line!");
-       return parser_idle_state;
-       //TODO: handle  
-     }
-
-     if(verify_urc_and_parse(buff, len)){
-        ESP_LOGI(TAG, "Found URC, handling");
-        post_urc_to_network_layer(get_urc_parsed_struct());
-     } 
-#endif 
+  // read the new line
+  uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+  if(buff == NULL){
+    return NULL_STATE;
   }
+#if 1
+  if(is_status_line(buff, len, &cme_err)){
+     ESP_LOGI(TAG, "Error - unexpected status line!");
+     return parser_idle_state;
+     //TODO: handle  
+   }
 
+   if(verify_urc_and_parse(buff, len)){
+      ESP_LOGI(TAG, "Found URC, handling");
+      post_urc_to_network_layer(get_urc_parsed_struct());
+   } 
+#endif 
   return NULL_STATE;
 }
 
@@ -97,11 +97,12 @@ static state_t state_handle_cmd_start () {
   int len = 0;
   bool status;
   int cme_err;
-  
+ 
+  int i = 0; 
   for(;;)
   {
+    printf("read - %d \n", i);
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    printf("%d ECHO len \n", len);
     if(buff)
     {
       if(is_status_line(buff, len, &cme_err)){

@@ -62,8 +62,6 @@ bool at_incomming_peek(){
 // Returns a refernce to a bunffer,
 // len == -1 on error, data read otherwise
 uint8_t* at_incomming_get_stream(int *len){
-  puts("here");
-
   if (!len){
     ESP_LOGE(TAG, "Null parameter!");
     ASSERT(0);

@@ -109,7 +109,7 @@ static void urc_hanlder(void * arg){
         if (urc_parsed.param_arr[0].val == 1){
           ESP_LOGI(TAG, "Registered! - posting!");
           state_post_event(NETWORK_ATTACHED);
-        } else if (urc_parsed.param_arr[0].val != 0){ //TODO: wrong! (roaming!)
+        } else if (urc_parsed.param_arr[0].val != 1){ //TODO: wrong! (roaming!)
           ESP_LOGI(TAG, "detached! - posting!");
           state_post_event(NETWORK_DETACHED);
         }
@@ -174,7 +174,7 @@ void driver_b(void * arg){
       mailbox_post(MAILBOX_POST_CONSUME);
       puts("done!");
       put_mailbox_sem();
-      
+     
       vTaskDelay(10000/portTICK_PERIOD_MS);
     }
   vTaskDelay(1000000);

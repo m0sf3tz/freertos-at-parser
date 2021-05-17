@@ -212,8 +212,6 @@ void at_print_lines(uint8_t* line, size_t len, uint8_t* rest){
   memset(fakebuf, 0, 100);
   memcpy(fakebuf, line, len);
   printf("---->new line (len = %d), :%s \n", len, fakebuf);
-  printf("---->rest %s \n", rest);
-
 }
 
 
@@ -634,9 +632,7 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
   static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
   static int len;       // current length of line being parsed
   static bool found_line;
-  TickType_t start_time_ms = xTaskGetTickCount()/portTICK_PERIOD_MS;
-  TickType_t max_time_ms = start_time_ms + 2000;
-  int new_line_size = 0;;
+  int new_line_size = 0;
   memset(line_found, 0 , sizeof(line_found));
 
   if(!status){
@@ -644,20 +640,16 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
     ASSERT(0);
   }
 
-  ESP_LOGI(TAG, "Starting AT parser!");
   for(;;){
     if(iter_lead == len){ // exhausted current buffer 
 
-      vTaskDelay(1000/portTICK_PERIOD_MS);
+      vTaskDelay(250/portTICK_PERIOD_MS);
       int new_len = 0;
       uint8_t * new_buff = at_incomming_get_stream(&new_len);
       if(new_len == -1){
-        if ( xTaskGetTickCount()/portTICK_PERIOD_MS > max_time_ms){
           return NULL;
-        }
-        vTaskDelay(250/portTICK_PERIOD_MS);
-        continue;
       }
+      
       if (!new_buff){
           ESP_LOGE(TAG, "Logic error!");
           ASSERT(0);
@@ -749,6 +741,10 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
 
   for(;;){
     ret = at_parser_stringer_private( mode,  status, len);
+    if (ret == NULL){
+      return NULL;
+    }
+
     if (*len == 0){
       if ( count != 2){
         count++;
