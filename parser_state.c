@@ -21,12 +21,10 @@ QueueSetHandle_t  outgoing_urc_queue;
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
 *********************************************************/
-static state_t state_idle();
-static state_t state_urc_handle();
-static state_t state_handle_cmd_start();
-static state_t state_handle_cmd();
-static state_t state_handle_write_start();
-static state_t state_handle_write();
+static state_t state_idle_func();
+static state_t state_handle_cmd_func();
+static state_t state_handle_write_func();
+
 static void    post_urc_to_network_layer(at_urc_parsed_s * ptr);
 
 /*********************************************************
@@ -37,31 +35,26 @@ static SemaphoreHandle_t parser_state_mutex;
 
 // Translation Table
 static state_array_s parser_translation_table[parser_state_len] = {
-       { state_idle               ,  300 },
-       { state_urc_handle         ,  0   }, 
-       { state_handle_cmd_start   ,  portMAX_DELAY }, 
-       { state_handle_cmd         ,  portMAX_DELAY }, 
-       { state_handle_write       ,  portMAX_DELAY }, 
-       { state_handle_write_start ,  portMAX_DELAY }, 
+       { state_idle_func          ,  300 },
+       { state_handle_cmd_func    ,  portMAX_DELAY }, 
+       { state_handle_write_func  ,  portMAX_DELAY }, 
 };
 
 
 /**********************************************************
 *                                         STATE FUNCTIONS *
 **********************************************************/
-static state_t state_idle() {
+static state_t state_idle_func() {
   ESP_LOGI(TAG, "Idle state!");
   int cme_err;
-  bool status;
   int len;
 
-    
   // read the new line
-  uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+  uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL,  &len);
   if(buff == NULL){
     return NULL_STATE;
   }
-#if 1
+  
   if(is_status_line(buff, len, &cme_err)){
      ESP_LOGI(TAG, "Error - unexpected status line!");
      return parser_idle_state;
@@ -71,73 +64,28 @@ static state_t state_idle() {
    if(verify_urc_and_parse(buff, len)){
       ESP_LOGI(TAG, "Found URC, handling");
       post_urc_to_network_layer(get_urc_parsed_struct());
+      return NULL_STATE;
    } 
-#endif 
-  return NULL_STATE;
-}
-
-static state_t state_urc_handle() {
-  ESP_LOGI(TAG, "Handling URC!");
-
-  int len = 0;
-  bool status;
-  uint8_t* buff = at_parser_stringer(false, &status, &len);
-
-  vTaskDelay(100);
-  if(buff){
-     at_print_lines(buff, len);
-     //parse_at_string(buff, len, true, false); 
-  }
-  return parser_idle_state; 
-}
-
-static state_t state_handle_cmd_start () {
-  ESP_LOGI(TAG, "entering handle_cmd_start!");
   
-  int len = 0;
-  bool status;
-  int cme_err;
- 
-  int i = 0; 
-  for(;;)
-  {
-    printf("read - %d \n", i);
-    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    if(buff)
-    {
-      if(is_status_line(buff, len, &cme_err)){
-        ESP_LOGI(TAG, "Error - unexpected status line!");
-        return parser_idle_state;
-        //TODO: handle  
-      }
+   ESP_LOGE(TAG, "unknown sequence followed!");
+   ASSERT(0);
+   //TODO: handle
 
-      if(verify_urc_and_parse(buff, len)){
-        //TODO: handle URC
-      }
-
-      if( !at_line_explode(buff,len, 0)){
-        //good! 
-        return parser_handle_cmd_state;
-      } else {
-        //TODO: handle error!
-      }
-    }
-  }
-  return NULL_STATE;
+   return NULL_STATE;
 }
 
-static state_t state_handle_cmd () {
+static state_t state_handle_cmd_func () {
   ESP_LOGI(TAG, "entering handle_cmd!");
   mailbox_post(MAILBOX_POST_READY); 
 
   int cme_err =0;
   int len = 0;
   int line = 0;
-  bool status = false;
+  command_e cmd;
 
   for(;;)
   {
-    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     printf("%d ECHO len \n", len);
     if(buff)
     {
@@ -148,14 +96,21 @@ static state_t state_handle_cmd () {
       }
 
       if(verify_urc_and_parse(buff, len)){
-        //TODO: handle URC
+        continue;
       }
 
       if( !at_line_explode(buff,len, 0)){
-        // Foudn new command
-        break;
+        // verifiy we are dealing with the correct command
+        at_parsed_s * parsed_p = get_parsed_struct();
+        if (get_net_state_cmd() == parsed_p->type){
+          break;
+        } else {
+          ESP_LOGE(TAG, "State machine out of sync - unexpected command! (%d)", parsed_p->type);
+          ASSERT(0);
+        }
       } else {
-        //TODO: handle error!
+          ESP_LOGE(TAG, "State machine out of sync!");
+          //ASSERT(0);
       }
     }
   }
@@ -163,7 +118,7 @@ static state_t state_handle_cmd () {
   // parse the lines of a command (not including first)
   for(line =1; line < MAX_LINES_AT; line++)
   {
-    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if (buff){
       if (len == 0){
          ESP_LOGE(TAG, "Failed to pars!");
@@ -172,10 +127,13 @@ static state_t state_handle_cmd () {
         
       if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
+        
         print_parsed();
         puts("ready to consume"); 
+        
         mailbox_post(MAILBOX_POST_PROCESSED);
         puts("watiing for done!");
+        
         mailbox_wait(MAILBOX_WAIT_CONSUME);
         puts("done comsuing "); 
         return parser_idle_state;  
@@ -190,50 +148,7 @@ static state_t state_handle_cmd () {
   return NULL_STATE;
 }
 
-static state_t state_handle_write_start() {
-  ESP_LOGI(TAG, "entering handle_write_start!");
-#if 0 
-  int len = 0;
-  bool status;
-  int cme_err;
-  
-  for(;;)
-  {
-    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &status, &len);
-    printf("%d ECHO len \n", len);
-    if(buff)
-    {
-      if(is_status_line(buff, len, &cme_err)){
-        ESP_LOGI(TAG, "Error - unexpected status line!");
-        return parser_idle_state;
-        //TODO: handle  
-      }
-
-      if(is_urc(buff, len)){
-        //TODO: handle URC
-      }
-
-      if( !at_line_explode(buff,len, 0)){
-        if (true){
-        return parser_handle_cmd_state;
-        } else {
-          // TODO: handle
-        }
-      } else {
-        //TODO: handle error!
-      }
-    }
-  }
-  return NULL_STATE;
-#endif 
-}
-
-static state_t state_handle_write() {
-
-  if (at_incomming_peek() ) {
-    // Data availible
-    return parser_urc_state; 
-  }
+static state_t state_handle_write_func() {
 
   return NULL_STATE;
 }
@@ -292,10 +207,10 @@ static void parser_state_init_freertos_objects() {
 
 static bool event_filter_func(state_event_t event) {
   switch(event){
-    case(EVENT_URC_F)      : return true; 
-    case(EVENT_DONE_URC_F) : return true;
-    case(EVENT_ISSUE_CMD)  : return true;
-    case(EVENT_ISSUE_SEND) : return true;
+    case(EVENT_URC_F)       : return true; 
+    case(EVENT_DONE_URC_F)  : return true;
+    case(EVENT_ISSUE_CMD)   : return true;
+    case(EVENT_ISSUE_WRITE) : return true;
   }
 }
 
@@ -318,28 +233,3 @@ void parser_state_spawner() {
     // State the state machine
     start_new_state_machine(get_parser_state_handle());
 }
-
-
-//// all bellow is test, you can delete!
-//
-static void driver (void * arg){
-  bool status;
-  int size; 
-  for(;;){
-    char * line = at_parser_stringer(false, &status, &size);
-
-    if(status){
-      at_print_lines(line,size);
-    } else {
-      ESP_LOGE(TAG, "Found nothing!");
-    }
-  }
-}
-
-void parser_state_test(){
-  //parser_state_spawner();
-  char test[] = "+CFUN: 1,2,3";
-  int d = parse_at_string(test,9,PARSER_FULL_MODE, 0);
-  printf("%d \n", d);
-}
-

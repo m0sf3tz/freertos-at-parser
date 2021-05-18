@@ -13,36 +13,42 @@
 #include "network_state.h"
 #include "at_parser.h"
 #include "mailbox.h"
+#include "uart_core.h"
 
-/**********************************************************
-*                                    FORWARD DECLARATIONS *
-**********************************************************/
-static state_t state_detached();
-static state_t state_attached();
+/*********************************************************
+*                                   FORWARD DECLARATIONS *
+*********************************************************/
+static state_t state_detached_func();
+static state_t state_attached_func();
+static state_t state_write_func();
+
+static void set_net_state_cmd(command_e cmd);
 
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
-static const char        TAG[] = "NET_STATE";
-network_state_s          net_context;
-static  at_urc_parsed_s  urc_parsed;
+static const char         TAG[] = "NET_STATE";
+static network_state_s    net_context;
+static at_urc_parsed_s    urc_parsed;
+static SemaphoreHandle_t  network_state_mutex;
 
 // Translation Table
 static state_array_s network_translation_table[network_state_len] = {
-       { state_detached ,  portMAX_DELAY },
-       { state_attached ,  portMAX_DELAY }, 
+       { state_detached_func,  portMAX_DELAY },
+       { state_attached_func,  portMAX_DELAY }, 
+       { state_write_func   ,  portMAX_DELAY }, 
 };
 
 
-/**********************************************************
-*                                         STATE FUNCTIONS *
-**********************************************************/
-static state_t state_detached() {
+/*********************************************************
+*                                        STATE FUNCTIONS *
+*********************************************************/
+static state_t state_detached_func() {
   ESP_LOGI(TAG, "Entering detached state!");
   return NULL_STATE;
 }
 
-static state_t state_attached() {
+static state_t state_attached_func() {
   ESP_LOGI(TAG, "Entering attached state!");
   return NULL_STATE;
 }
@@ -118,30 +124,82 @@ static void urc_hanlder(void * arg){
 }
 
 
-void driver_b(void * arg){
+void dummy_callbuck(){
+  puts("dumy callback");
+  print_parsed();
+}
+
+
+static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum){
+  ASSERT(cmd);
+
+  get_mailbox_sem();
+
+  ESP_LOGI(TAG, "Posting issue cmd!");
+  state_post_event(EVENT_ISSUE_CMD);
+
+  ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
+  if (!mailbox_wait(MAILBOX_WAIT_READY)) goto fail;
+  set_net_state_cmd(cmd_enum);
+
+  ESP_LOGI(TAG, "ISSUE CMD-> %s", cmd);
+  if(at_command_issue_hal(cmd, len) == -1) goto fail;
+  
+  ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
+  
+  ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");
+  clb();
+
+  if(!mailbox_post(MAILBOX_POST_CONSUME)) goto fail;
+
+  put_mailbox_sem();
+  return true;
+
+fail:
+  ESP_LOGE(TAG, "Failed to issue cmd!");
+  put_mailbox_sem(); 
+  return false;
+}
+
+static void network_state_init_freertos_objects() {
+    network_state_mutex = xSemaphoreCreateMutex();
+
+    // make sure we init all the rtos objects
+    ASSERT(network_state_mutex);
+}
+
+static void network_state_init(){
+  network_state_init_freertos_objects();
 
   // State the state machine
   start_new_state_machine(get_network_state_handle());
-/*
-  int r = 0;
-  for(;;){
-      vTaskDelay(10000/portTICK_PERIOD_MS);
+}
 
-      if (r & 1 == 1){
-        char str[] = "AT+CFUN=0\r\n";
-        int len = strlen(str);
-        at_command_issue_hal(str, len);
-      } else {
-         puts("wtf?");
-         char str[] = "AT+CFUN=1\r\n";
-         int len = strlen(str);
-         at_command_issue_hal(str, len);
-      }
-      r++;
-      vTaskDelay(10000/portTICK_PERIOD_MS);
+static void set_net_state_cmd(command_e cmd){
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+      ESP_LOGE(TAG, "FAILED TO TAKE net mutext!");
+      ASSERT(0);
   }
-*/
+  net_context.curr_cmd = cmd;
+  xSemaphoreGive(network_state_mutex);
+}
 
+command_e get_net_state_cmd(){
+  command_e ret;
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+      ESP_LOGE(TAG, "FAILED TO TAKE net mutext!");
+      ASSERT(0);
+  }
+  ret = net_context.curr_cmd;
+  xSemaphoreGive(network_state_mutex);
+
+  return ret;
+}
+
+
+void driver_b(void * arg){
+  network_state_init();
 
   puts("Test");
   int len;
@@ -161,7 +219,9 @@ void driver_b(void * arg){
       r++;
 
       vTaskDelay(10000/portTICK_PERIOD_MS);
-
+      
+      send_cmd(str, len, dummy_callbuck, CFUN);
+/*
       get_mailbox_sem();
       state_post_event(EVENT_ISSUE_CMD); 
       puts("issue");
@@ -174,7 +234,7 @@ void driver_b(void * arg){
       mailbox_post(MAILBOX_POST_CONSUME);
       puts("done!");
       put_mailbox_sem();
-     
+  */   
       vTaskDelay(10000/portTICK_PERIOD_MS);
     }
   vTaskDelay(1000000);

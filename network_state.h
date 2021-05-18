@@ -1,9 +1,11 @@
 #pragma once
 #include "state_core.h"
+#include "at_parser.h"
 
 /*********************************************************
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
+command_e get_net_state_cmd();
 
 /*********************************************************
 *                                                GLOBALS *
@@ -13,18 +15,30 @@
 *                                               TYPEDEFS *
 *********************************************************/
 typedef int net_mode_t;
-typedef int cmd_t;
 typedef int network_status_t;
 
+// from KCNX_IND
+typedef enum {
+  disconnected,
+  connected,
+  failed_to_connect,
+  closed,
+  connecting,
+} pdp_network_status;
+
 typedef struct{
-  net_mode_t       mode;
-  cmd_t            curr_cmd;
-  network_status_t net_state;  
+  net_mode_t         mode;
+  command_e          curr_cmd;
+  network_status_t   net_state;  
+  pdp_network_status pdp_status;  // from KCNX_IND
+  int                pdp_session; // expect this to be only == 1 (won't use 2 sessions)
+  bool               udp_status;  // from KUDP_IND
 }network_state_s;
 
 typedef enum {
     network_attaching_state = 0,
     network_idle_state,
+    network_write_state,
 
     network_state_len //LEAVE AS LAST!
 } network_state_e;
@@ -33,6 +47,7 @@ typedef enum {
 typedef enum {
     NETWORK_ATTACHED = NETWORK_EVENT_START,
     NETWORK_DETACHED,
+    NETWORK_WRITE,
 
     network_event_len //LEAVE AS LAST!
 } network_event_e;
@@ -43,5 +58,7 @@ typedef enum {
 *********************************************************/
 
 /*********************************************************
-*                                                 DEFINES *
+*                                                DEFINES *
 *********************************************************/
+#define NET_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)
+#define PDP_INVALID          (-1)

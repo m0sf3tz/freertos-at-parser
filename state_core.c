@@ -38,7 +38,7 @@ static SemaphoreHandle_t consumer_sem;
 void add_event_consumer(state_init_s* thread_info) {
     ESP_LOGI(TAG, "Adding new state machine, name = %s", thread_info->state_name_string);
 
-    if (pdTRUE != xSemaphoreTake(consumer_sem, SATE_MUTEX_WAIT)) {
+    if (pdTRUE != xSemaphoreTake(consumer_sem, STATE_MUTEX_WAIT)) {
         ESP_LOGE(TAG, "FAILED TO TAKE consumer_sem!");
         ASSERT(0);
     }
@@ -122,7 +122,7 @@ static void event_multiplexer(void* v) {
 
         // Iterate through all the registered event consumers, see if they
         // signed up for an event, and if so, send the event to them
-        if (pdTRUE != xSemaphoreTake(consumer_sem, SATE_MUTEX_WAIT)) {
+        if (pdTRUE != xSemaphoreTake(consumer_sem, STATE_MUTEX_WAIT)) {
             ESP_LOGE(TAG, "FAILED TO TAKE consumer_sem!");
             ASSERT(0);
         }

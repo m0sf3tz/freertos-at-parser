@@ -72,14 +72,10 @@ uint8_t* at_incomming_get_stream(int *len){
     *len = rc;
 
     { // test. can remov
-    char test[200];
-    memset(test, 0 , 200);
-    memcpy(test, buff_s, rc);
-    printf("ECHO (%d):> %s \n", rc, test);
-    for(int i =0 ; i < rc; i++){
-      printf("%d: (%d) %c \n", i, test[i], test[i]);
-    }
-  
+      char test[200];
+      memset(test, 0 , 200);
+      memcpy(test, buff_s, rc);
+      printf("ECHO (%d):> %s \n", rc, test);
     }
     return buff_s;
   }

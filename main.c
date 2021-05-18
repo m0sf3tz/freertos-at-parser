@@ -153,7 +153,7 @@ int main( void )
     parser_state_spawner();
     network_driver();
 #else
-    network_driver();
+    mailbox_test();
 #endif 
     vTaskStartScheduler();
     return 0;

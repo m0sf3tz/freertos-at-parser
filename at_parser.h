@@ -7,17 +7,7 @@
 /**********************************************************
 *                                                 DEFINES *
 **********************************************************/
-#define KUDP_RCV     (1)
-#define KUDP_NOTIF   (2)
-#define CFUN         (3)
-#define CEREG        (4)
-#define CGREG        (5)
-#define KUDPCFG      (6)
-#define KALTCFG      (7)
-#define KBNDCFG      (8)
-#define ATI          (9)
-#define CESQ         (10)
-#define UNKNOWN_TYPE (-1)
+#define UNKNOWN_TYPE  (-1)
 
 #define MAX_LINES_AT   (10)
 #define MAX_DELIMITERS (7)
@@ -49,6 +39,19 @@
 *********************************************************/
 typedef int at_type_t;
 typedef int at_status_t;
+
+typedef enum {
+  KUDP_RCV     = 1,
+  KUDP_NOTIF,
+  CFUN,
+  CEREG,
+  CGREG,
+  KUDPCFG,
+  KALTCFG,
+  KBNDCFG,
+  ATI,
+  CESQ,
+} command_e;
 
 typedef enum {
   READ_CMD,
@@ -139,12 +142,14 @@ typedef enum {
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-uint8_t         * at_parser_stringer(parser_del_e mode, bool * status, int * len);
-int               parse_at_string(char * str, int len, parser_mode_e mode, int line);
-bool              check_for_type(char *str,int len, parser_mode_e mode);
-at_type_t         get_type(char *s);
-bool              verify_and_parse_urc(char * str, int len);
-void              print_parsed(); //debug
-void              print_parsed_urc(at_urc_parsed_s * urc);
-at_parsed_s     * get_parsed_struct();
-at_urc_parsed_s * get_urc_parsed_struct();
+uint8_t         *at_parser_stringer(parser_del_e mode, int * len);
+int              parse_at_string(char * str, int len, parser_mode_e mode, int line);
+bool             check_for_type(char *str,int len, parser_mode_e mode);
+at_type_t        get_type(char *s);
+bool             verify_urc_and_parse(char * str, int len);
+void             print_parsed();
+void             print_parsed_urc(at_urc_parsed_s * urc);
+at_parsed_s     *get_parsed_struct();
+at_urc_parsed_s *get_urc_parsed_struct();
+at_status_t      is_status_line(char * line, size_t len, int *cme_error);
+int              at_line_explode (char * str, const int len, int line);

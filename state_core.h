@@ -85,5 +85,5 @@ extern QueueHandle_t events_net_q;
 #define GENERIC_QUEUE_TIMEOUT (2500 / portTICK_PERIOD_MS)
 #define INVALID_EVENT         (0xFFFFFFFF)
 #define EVENT_QUEUE_MAX_DEPTH (16)
-#define SATE_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)
+#define STATE_MUTEX_WAIT      (2500 / portTICK_PERIOD_MS)
 #define NULL_STATE            (0xFFFF)

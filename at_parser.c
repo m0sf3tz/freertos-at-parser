@@ -202,7 +202,7 @@ return true;
 }
 
 // debug
-void at_print_lines(uint8_t* line, size_t len, uint8_t* rest){
+void at_print_lines(uint8_t* line, int len, uint8_t* rest){
   static int current_response_lines = 0;
   static char buff[MAX_LINES_AT][MAX_LINE_SIZE];
 
@@ -252,7 +252,7 @@ bool check_for_type(char *str,int len, parser_mode_e mode){
 }
 
 // Takes a line (AT+CFUN=1), and breaks it down into chunks
-int at_line_explode (const char * str, const int len, int line) {
+int at_line_explode (char * str, const int len, int line) {
   char type[MAX_LEN_TYPE];
   const char c[2] = ",";
   int lead = 0;
@@ -398,138 +398,6 @@ seperate_args:
 return 0;
 }
 
-int parse_at_string(char * str, int len, parser_mode_e mode, int line) {
-#if 0
-  char internal_buff[512]; //used in strtok_r
-  char type[MAX_LEN_TYPE];
-  const char c[2] = ",";
-  int lead = 0;
-  int lag  = 0;  
-  int curret_line = 0;
-  memset(type, 0, sizeof(type));
-  int type_int;
-  
-  if (!str){
-    ESP_LOGE(TAG, "NULL INPUT!");
-    ASSERT(0);
-  }
-
-  if (len == 0){
-      ESP_LOGE(TAG, "WRONG PARAM INPUT!");
-      ASSERT(0);
-  }
-
-  if( mode == PARSER_CMD_MODE || mode == PARSER_QRY_MODE ){
-    char del[2];
-    if( mode == PARSER_QRY_MODE){
-      strncpy(del, "?", 2);
-    } else {
-      strncpy(del, "=", 2);
-    }
-
-    // If we are trying to determine type
-    if ( mode == PARSER_CMD_MODE){
-      if(!check_for_type(str, len, PARSER_CMD_MODE)){
-        ESP_LOGE(TAG, "Can't find command!");
-        return 0;
-     }
-    }
-
-    if ( mode == PARSER_QRY_MODE){
-      if(!check_for_type(str, len, PARSER_QRY_MODE)){
-        ESP_LOGE(TAG, "Can't find query!");
-        return 0;
-     }
-    }
-
-    char *saveptr = NULL;
-    char *ret = strtok_r(str, del, &saveptr);
-    // ret should be AT+CFUN
-    if(ret){
-        ESP_LOGI(TAG, "found new line (%s), del = %s", ret, del);
-        return get_type_cmd(str);
-      }
-    }
- 
-    // Cant parse termination 
-    if (str[lead] != '+'){
-        ESP_LOGE(TAG, "can't handle, leading not +");
-        return -1; 
-    }
-    lag++;
-    lead++;
-   
-    // searches for the first ":" 
-    while (lead != '\0'){
-      if (lead > len - 1){ // lead is zero based!
-        ESP_LOGE(TAG, "Parsing failed! cant find :");
-        return -1;
-      }
-      if (str[lead] == ':'){
-        break;
-      }
-      lead++;
-    }
-
-    if ( 0 >= (lead - lag) ) {
-      ESP_LOGE(TAG, "Logic failed!");
-      return -1;
-    }
-    memcpy(type, str+lag, lead-lag);
-
-    if (mode == PARSER_URC_MODE){
-      type_int = get_type(type);
-      if (is_urc(type_int)){
-        ESP_LOGI(TAG, "Found URC! == %s", type);
-        return 1;
-      }
-    }
-
-    // if we get here, we will do a full parse of the string
-
-    // move it up to the first delimiter
-    lead = lead + 2;
-    lag = lead; 
-    if (lead > len - 1){ // lead is zero based!
-       ESP_LOGE(TAG, "Error!");
-       return -1;
-    }
-
-    // seperate the individual parameters
-    int param = 0;
-    char * token = NULL;
-    for(;;)
-    {
-        if (param==0){
-          token = strtok(str+lead, ",");
-        } else {
-          token = strtok(NULL, c);
-        }   
-
-        if (token == NULL){
-          break;
-        }
-        
-        if (param == MAX_DELIMITERS){
-          ESP_LOGE(TAG, "Exceed max params!");
-          break;
-        }
-        strncpy(parsed.param_arr[line][param].str, token, MAX_LEN_PARAM);
-        // check to see if we can convert the parameter into an number
-        int test_atoi;
-        if( myatoi(parsed.param_arr[line][param].str, &test_atoi)) {
-          // dealing with a number!
-          parsed.param_arr[line][param].is_number = true;
-          parsed.param_arr[line][param].val = test_atoi;
-        }	else {
-          parsed.param_arr[line][param].is_number = false;
-        }
-        param++;
-    }
-#endif 
-  return 1;
-}
-
 at_parsed_s * get_parsed_struct(){
   return &parsed;
 }
@@ -627,18 +495,13 @@ int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){
 // 12: (10) <LF>  <
 //     
 // size: returns the total number of characters in the string, not including NULL
-static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, int * size){
+static uint8_t * at_parser_stringer_private(parser_del_e mode, int * size){
   static int iter_lead; // Reads ahead until all of end delimiter is hit 
   static int iter_lag;  // Lags behind while iter_lead hunts for EOL delimiter
   static int len;       // current length of line being parsed
   static bool found_line;
   int new_line_size = 0;
   memset(line_found, 0 , sizeof(line_found));
-
-  if(!status){
-    ESP_LOGE(TAG, "Null param!");
-    ASSERT(0);
-  }
 
   for(;;){
     if(iter_lead == len){ // exhausted current buffer 
@@ -674,7 +537,6 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
       } else {
         if ( len + new_len > BUFF_SIZE){
           ESP_LOGE(TAG, "Exceeded buffer size... error! Resetting!");
-          *status = false;
           return NULL;
         }
         iter_lead++;
@@ -701,7 +563,6 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
       iter_lead = 0;
       iter_lag = 0;
       found_line = true;
-      *status = true;
       at_print_lines(line_found, *size, buffer);
       return line_found;
     } else if (LONG_DELIMITER_FOUND == parse_status){
@@ -712,7 +573,6 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
       iter_lead = 0;
       iter_lag = 0;
       found_line = true;
-      *status = true;
       return line_found;
     }else if ( PARTIAL_DELIMETER_SCANNING == parse_status ) {
       if (iter_lead == len){
@@ -730,7 +590,7 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, bool * status, in
   }
 }
 // like above, but does not properagte zero lenght reads
-uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
+uint8_t * at_parser_stringer(parser_del_e mode, int * len){
   if (!len){
     ESP_LOGE(TAG, "len == null");
     ASSERT(0);
@@ -740,7 +600,7 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
   uint8_t * ret;
 
   for(;;){
-    ret = at_parser_stringer_private( mode,  status, len);
+    ret = at_parser_stringer_private(mode, len);
     if (ret == NULL){
       return NULL;
     }
@@ -757,11 +617,6 @@ uint8_t * at_parser_stringer(parser_del_e mode, bool * status, int * len){
       return ret;
     }
   }
-}
-
-
-bool stream_availible(){
-  
 }
 
 

@@ -28,6 +28,72 @@ static SemaphoreHandle_t  mailbox_sem;
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
+static void debug_print_wait(bool set, int wait_bits){
+  if (wait_bits != MAILBOX_WAIT_READY     &&
+      wait_bits != MAILBOX_WAIT_CONNECT   &&
+      wait_bits != MAILBOX_WAIT_PROCESSED &&
+      wait_bits != MAILBOX_WAIT_CONSUME ) {
+    
+    ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
+    ASSERT(0);
+  }
+  char to_s[] = "TIMEOUT!";
+  char set_s[] = "SET!";
+
+  switch(wait_bits){
+    case(MAILBOX_WAIT_READY):
+      if(set) 
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_READY", set_s);
+     else
+       ESP_LOGI(TAG, "%s: MAILBOX_WAIT_READY", to_s); 
+      break;
+    case(MAILBOX_WAIT_CONNECT):
+      if (set)
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONNECT", set_s); 
+      else 
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONNECT", to_s); 
+      break;
+    case(MAILBOX_WAIT_PROCESSED):
+      if(set)
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_PROCESSED", set_s);
+       else
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_PROCESSED ", to_s); 
+      break;
+    case(MAILBOX_WAIT_CONSUME):
+      if (set)
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONSUME", set_s); 
+      else
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONSUME", to_s); 
+      break;
+  }
+}
+
+static void debug_print_post(int wait_bits){
+  if (wait_bits != MAILBOX_POST_READY     &&
+      wait_bits != MAILBOX_POST_CONNECT   &&
+      wait_bits != MAILBOX_POST_PROCESSED &&
+      wait_bits != MAILBOX_POST_CONSUME ) {
+    
+    ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
+    ASSERT(0);
+  }
+
+  switch(wait_bits){
+    case(MAILBOX_POST_READY):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_READY");
+      break;
+    case(MAILBOX_POST_CONNECT):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_CONNECT");
+      break;
+    case(MAILBOX_WAIT_PROCESSED):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_PROCESSED ");
+      break;
+    case(MAILBOX_WAIT_CONSUME):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_CONSUME");
+      break;
+  }
+}
+
 void create_mailbox_freertos_objects(){
   event_group = xEventGroupCreate();
   mailbox_sem = xSemaphoreCreateMutex();
@@ -46,23 +112,18 @@ bool mailbox_wait(EventBits_t wait_bits) {
     ASSERT(0);
   }  
 
-
-  // Don't care about current state - clear it!
-  xEventGroupClearBits(event_group, wait_bits);
-
-  ESP_LOGI(TAG, "Waiting for event (%d)", wait_bits);
   EventBits_t uxBits = xEventGroupWaitBits(event_group,
                       wait_bits,
-                      pdTRUE,          // clear bit on exit
+                      pdTRUE,          // dont bit on exit (if multiple bits are set we want to handle them all)
                       pdFALSE,         // Just wait for 1 bit ( we only have 1 bit)
                       EVENT_WAIT_PERIOD
       );
- 
+
   if (uxBits == wait_bits){
-    ESP_LOGI(TAG, "Event group set! (%d)", (int)wait_bits);
+    debug_print_wait(true, (int)wait_bits);
     return true;
   } else {
-    ESP_LOGI(TAG, "Event group TO %d", (int)wait_bits);
+    debug_print_wait(false, (int)wait_bits);
     return false;
   } 
 }
@@ -76,8 +137,10 @@ bool mailbox_post(EventBits_t post_bits){
     ESP_LOGE(TAG, "Unknown bits posted!");
     ASSERT(0);
   }  
-
+  
+  debug_print_post(post_bits);
   xEventGroupSetBits(event_group, post_bits);
+  return true;
 }
 
 void get_mailbox_sem(){
@@ -94,13 +157,15 @@ void put_mailbox_sem(){
 
 void a(void * arg){
   mailbox_wait(MAILBOX_WAIT_CONSUME);
+  mailbox_wait(MAILBOX_WAIT_READY);
   puts("done!");
   vTaskDelay(1000000);
 }
 
 void b(void * arg){
   vTaskDelay(100);
-  mailbox_post(MAILBOX_POST_READY);
+  mailbox_post(MAILBOX_POST_CONSUME);
+  mailbox_post(MAILBOX_WAIT_READY);
 
   puts("oisted");
   vTaskDelay(1000000);

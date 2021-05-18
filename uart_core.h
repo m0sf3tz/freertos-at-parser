@@ -4,9 +4,10 @@
 /*********************************************************
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
-bool at_incomming_peek();
-bool at_incomming_get_byte(char * c);
-uint8_t* at_incomming_get_stream(int *len);
+bool      at_incomming_peek();
+bool      at_incomming_get_byte(char * c);
+uint8_t  *at_incomming_get_stream(int *len);
+int       at_command_issue_hal(char *cmd, int len);
 
 /*********************************************************
 *                                                GLOBALS *
