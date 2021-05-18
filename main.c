@@ -146,6 +146,7 @@ int main( void )
     extern void parser_test();
     extern void create_mailbox_freertos_objects();
     extern void mailbox_test();
+    extern void create_kcnxcfg_cmd(char * str, int size);
 #if 1
     create_mailbox_freertos_objects();
     spawn_uart_thread();
@@ -153,7 +154,7 @@ int main( void )
     parser_state_spawner();
     network_driver();
 #else
-    mailbox_test();
+    parser_test();
 #endif 
     vTaskStartScheduler();
     return 0;

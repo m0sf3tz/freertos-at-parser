@@ -30,7 +30,7 @@ static void    post_urc_to_network_layer(at_urc_parsed_s * ptr);
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
-static const char        TAG[] = "NET_STATE";
+static const char        TAG[] = "PARSER_STATE";
 static SemaphoreHandle_t parser_state_mutex;
 
 // Translation Table
@@ -103,6 +103,8 @@ static state_t state_handle_cmd_func () {
         // verifiy we are dealing with the correct command
         at_parsed_s * parsed_p = get_parsed_struct();
         if (get_net_state_cmd() == parsed_p->type){
+          // set the token, we will verify in network state
+          parsed_p->token = get_net_state_token();
           break;
         } else {
           ESP_LOGE(TAG, "State machine out of sync - unexpected command! (%d)", parsed_p->type);
@@ -211,6 +213,7 @@ static bool event_filter_func(state_event_t event) {
     case(EVENT_DONE_URC_F)  : return true;
     case(EVENT_ISSUE_CMD)   : return true;
     case(EVENT_ISSUE_WRITE) : return true;
+    defaut                  : return false;
   }
 }
 

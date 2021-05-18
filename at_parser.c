@@ -94,6 +94,8 @@ at_type_t get_type_cmd(char *s){
   if (strncmp(s, "AT+KBNDCFG",10)  == 0) return KBNDCFG;
   if (strncmp(s, "AT+ATI",6)       == 0) return ATI;
   if (strncmp(s, "AT+CESQ",7)      == 0) return CESQ;
+  if (strncmp(s, "AT+KCNXCFG",10)  == 0) return KCNXCFG;
+  if (strncmp(s, "AT+CEREG",8)     == 0) return CEREG;
   // no match,
 	return UNKNOWN_TYPE ;
 }
@@ -114,6 +116,7 @@ at_type_t get_type(char *s){
   if (strcmp(s, "KBDNCFG")    == 0) return KBNDCFG;
   if (strcmp(s, "ATI")        == 0) return ATI;
   if (strcmp(s, "CESQ")       == 0) return CESQ;
+  if (strcmp(s, "KCNXCFG")    == 0) return KCNXCFG;
 	// no match,
 	return UNKNOWN_TYPE;
 }
@@ -302,6 +305,7 @@ int at_line_explode (char * str, const int len, int line) {
         goto exit;
       case('='):
         ESP_LOGI(TAG, "Discovered a write");
+        iter++;
         extended_at = WRITE_CMD;
         goto exit;
       case('\0'):
@@ -322,7 +326,9 @@ exit:
  parsed.type = get_type_cmd(str);
 
  if (extended_at == WRITE_CMD){
-  iter++;
+  // move str up to CMD=1,2,3
+  //            (here)  ^  
+  str = iter;
   goto seperate_args;
  }
  // nothing left to do - no further args
@@ -362,7 +368,7 @@ find_first_respond:
     return -1;
   }
 
-  // move it up to the first delimiter ":"
+  // move it up to the first delimiter 2 after ":"
   lead = lead + 2;
  
 seperate_args:
@@ -621,7 +627,6 @@ uint8_t * at_parser_stringer(parser_del_e mode, int * len){
 
 
 void print_parsed(){
-#if 0
   printf("type == (%d) \n", parsed.type);
   printf("form == (%d) \n", parsed.form);
 
@@ -631,7 +636,6 @@ void print_parsed(){
 		    printf("%s %d %d \n", parsed.param_arr[j][i].str, parsed.param_arr[j][i].is_number, parsed.param_arr[j][i].val);
 	    }
   }
-#endif 
 }
 
 void print_parsed_urc(at_urc_parsed_s * urc){
@@ -645,6 +649,20 @@ void print_parsed_urc(at_urc_parsed_s * urc){
 void parser_test(){
 
   puts("starting test");
+  char first_1[] = "AT+CFUN=1,2"; 
+  at_line_explode (first_1, strlen(first_1), 0);
+  print_parsed();
+  if(parsed.form != WRITE_CMD){
+    ASSERT(0);
+  }
+  if(parsed.type != CFUN){
+    ASSERT(0);
+  }
+  if(parsed.param_arr[0][0].val != 1){
+    ASSERT(0);
+  }
+  
+  
   char test[] = "AT+CFUN=1,2"; 
   at_line_explode (test, strlen(test), 0);
   char test2[] = "+CFUN: 4,5"; 

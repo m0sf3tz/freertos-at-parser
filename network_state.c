@@ -14,6 +14,7 @@
 #include "at_parser.h"
 #include "mailbox.h"
 #include "uart_core.h"
+#include "threegpp.h"
 
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
@@ -23,7 +24,12 @@ static state_t state_attached_func();
 static state_t state_write_func();
 
 static void set_net_state_cmd(command_e cmd);
+static void set_net_state_token();
 
+static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum);
+
+static void verify_kcnxfg();
+static void verify_cereg();
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
@@ -31,6 +37,7 @@ static const char         TAG[] = "NET_STATE";
 static network_state_s    net_context;
 static at_urc_parsed_s    urc_parsed;
 static SemaphoreHandle_t  network_state_mutex;
+static char               misc_buff[MISC_BUFF_SIZE]; 
 
 // Translation Table
 static state_array_s network_translation_table[network_state_len] = {
@@ -45,11 +52,23 @@ static state_array_s network_translation_table[network_state_len] = {
 *********************************************************/
 static state_t state_detached_func() {
   ESP_LOGI(TAG, "Entering detached state!");
+  ESP_LOGI(TAG, "------------>ENTERING");
+/*  
+  memcpy(misc_buff, "AT+CEREG=2\r\n", strlen("AT+CEREG=2\r\n"));
+  int len = strlen(misc_buff);
+ 
+  //verify we are detatched 
+  send_cmd(misc_buff, len, verify_cereg, CEREG);
+*/
   return NULL_STATE;
 }
 
 static state_t state_attached_func() {
   ESP_LOGI(TAG, "Entering attached state!");
+
+  //create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
+  //send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, CFUN);
+  
   return NULL_STATE;
 }
 
@@ -60,11 +79,12 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
       switch(event){
         case (NETWORK_ATTACHED):
             ESP_LOGI(TAG, "detached->attached");
-            *curr_state = network_idle_state;
+            *curr_state = network_attached_state;
             break;
       }
   }
-  if (*curr_state == network_idle_state) {
+
+  if (*curr_state == network_attached_state) {
       switch(event){
         case (NETWORK_DETACHED):
             ESP_LOGI(TAG, "attached->detached");
@@ -81,9 +101,10 @@ static char* event_print_func(state_event_t event) {
 
 static bool event_filter_func(state_event_t event) {
   switch(event){
-    case(NETWORK_ATTACHED)   : return true; 
-    case(NETWORK_DETACHED)   : return true; 
+    case(NETWORK_ATTACHED): return true; 
+    case(NETWORK_DETACHED): return true; 
   }
+  return false;
 }
 
 /*********************************************************
@@ -123,12 +144,35 @@ static void urc_hanlder(void * arg){
   }
 }
 
-
 void dummy_callbuck(){
   puts("dumy callback");
   print_parsed();
 }
 
+static void verify_kcnxfg(){
+  puts("dumy callback");
+  print_parsed();
+}
+
+static void verify_cereg(){
+
+  print_parsed();
+
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != CEREG){
+    ESP_LOGE(TAG, "CMD type not CEREG -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+  if(parsed->form != READ_CMD ){
+    ESP_LOGE(TAG, "form type not CEREG -> (%d)", parsed->form);
+    ASSERT(0);
+  }
+
+  if (parsed->param_arr[CEREG_STATUS_LINE][CEREG_STATUS_INDEX].val == CEREG_CONNECTED){
+    ESP_LOGI(TAG, "Registered! - posting!");
+    state_post_event(NETWORK_ATTACHED);
+  }  
+}
 
 static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
@@ -141,13 +185,21 @@ static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enu
   ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
   if (!mailbox_wait(MAILBOX_WAIT_READY)) goto fail;
   set_net_state_cmd(cmd_enum);
+  set_net_state_token();
 
   ESP_LOGI(TAG, "ISSUE CMD-> %s", cmd);
   if(at_command_issue_hal(cmd, len) == -1) goto fail;
   
   ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
   if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
-  
+ 
+  // verify token
+  at_parsed_s * parsed_p = get_parsed_struct();
+  if (get_net_state_token() != parsed_p->token){
+    ESP_LOGE(TAG, "TOKEN NOT CORRECT!");
+    ASSERT(0);
+  }
+
   ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");
   clb();
 
@@ -197,6 +249,27 @@ command_e get_net_state_cmd(){
   return ret;
 }
 
+static void set_net_state_token(){
+  static int token;
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+      ESP_LOGE(TAG, "FAILED TO TAKE net mutext!");
+      ASSERT(0);
+  }
+  net_context.token = token;
+  xSemaphoreGive(network_state_mutex);
+}
+
+int get_net_state_token(){
+  int ret;
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+      ESP_LOGE(TAG, "FAILED TO TAKE net mutext!");
+      ASSERT(0);
+  }
+  ret = net_context.token;
+  xSemaphoreGive(network_state_mutex);
+
+  return ret;
+}
 
 void driver_b(void * arg){
   network_state_init();
@@ -208,7 +281,7 @@ void driver_b(void * arg){
   int r = 0;
 
   for(;;){
-      if (r & 1 == 1){
+        if (r & 1 == 1){
         memcpy(str, "AT+CFUN=0\r\n", strlen("AT+CFUN=0\r\n"));
         len = strlen(str);
 
@@ -221,6 +294,7 @@ void driver_b(void * arg){
       vTaskDelay(10000/portTICK_PERIOD_MS);
       
       send_cmd(str, len, dummy_callbuck, CFUN);
+      
 /*
       get_mailbox_sem();
       state_post_event(EVENT_ISSUE_CMD); 

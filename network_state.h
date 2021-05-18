@@ -6,7 +6,7 @@
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
 command_e get_net_state_cmd();
-
+int       get_net_state_token();
 /*********************************************************
 *                                                GLOBALS *
 *********************************************************/
@@ -33,23 +33,22 @@ typedef struct{
   pdp_network_status pdp_status;  // from KCNX_IND
   int                pdp_session; // expect this to be only == 1 (won't use 2 sessions)
   bool               udp_status;  // from KUDP_IND
+  int                token;       // used to keep parser and network states in sync 
 }network_state_s;
 
 typedef enum {
-    network_attaching_state = 0,
-    network_idle_state,
-    network_write_state,
+  network_attaching_state = 0,
+  network_attached_state,
 
-    network_state_len //LEAVE AS LAST!
+  network_state_len //LEAVE AS LAST!
 } network_state_e;
 
 
 typedef enum {
-    NETWORK_ATTACHED = NETWORK_EVENT_START,
-    NETWORK_DETACHED,
-    NETWORK_WRITE,
+  NETWORK_ATTACHED = NETWORK_EVENT_START,
+  NETWORK_DETACHED,
 
-    network_event_len //LEAVE AS LAST!
+  network_event_len //LEAVE AS LAST!
 } network_event_e;
 
 
@@ -62,3 +61,4 @@ typedef enum {
 *********************************************************/
 #define NET_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)
 #define PDP_INVALID          (-1)
+#define MISC_BUFF_SIZE       (100)

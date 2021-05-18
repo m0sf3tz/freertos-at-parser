@@ -51,6 +51,7 @@ typedef enum {
   KBNDCFG,
   ATI,
   CESQ,
+  KCNXCFG
 } command_e;
 
 typedef enum {
@@ -105,6 +106,12 @@ typedef struct {
 	// +KUDP_RCV: "54.189.156.244",...
   // the first param is "54.1...", etc
 	at_param_s param_arr[MAX_LINES_AT][MAX_DELIMITERS];
+
+  // network_parser sets a token which
+  // at_parser puts into the reponse
+  // to make sure both state machines 
+  // are in sync 
+  int token;
 }at_parsed_s;
 
 
