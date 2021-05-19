@@ -15,11 +15,6 @@
 #define MAX_LEN_PARAM  (35)
 #define MAX_LEN_RAW    (150)
 
-#define LINE_TERMINATION_INDICATION_NONE (0)
-#define LINE_TERMINATION_INDICATION_OK (1)
-#define LINE_TERMINATION_INDICATION_ERROR (2)
-#define LINE_TERMINATION_INDICATION_CME_ERROR (3)
-
 #define LINE_WAS_NOT_DATA_RELATED (0)
 #define LINE_WAS_DATA_RELATED (1)
 #define LINE_WAS_CONNECT (2)
@@ -39,6 +34,18 @@
 *********************************************************/
 typedef int at_type_t;
 typedef int at_status_t;
+
+typedef enum {
+ LINE_TERMINATION_INDICATION_NONE,
+ LINE_TERMINATION_INDICATION_OK,
+ LINE_TERMINATION_INDICATION_ERROR, 
+ LINE_TERMINATION_INDICATION_CME_ERROR, 
+} at_modem_respond_e;
+
+typedef enum {
+  AT_PROCESSED_GOOD,
+  AT_PROCESSED_TIMEOUT
+} at_processed_status_e;
 
 typedef enum {
   KUDP_RCV     = 1,
@@ -91,8 +98,10 @@ typedef struct {
   // type is CREG
 	at_type_t type;
 
-  // set to either OK or ERROR based on the command status.
-  at_status_t status;
+  // set to either OK or ERROR, this is not the AT respond from modem,
+  // for examlpe, if the parser_state times out reading from the UART 
+  // port, this would be set accordingly
+  at_processed_status_e status;
 
   // READ/WRITE/EXEC
   discovered_form form;
@@ -112,6 +121,11 @@ typedef struct {
   // to make sure both state machines 
   // are in sync 
   int token;
+
+  // this is the AT respond FROM the modem
+  // ie one of (ERROR, OK, +CME ERROR)
+  at_modem_respond_e response;
+
 }at_parsed_s;
 
 
@@ -149,14 +163,15 @@ typedef enum {
 /**********************************************************
 *                                        GLOBAL FUNCTIONS *
 **********************************************************/
-uint8_t         *at_parser_stringer(parser_del_e mode, int * len);
-int              parse_at_string(char * str, int len, parser_mode_e mode, int line);
-bool             check_for_type(char *str,int len, parser_mode_e mode);
-at_type_t        get_type(char *s);
-bool             verify_urc_and_parse(char * str, int len);
-void             print_parsed();
-void             print_parsed_urc(at_urc_parsed_s * urc);
-at_parsed_s     *get_parsed_struct();
-at_urc_parsed_s *get_urc_parsed_struct();
-at_status_t      is_status_line(char * line, size_t len, int *cme_error);
-int              at_line_explode (char * str, const int len, int line);
+uint8_t            *at_parser_stringer(parser_del_e mode, int * len);
+int                 parse_at_string(char * str, int len, parser_mode_e mode, int line);
+bool                check_for_type(char *str,int len, parser_mode_e mode);
+at_type_t           get_type(char *s);
+bool                verify_urc_and_parse(char * str, int len);
+void                print_parsed();
+void                print_parsed_urc(at_urc_parsed_s * urc);
+at_parsed_s        *get_parsed_struct();
+at_urc_parsed_s    *get_urc_parsed_struct();
+at_modem_respond_e  is_status_line(char * line, size_t len, int *cme_error);
+int                 at_line_explode (char * str, const int len, int line);
+void                clear_at_parsed_struct();

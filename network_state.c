@@ -41,7 +41,7 @@ static char               misc_buff[MISC_BUFF_SIZE];
 
 // Translation Table
 static state_array_s network_translation_table[network_state_len] = {
-       { state_detached_func,  portMAX_DELAY },
+       { state_detached_func,  10000 },
        { state_attached_func,  portMAX_DELAY }, 
        { state_write_func   ,  portMAX_DELAY }, 
 };
@@ -51,23 +51,25 @@ static state_array_s network_translation_table[network_state_len] = {
 *                                        STATE FUNCTIONS *
 *********************************************************/
 static state_t state_detached_func() {
+  static int i;
+
   ESP_LOGI(TAG, "Entering detached state!");
   ESP_LOGI(TAG, "------------>ENTERING");
   
-  memcpy(misc_buff, "AT+CEREG?\r\n", strlen("AT+CEREG?\r\n"));
+  memcpy(misc_buff, "AT+CEREGz?\r\n", strlen("AT+CEREGz?\r\n"));
   int len = strlen(misc_buff);
  
   //verify we are detatched 
   send_cmd(misc_buff, len, verify_cereg, CEREG);
-
+ 
   return NULL_STATE;
 }
 
 static state_t state_attached_func() {
   ESP_LOGI(TAG, "Entering attached state!");
 
-  //create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
-  //send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, CFUN);
+  create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
+  send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, KCNXCFG);
   
   return NULL_STATE;
 }
@@ -150,12 +152,20 @@ void dummy_callbuck(){
 }
 
 static void verify_kcnxfg(){
-  puts("dumy callback");
   print_parsed();
+  
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != KCNXCFG){
+    ESP_LOGE(TAG, "CMD type not kcnxfg -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+  if(parsed->form != WRITE_CMD ){
+    ESP_LOGE(TAG, "form type not write -> (%d)", parsed->form);
+    ASSERT(0);
+  }
 }
 
 static void verify_cereg(){
-
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -164,7 +174,7 @@ static void verify_cereg(){
     ASSERT(0);
   }
   if(parsed->form != READ_CMD ){
-    ESP_LOGE(TAG, "form type not CEREG -> (%d)", parsed->form);
+    ESP_LOGE(TAG, "form type not read -> (%d)", parsed->form);
     ASSERT(0);
   }
 
@@ -176,7 +186,8 @@ static void verify_cereg(){
 
 static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
-
+  at_parsed_s * parsed_p = get_parsed_struct();
+  
   get_mailbox_sem();
 
   ESP_LOGI(TAG, "Posting issue cmd!");
@@ -192,12 +203,21 @@ static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enu
   
   ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
   if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
- 
+
   // verify token
-  at_parsed_s * parsed_p = get_parsed_struct();
   if (get_net_state_token() != parsed_p->token){
     ESP_LOGE(TAG, "TOKEN NOT CORRECT!");
     ASSERT(0);
+  }
+
+  // verify status 
+  if (parsed_p->status != AT_PROCESSED_GOOD){
+    // unstuck parser_state
+     mailbox_post(MAILBOX_POST_CONSUME);
+
+    ESP_LOGE(TAG, "Error! status = %d", parsed_p->status);
+    //TODO: handle!
+    goto fail;
   }
 
   ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");

@@ -404,6 +404,10 @@ seperate_args:
 return 0;
 }
 
+void clear_at_parsed_struct(){
+  memset(&parsed, 0, sizeof(at_parsed_s));
+}
+
 at_parsed_s * get_parsed_struct(){
   return &parsed;
 }
@@ -430,7 +434,7 @@ bool is_connect_line(char * line, size_t len){
 
 // checks for command terminating line
 // (OK, +CME ERROR: <N>, ERROR)
-at_status_t is_status_line(char * line, size_t len, int *cme_error){
+at_modem_respond_e is_status_line(char * line, size_t len, int *cme_error){
   if (!line){
     ESP_LOGE(TAG, "NULL line!");
     ASSERT(0);
@@ -442,7 +446,34 @@ at_status_t is_status_line(char * line, size_t len, int *cme_error){
     return LINE_TERMINATION_INDICATION_NONE; 
   }
 
-  if ( strncmp(line, "OK", len) == 0 ) return LINE_TERMINATION_INDICATION_OK; 
+  if ( strncmp(line, "OK", len) == 0 )    return LINE_TERMINATION_INDICATION_OK; 
+  if ( strncmp(line, "ERROR", len) == 0 ) return LINE_TERMINATION_INDICATION_ERROR; 
+  if ( strncmp(line, "+CME ERROR:", strlen("+CME ERROR:")) == 0 ){
+    int iter = 0;
+    while(line[iter] != ':'){
+      if(iter > len){
+        ESP_LOGE(TAG, "did not find termination where expected!");
+        ASSERT(0);
+      }
+      iter++;
+    }
+
+    // we need to go 2 more, number starts after:  (here)
+    // +CME ERROR: 12
+    //           ^ ^
+    iter = iter + 2;
+    if(iter > len){
+       ESP_LOGE(TAG, "did not find termination where expected!");
+       ASSERT(0);
+    }
+    
+    if(!myatoi(line+iter, cme_error)){
+       ESP_LOGE(TAG, "could not find CME error!");
+       ASSERT(0);
+    }
+
+    return LINE_TERMINATION_INDICATION_CME_ERROR; 
+  } 
   
   return LINE_TERMINATION_INDICATION_NONE; 
 }
@@ -627,8 +658,10 @@ uint8_t * at_parser_stringer(parser_del_e mode, int * len){
 
 
 void print_parsed(){
-  printf("type == (%d) \n", parsed.type);
-  printf("form == (%d) \n", parsed.form);
+  printf("type     == (%d) \n", parsed.type);
+  printf("form     == (%d) \n", parsed.form);
+  printf("response == (%d) \n", parsed.response);
+  printf("token    == (%d) \n", parsed.token);
 
   for (int j = 0; j < MAX_LINES_AT ; j++){
       ESP_LOGI(TAG, "Printing line %d", j);
@@ -649,6 +682,31 @@ void print_parsed_urc(at_urc_parsed_s * urc){
 void parser_test(){
 
   puts("starting test");
+
+  int cme;
+  char t1[] = "OK";
+  at_modem_respond_e ret = is_status_line(t1, strlen(t1), &cme);
+  if(ret != LINE_TERMINATION_INDICATION_OK){
+    ASSERT(0);
+  }
+ 
+  char t2[] = "ERROR";
+  ret  = is_status_line(t2, strlen(t2), &cme);
+  if(ret != LINE_TERMINATION_INDICATION_ERROR){
+    ASSERT(0);
+  }
+
+  char t3[] = "+CME ERROR: 500";
+  ret  = is_status_line(t3, strlen(t3), &cme);
+  if(ret != LINE_TERMINATION_INDICATION_CME_ERROR){
+    ASSERT(0);
+  }
+
+  printf("CME = %d\n", cme);
+  if(cme != 500){
+    ASSERT(0);
+  }
+
   char first_1[] = "AT+CFUN=1,2"; 
   at_line_explode (first_1, strlen(first_1), 0);
   print_parsed();

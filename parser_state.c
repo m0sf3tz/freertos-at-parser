@@ -78,18 +78,36 @@ static state_t state_handle_cmd_func () {
   ESP_LOGI(TAG, "entering handle_cmd!");
   mailbox_post(MAILBOX_POST_READY); 
 
+  at_modem_respond_e term; 
   int cme_err =0;
   int len = 0;
   int line = 0;
+  TickType_t start = xTaskGetTickCount();
+  TickType_t end = start + 1000;
   command_e cmd;
-
+  at_parsed_s * parsed_p = get_parsed_struct();
+  clear_at_parsed_struct();
+  
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
-    printf("%d ECHO len \n", len);
+    if(!buff){
+      if (xTaskGetTickCount() > end){
+        ESP_LOGE(TAG, "Failed to AT response!");
+        parsed_p->status = AT_PROCESSED_TIMEOUT;
+
+        mailbox_post(MAILBOX_POST_PROCESSED);
+        puts("watiing for done!");
+        
+        mailbox_wait(MAILBOX_WAIT_CONSUME);
+        puts("done comsuing "); 
+        return parser_idle_state;  
+      }
+    }
     if(buff)
     {
-      if(is_status_line(buff, len, &cme_err)){
+        printf("%d ECHO len \n", len);
+        if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Error - unexpected status line!");
         return parser_idle_state;
         //TODO: handle  
@@ -101,10 +119,7 @@ static state_t state_handle_cmd_func () {
 
       if( !at_line_explode(buff,len, 0)){
         // verifiy we are dealing with the correct command
-        at_parsed_s * parsed_p = get_parsed_struct();
         if (get_net_state_cmd() == parsed_p->type){
-          // set the token, we will verify in network state
-          parsed_p->token = get_net_state_token();
           break;
         } else {
           ESP_LOGE(TAG, "State machine out of sync - unexpected command! (%d)", parsed_p->type);
@@ -126,8 +141,13 @@ static state_t state_handle_cmd_func () {
          ESP_LOGE(TAG, "Failed to pars!");
         // TODO: handle...
       }
-        
-      if(is_status_line(buff, len, &cme_err)){
+      
+      term = is_status_line(buff, len, &cme_err); 
+      if(term){
+        parsed_p->token  = get_net_state_token();
+        parsed_p->status = AT_PROCESSED_GOOD;
+        parsed_p->response = term;
+
         ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
         
         print_parsed();
