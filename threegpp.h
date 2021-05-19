@@ -4,8 +4,8 @@
 /**********************************************************
 *                                                 DEFINES *
 **********************************************************/
-#define CEREG_STATUS_LINE  (0)
-#define CEREG_STATUS_INDEX (0)
+#define CEREG_STATUS_LINE  (1)
+#define CEREG_STATUS_INDEX (1)
 #define CEREG_CONNECTED    (1)
 
 /*********************************************************

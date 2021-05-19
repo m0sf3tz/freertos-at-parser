@@ -53,13 +53,13 @@ static state_array_s network_translation_table[network_state_len] = {
 static state_t state_detached_func() {
   ESP_LOGI(TAG, "Entering detached state!");
   ESP_LOGI(TAG, "------------>ENTERING");
-/*  
-  memcpy(misc_buff, "AT+CEREG=2\r\n", strlen("AT+CEREG=2\r\n"));
+  
+  memcpy(misc_buff, "AT+CEREG?\r\n", strlen("AT+CEREG?\r\n"));
   int len = strlen(misc_buff);
  
   //verify we are detatched 
   send_cmd(misc_buff, len, verify_cereg, CEREG);
-*/
+
   return NULL_STATE;
 }
 
@@ -280,6 +280,7 @@ void driver_b(void * arg){
   memset(str, 0, 100);
   int r = 0;
 
+  vTaskDelay(1000000);
   for(;;){
         if (r & 1 == 1){
         memcpy(str, "AT+CFUN=0\r\n", strlen("AT+CFUN=0\r\n"));
