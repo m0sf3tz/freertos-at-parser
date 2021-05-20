@@ -37,7 +37,8 @@ typedef struct{
 }network_state_s;
 
 typedef enum {
-  network_attaching_state = 0,
+  network_airplaine_mode_state = 0,
+  network_attaching_state,
   network_attached_state,
 
   network_state_len //LEAVE AS LAST!

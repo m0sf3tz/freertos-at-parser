@@ -83,7 +83,7 @@ static state_t state_handle_cmd_func () {
   int len = 0;
   int line = 0;
   TickType_t start = xTaskGetTickCount();
-  TickType_t end = start + 1000;
+  TickType_t end = start + PARSER_WAIT_FOR_UART;
   command_e cmd;
   at_parsed_s * parsed_p = get_parsed_struct();
   clear_at_parsed_struct();
@@ -97,10 +97,10 @@ static state_t state_handle_cmd_func () {
         parsed_p->status = AT_PROCESSED_TIMEOUT;
 
         mailbox_post(MAILBOX_POST_PROCESSED);
-        puts("watiing for done!");
+        ESP_LOGI(TAG, "watiing for done!");
         
         mailbox_wait(MAILBOX_WAIT_CONSUME);
-        puts("done comsuing "); 
+        ESP_LOGI(TAG, "done comsuing "); 
         return parser_idle_state;  
       }
     }
@@ -149,15 +149,13 @@ static state_t state_handle_cmd_func () {
         parsed_p->response = term;
 
         ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
-        
-        print_parsed();
-        puts("ready to consume"); 
+        ESP_LOGI(TAG, "ready to consume"); 
         
         mailbox_post(MAILBOX_POST_PROCESSED);
-        puts("watiing for done!");
+        ESP_LOGI(TAG, "watiing for done!");
         
         mailbox_wait(MAILBOX_WAIT_CONSUME);
-        puts("done comsuing "); 
+        ESP_LOGI(TAG, "done comsuing "); 
         return parser_idle_state;  
       }
 

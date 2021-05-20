@@ -486,23 +486,35 @@ int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){
   static char current_hunt[LONG_DELIMITER_LEN];
   static int iter = 0; 
 
+  //used in searching for <CR><LF>
+  static bool found_cr;
 
   // if not in data mode, hunts for '\n'
   // Note, technically <CR><LF> - but I never
   // seen a CR not followed by a LF
-  if ( c == '\n' && (mode == PARSER_CMD_DEL) ){
-    //ESP_LOGI(TAG, "Found new-line delimiter");
-    memset(current_hunt, 0, sizeof(current_hunt));
-    iter = 0;
-    return NEW_LINE_DELIMITER;  
+  if ( c == '\r' && (mode == PARSER_CMD_DEL) ){
+    found_cr = true;
+    return NO_DELIMITER;
+  } 
+  if (found_cr){
+    if ( c == '\n'){
+      found_cr = false;
+      return NEW_LINE_DELIMITER; 
+    } else {
+      found_cr = false;
+      return NO_DELIMITER;
+    }
   }
+  
 
+  
   current_hunt[iter] = c;
   int rc = memcmp(long_del, current_hunt, iter + 1); //must test at least one character
   if (rc == 0) {
     iter++;
     if (iter == LONG_DELIMITER_LEN){
       iter = 0;
+      memset(current_hunt, 0, sizeof(current_hunt));
       return LONG_DELIMITER_FOUND;
     } else {
       return PARTIAL_DELIMETER_SCANNING;
@@ -662,13 +674,14 @@ void print_parsed(){
   printf("form     == (%d) \n", parsed.form);
   printf("response == (%d) \n", parsed.response);
   printf("token    == (%d) \n", parsed.token);
-
+#if 0
   for (int j = 0; j < MAX_LINES_AT ; j++){
       ESP_LOGI(TAG, "Printing line %d", j);
       for (int i = 0; i < MAX_DELIMITERS; i ++){
 		    printf("%s %d %d \n", parsed.param_arr[j][i].str, parsed.param_arr[j][i].is_number, parsed.param_arr[j][i].val);
 	    }
   }
+#endif 
 }
 
 void print_parsed_urc(at_urc_parsed_s * urc){

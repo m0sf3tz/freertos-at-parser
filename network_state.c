@@ -19,6 +19,7 @@
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
 *********************************************************/
+static state_t state_airplain_mode_func();
 static state_t state_detached_func();
 static state_t state_attached_func();
 static state_t state_write_func();
@@ -26,10 +27,12 @@ static state_t state_write_func();
 static void set_net_state_cmd(command_e cmd);
 static void set_net_state_token();
 
-static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum);
+static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 
-static void verify_kcnxfg();
-static void verify_cereg();
+static int verify_kcnxfg();
+static int verify_cereg();
+static int verify_cfun();
+static int set_cfun();
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
@@ -41,32 +44,60 @@ static char               misc_buff[MISC_BUFF_SIZE];
 
 // Translation Table
 static state_array_s network_translation_table[network_state_len] = {
-       { state_detached_func,  10000 },
-       { state_attached_func,  portMAX_DELAY }, 
-       { state_write_func   ,  portMAX_DELAY }, 
+       { state_airplain_mode_func , 10000         },
+       { state_detached_func      , 10000         },
+       { state_attached_func      , portMAX_DELAY }, 
+       { state_write_func         , portMAX_DELAY }, 
 };
 
 
 /*********************************************************
 *                                        STATE FUNCTIONS *
 *********************************************************/
-static state_t state_detached_func() {
-  static int i;
-
-  ESP_LOGI(TAG, "Entering detached state!");
-  ESP_LOGI(TAG, "------------>ENTERING");
-  
-  memcpy(misc_buff, "AT+CEREGz?\r\n", strlen("AT+CEREGz?\r\n"));
+static state_t state_airplain_mode_func() {
+  ESP_LOGI(TAG, "Entering airplaine mode state!");
+ /* 
+  memcpy(misc_buff, "AT+CFUN?\r\n", strlen("AT+CFUN?\r\n"));
   int len = strlen(misc_buff);
  
-  //verify we are detatched 
-  send_cmd(misc_buff, len, verify_cereg, CEREG);
+  // verify we are detatched 
+  // If we are, leave state function and wait for kick into attached
+  if (1 == send_cmd(misc_buff, len, verify_cfun, CFUN)){
+    ESP_LOGI(TAG, "Radio is on, forcing next state!");
+    return network_attaching_state;
+  }
+  vTaskDelay(1000/portTICK_PERIOD_MS);
+*/
+  // if we get here, CFUN return 0, set it on!
+  ESP_LOGE(TAG, "Forcing CFUN=1");
+  
+  memcpy(misc_buff, "AT+CFUN=1\r\n", strlen("AT+CFUN=1\r\n"));
+  int len = strlen(misc_buff);
+  send_cmd(misc_buff, len, set_cfun, CFUN);
+
+  vTaskDelay(1000/portTICK_PERIOD_MS);
+
+  return network_attaching_state;
+}
+
+static state_t state_detached_func() {
+  ESP_LOGI(TAG, "\n*************Entering detached state!***********\n");
+
+  // At turn on, we will have URC + CEREG? asking the same thing,
+  // are we connected? have a small cool down period before we start polling 
+  if (xTaskGetTickCount() > 60000/portTICK_PERIOD_MS){
+    memcpy(misc_buff, "AT+CEREG?\r\n", strlen("AT+CEREG?\r\n"));
+    int len = strlen(misc_buff);
  
+    // verify we are detatched 
+    // If we are, leave state function and wait for kick into attached
+    if (1 == send_cmd(misc_buff, len, verify_cereg, CEREG)) return network_attached_state;
+  }
   return NULL_STATE;
 }
 
 static state_t state_attached_func() {
-  ESP_LOGI(TAG, "Entering attached state!");
+  ESP_LOGI(TAG, "\n**********Entering attached state!***********\n");
 
   create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
   send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, KCNXCFG);
@@ -89,12 +120,12 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
   if (*curr_state == network_attached_state) {
       switch(event){
         case (NETWORK_DETACHED):
+            puts("wtf?");
             ESP_LOGI(TAG, "attached->detached");
             *curr_state = network_attaching_state;
             break;
       }
   }
-
 }
 
 static char* event_print_func(state_event_t event) {
@@ -118,7 +149,7 @@ static state_init_s* get_network_state_handle() {
         .next_state        = next_state_func,
         .translation_table = network_translation_table,
         .event_print       = event_print_func,
-        .starting_state    = network_attaching_state,
+        .starting_state    = network_airplaine_mode_state,
         .state_name_string = "network_state",
         .filter_event      = event_filter_func,
         .total_states      = network_state_len,  
@@ -151,7 +182,7 @@ void dummy_callbuck(){
   print_parsed();
 }
 
-static void verify_kcnxfg(){
+static int verify_kcnxfg(){
   print_parsed();
   
   at_parsed_s *parsed = get_parsed_struct();
@@ -165,7 +196,7 @@ static void verify_kcnxfg(){
   }
 }
 
-static void verify_cereg(){
+static int verify_cereg(){
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -181,11 +212,64 @@ static void verify_cereg(){
   if (parsed->param_arr[CEREG_STATUS_LINE][CEREG_STATUS_INDEX].val == CEREG_CONNECTED){
     ESP_LOGI(TAG, "Registered! - posting!");
     state_post_event(NETWORK_ATTACHED);
+    return 1;
   }  
 }
 
-static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enum){
+
+static int verify_cfun(){
+  print_parsed();
+
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != CFUN){
+    ESP_LOGE(TAG, "CMD type not CFUN -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+
+  if(parsed->form != READ_CMD ){
+    ESP_LOGE(TAG, "form type not read -> (%d)", parsed->form);
+    ASSERT(0);
+  }
+
+  if(parsed->response != LINE_TERMINATION_INDICATION_OK){
+    ESP_LOGE(TAG, "response type not OK -> (%d)", parsed->response);
+    return -1;
+  }
+
+  if (parsed->param_arr[CFUN_STATUS_LINE][CFUN_STATUS_INDEX].val == CFUN_RADIO_ON){
+    ESP_LOGI(TAG, "Radio on!!");
+    return 1;
+  }  
+}
+
+static int set_cfun(){
+  print_parsed();
+
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != CFUN){
+    ESP_LOGE(TAG, "CMD type not CFUN -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+
+  if(parsed->form != WRITE_CMD ){
+    ESP_LOGE(TAG, "form type not write -> (%d)", parsed->form);
+    ASSERT(0);
+  }
+
+  if(parsed->response != LINE_TERMINATION_INDICATION_OK){
+    ESP_LOGE(TAG, "response type not OK -> (%d)", parsed->response);
+    return -1;
+  }
+
+  if (parsed->param_arr[CFUN_SET_STATUS_LINE][CFUN_STATUS_INDEX].val == CFUN_RADIO_ON){
+    ESP_LOGI(TAG, "Radio on!!");
+    return 1;
+  }  
+}
+
+static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
+  int ret;
   at_parsed_s * parsed_p = get_parsed_struct();
   
   get_mailbox_sem();
@@ -221,17 +305,17 @@ static bool send_cmd(uint8_t* cmd, int len, void (*clb)(void), command_e cmd_enu
   }
 
   ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");
-  clb();
+  ret = clb();
 
   if(!mailbox_post(MAILBOX_POST_CONSUME)) goto fail;
 
   put_mailbox_sem();
-  return true;
+  return ret;
 
 fail:
   ESP_LOGE(TAG, "Failed to issue cmd!");
   put_mailbox_sem(); 
-  return false;
+  return -1;
 }
 
 static void network_state_init_freertos_objects() {
@@ -313,8 +397,6 @@ void driver_b(void * arg){
       r++;
 
       vTaskDelay(10000/portTICK_PERIOD_MS);
-      
-      send_cmd(str, len, dummy_callbuck, CFUN);
       
 /*
       get_mailbox_sem();
