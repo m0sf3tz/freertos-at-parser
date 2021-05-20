@@ -154,7 +154,11 @@ int main( void )
     parser_state_spawner();
     network_driver();
 #else
-    parser_test();
+    char buff[200];
+    memset(buff, 0 , 200);
+    create_kcnxcfg_cmd(buff, 200);
+    printf("%s \n", buff);
+    //parser_test();
 #endif 
     vTaskStartScheduler();
     return 0;

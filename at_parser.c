@@ -558,15 +558,10 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, int * size){
       vTaskDelay(250/portTICK_PERIOD_MS);
       int new_len = 0;
       uint8_t * new_buff = at_incomming_get_stream(&new_len);
-      if(new_len == -1){
+      if(new_buff == NULL){
           return NULL;
       }
       
-      if (!new_buff){
-          ESP_LOGE(TAG, "Logic error!");
-          ASSERT(0);
-      }
-
       if (found_line){ 
         len = len - iter_lead;
         found_line = false;

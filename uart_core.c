@@ -80,7 +80,6 @@ uint8_t* at_incomming_get_stream(int *len){
     return buff_s;
   }
 
-  *len = -1;
   return NULL;
 }
 

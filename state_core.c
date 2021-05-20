@@ -72,7 +72,7 @@ void add_event_consumer(state_init_s* thread_info) {
 static state_array_s get_state_table(state_init_s * state_ptr, state_t state) {
     
     if (state >= state_ptr->total_states) {
-        ESP_LOGE(TAG, "Current state out of bounds in %s", state_ptr->state_name_string);
+        ESP_LOGE(TAG, "Current state (%d) out of bounds in %s", state, state_ptr->state_name_string);
         ASSERT(0);
     }
     return state_ptr->translation_table[state];
@@ -194,21 +194,32 @@ static void state_machine(void* arg) {
 
         if (forced_state != NULL_STATE){
           // Previous state is forcing next state, don't read from queue
-          ESP_LOGI(TAG, "State %s is forcing next state", state_init_ptr->state_name_string );
+          ESP_LOGI(TAG, "State %s is forcing next state (%d)", state_init_ptr->state_name_string, forced_state );
           state = forced_state;
           continue;
         }
+        
+        state_t curr_state = state;
+        for(;;){
+          // Wait until a new event comes
+          new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
+          printf("even5 = %d \n", new_event);
 
-        // Wait until a new event comes
-        new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
-
-        // Recieved an event, see if we need to change state
-        // Don't run if we had a timeout (looping)
-        if (new_event != INVALID_EVENT){
-          state_init_ptr->next_state(&state, new_event);
+          // Recieved an event, see if we need to change state
+          // Don't run if we had a timeout (looping)
+          if (new_event != INVALID_EVENT){
+            state_init_ptr->next_state(&state, new_event);
+          } else {
+            // loop
+            break; 
+          }
+          
+          // check to see if there was a state change
+          // only run the state machine in that case
+          if (curr_state != state){
+            break;
+          }
         }
-        // Reset new_event
-        new_event = INVALID_EVENT;
     }
 }
 

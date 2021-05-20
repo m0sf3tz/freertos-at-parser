@@ -40,6 +40,7 @@ typedef enum {
   network_airplaine_mode_state = 0,
   network_attaching_state,
   network_attached_state,
+  network_idle_state,
 
   network_state_len //LEAVE AS LAST!
 } network_state_e;

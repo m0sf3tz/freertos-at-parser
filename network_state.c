@@ -22,6 +22,7 @@
 static state_t state_airplain_mode_func();
 static state_t state_detached_func();
 static state_t state_attached_func();
+static state_t state_idle_func();
 static state_t state_write_func();
 
 static void set_net_state_cmd(command_e cmd);
@@ -33,6 +34,7 @@ static int verify_kcnxfg();
 static int verify_cereg();
 static int verify_cfun();
 static int set_cfun();
+static int verify_kudpcfg();
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
@@ -47,6 +49,7 @@ static state_array_s network_translation_table[network_state_len] = {
        { state_airplain_mode_func , 10000         },
        { state_detached_func      , 10000         },
        { state_attached_func      , portMAX_DELAY }, 
+       { state_idle_func          , portMAX_DELAY }, 
        { state_write_func         , portMAX_DELAY }, 
 };
 
@@ -85,7 +88,7 @@ static state_t state_detached_func() {
 
   // At turn on, we will have URC + CEREG? asking the same thing,
   // are we connected? have a small cool down period before we start polling 
-  if (xTaskGetTickCount() > 60000/portTICK_PERIOD_MS){
+  if (xTaskGetTickCount() > 5000/portTICK_PERIOD_MS){
     memcpy(misc_buff, "AT+CEREG?\r\n", strlen("AT+CEREG?\r\n"));
     int len = strlen(misc_buff);
  
@@ -98,13 +101,30 @@ static state_t state_detached_func() {
 
 static state_t state_attached_func() {
   ESP_LOGI(TAG, "\n**********Entering attached state!***********\n");
-
+/*
   create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
   send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, KCNXCFG);
-  
+
+  memset(misc_buff, 0, MISC_BUFF_SIZE);
+  memcpy(misc_buff, "AT+KUDPCFG=1,0\r\n", strlen("AT+KUDPCFG=1,0\r\n"));
+  int len = strlen(misc_buff);
+  // verify we are detatched 
+  // If we are, leave state function and wait for kick into attached
+  send_cmd(misc_buff, len, verify_kudpcfg, KUDPCFG);
+*/
+  puts("bar");
+  return network_idle_state;
+}
+
+static state_t state_idle_func() {
+  ESP_LOGI(TAG, "\n(net)-------------->Entering idle state!\n");
   return NULL_STATE;
 }
 
+static state_t state_write_func() {
+  ESP_LOGI(TAG, "\n(net)-------------->Entering write state!\n");
+  return NULL_STATE;
+} 
 
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
@@ -266,6 +286,33 @@ static int set_cfun(){
     return 1;
   }  
 }
+
+static int verify_kudpcfg(){
+  print_parsed();
+
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != KUDPCFG){
+    ESP_LOGE(TAG, "CMD type not KUDPCFG -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+
+  if(parsed->form != WRITE_CMD ){
+    ESP_LOGE(TAG, "form type not write -> (%d)", parsed->form);
+    ASSERT(0);
+  }
+
+  if(parsed->response != LINE_TERMINATION_INDICATION_OK){
+    ESP_LOGE(TAG, "response type not OK -> (%d)", parsed->response);
+    return -1;
+  }
+/*
+  if (parsed->param_arr[CFUN_SET_STATUS_LINE][CFUN_STATUS_INDEX].val == CFUN_RADIO_ON){
+    ESP_LOGI(TAG, "Radio on!!");
+    return 1;
+  }*/  
+  return 1;
+}
+
 
 static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
