@@ -32,7 +32,7 @@
 *                                        STATIC VARIABLES *
 **********************************************************/
 static const char      TAG[] = "UART_CORE";
-static const char  AT_PORT[] = "/dev/ttyUSB0";
+static const char  AT_PORT[] = "/dev/ttyUSB2";
 static int atfd;
 static QueueSetHandle_t command_issue_q;
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!

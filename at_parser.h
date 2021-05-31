@@ -58,7 +58,8 @@ typedef enum {
   KBNDCFG,
   ATI,
   CESQ,
-  KCNXCFG
+  KCNXCFG,
+  KUDPSND
 } command_e;
 
 typedef enum {
@@ -175,3 +176,4 @@ at_urc_parsed_s    *get_urc_parsed_struct();
 at_modem_respond_e  is_status_line(char * line, size_t len, int *cme_error);
 int                 at_line_explode (char * str, const int len, int line);
 void                clear_at_parsed_struct();
+bool                is_connect_line(char * line, size_t len);

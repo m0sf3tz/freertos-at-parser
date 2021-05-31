@@ -31,6 +31,7 @@ static SemaphoreHandle_t  mailbox_sem;
 static void debug_print_wait(bool set, int wait_bits){
   if (wait_bits != MAILBOX_WAIT_READY     &&
       wait_bits != MAILBOX_WAIT_CONNECT   &&
+      wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
@@ -53,6 +54,12 @@ static void debug_print_wait(bool set, int wait_bits){
       else 
         ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONNECT", to_s); 
       break;
+    case(MAILBOX_WAIT_WRITE):
+      if (set)
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_WRITE", set_s); 
+      else 
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_WRITE", to_s); 
+      break;
     case(MAILBOX_WAIT_PROCESSED):
       if(set)
         ESP_LOGI(TAG, "%s: MAILBOX_WAIT_PROCESSED", set_s);
@@ -71,6 +78,7 @@ static void debug_print_wait(bool set, int wait_bits){
 static void debug_print_post(int wait_bits){
   if (wait_bits != MAILBOX_POST_READY     &&
       wait_bits != MAILBOX_POST_CONNECT   &&
+      wait_bits != MAILBOX_POST_WRITE     &&
       wait_bits != MAILBOX_POST_PROCESSED &&
       wait_bits != MAILBOX_POST_CONSUME ) {
     
@@ -84,6 +92,9 @@ static void debug_print_post(int wait_bits){
       break;
     case(MAILBOX_POST_CONNECT):
       ESP_LOGI(TAG, "POSTING MAILBOX_POST_CONNECT");
+      break;
+    case(MAILBOX_POST_WRITE):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_WRITE");
       break;
     case(MAILBOX_WAIT_PROCESSED):
       ESP_LOGI(TAG, "POSTING MAILBOX_POST_PROCESSED ");
@@ -105,6 +116,7 @@ void create_mailbox_freertos_objects(){
 bool mailbox_wait(EventBits_t wait_bits) {
   if (wait_bits != MAILBOX_WAIT_READY     &&
       wait_bits != MAILBOX_WAIT_CONNECT   &&
+      wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
@@ -131,6 +143,7 @@ bool mailbox_wait(EventBits_t wait_bits) {
 bool mailbox_post(EventBits_t post_bits){
   if (post_bits != MAILBOX_POST_READY     &&
       post_bits != MAILBOX_POST_CONNECT   &&
+      post_bits != MAILBOX_POST_WRITE     &&
       post_bits != MAILBOX_POST_PROCESSED &&
       post_bits != MAILBOX_POST_CONSUME ) {
     

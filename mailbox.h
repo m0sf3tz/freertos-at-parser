@@ -17,11 +17,14 @@
 #define MAILBOX_WAIT_CONNECT   (1 << 1)
 #define MAILBOX_POST_CONNECT   (1 << 1)
 
-#define MAILBOX_WAIT_PROCESSED (1 << 2)
-#define MAILBOX_POST_PROCESSED (1 << 2)
+#define MAILBOX_WAIT_WRITE     (1 << 2)
+#define MAILBOX_POST_WRITE     (1 << 2)
 
-#define MAILBOX_WAIT_CONSUME   (1 << 3)
-#define MAILBOX_POST_CONSUME   (1 << 3)
+#define MAILBOX_WAIT_PROCESSED (1 << 3)
+#define MAILBOX_POST_PROCESSED (1 << 3)
+
+#define MAILBOX_WAIT_CONSUME   (1 << 4)
+#define MAILBOX_POST_CONSUME   (1 << 4)
 
 /*********************************************************
 *                                               TYPEDEFS *

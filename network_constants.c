@@ -35,5 +35,14 @@ void create_kcnxcfg_cmd(char * str, int size){
 
   memset(str, 0, size);
   sprintf(str, "AT+KCNXCFG=1,\"GPRS\",\"%s\"\r\n", NET_APN);
-  printf(str);
+}
+
+void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t len){
+  if(!str){
+    ESP_LOGI(TAG, "NULL str!");
+    ASSERT(0);
+  }
+
+  memset(str, 0, size);
+  sprintf(str, "AT+KUDPSND=1,\"%s\",%d,%d\r\n", ip, port, len);
 }

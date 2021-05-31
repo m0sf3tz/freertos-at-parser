@@ -203,7 +203,6 @@ static void state_machine(void* arg) {
         for(;;){
           // Wait until a new event comes
           new_event = get_event_generic(state_init_ptr->state_queue_input_handle_private, timeout);
-          printf("even5 = %d \n", new_event);
 
           // Recieved an event, see if we need to change state
           // Don't run if we had a timeout (looping)

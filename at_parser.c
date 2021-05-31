@@ -96,6 +96,7 @@ at_type_t get_type_cmd(char *s){
   if (strncmp(s, "AT+CESQ",7)      == 0) return CESQ;
   if (strncmp(s, "AT+KCNXCFG",10)  == 0) return KCNXCFG;
   if (strncmp(s, "AT+CEREG",8)     == 0) return CEREG;
+  if (strncmp(s, "AT+KUDPSND",10)  == 0) return KUDPSND;
   // no match,
 	return UNKNOWN_TYPE ;
 }
@@ -117,6 +118,7 @@ at_type_t get_type(char *s){
   if (strcmp(s, "ATI")        == 0) return ATI;
   if (strcmp(s, "CESQ")       == 0) return CESQ;
   if (strcmp(s, "KCNXCFG")    == 0) return KCNXCFG;
+  if (strcmp(s, "KUDPSND")    == 0) return KUDPSND;
 	// no match,
 	return UNKNOWN_TYPE;
 }
@@ -424,6 +426,7 @@ bool is_connect_line(char * line, size_t len){
   }
 
   if (len < strlen("CONNECT")){
+    puts("here");
     return false; 
   }
 
@@ -505,8 +508,6 @@ int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){
       return NO_DELIMITER;
     }
   }
-  
-
   
   current_hunt[iter] = c;
   int rc = memcmp(long_del, current_hunt, iter + 1); //must test at least one character

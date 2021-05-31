@@ -147,6 +147,7 @@ int main( void )
     extern void create_mailbox_freertos_objects();
     extern void mailbox_test();
     extern void create_kcnxcfg_cmd(char * str, int size);
+    extern void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t len);
 #if 1
     create_mailbox_freertos_objects();
     spawn_uart_thread();
@@ -156,9 +157,8 @@ int main( void )
 #else
     char buff[200];
     memset(buff, 0 , 200);
-    create_kcnxcfg_cmd(buff, 200);
+    create_kudpsend_cmd(buff, 200, "192.168.0.188", 33, 100);
     printf("%s \n", buff);
-    //parser_test();
 #endif 
     vTaskStartScheduler();
     return 0;

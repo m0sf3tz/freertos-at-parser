@@ -27,8 +27,9 @@ static state_t state_write_func();
 
 static void set_net_state_cmd(command_e cmd);
 static void set_net_state_token();
-
+static void network_state_set_status(network_status_e status);
 static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
+static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 
 static int verify_kcnxfg();
 static int verify_cereg();
@@ -57,6 +58,11 @@ static state_array_s network_translation_table[network_state_len] = {
 /*********************************************************
 *                                        STATE FUNCTIONS *
 *********************************************************/
+int dummy_callback(){
+  puts("dumy callback");
+  print_parsed();
+}
+
 static state_t state_airplain_mode_func() {
   ESP_LOGI(TAG, "Entering airplaine mode state!");
  /* 
@@ -101,28 +107,30 @@ static state_t state_detached_func() {
 
 static state_t state_attached_func() {
   ESP_LOGI(TAG, "\n**********Entering attached state!***********\n");
-/*
+
   create_kcnxcfg_cmd(misc_buff, MISC_BUFF_SIZE);
   send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, KCNXCFG);
 
   memset(misc_buff, 0, MISC_BUFF_SIZE);
   memcpy(misc_buff, "AT+KUDPCFG=1,0\r\n", strlen("AT+KUDPCFG=1,0\r\n"));
   int len = strlen(misc_buff);
-  // verify we are detatched 
-  // If we are, leave state function and wait for kick into attached
   send_cmd(misc_buff, len, verify_kudpcfg, KUDPCFG);
-*/
-  puts("bar");
+
   return network_idle_state;
 }
 
 static state_t state_idle_func() {
   ESP_LOGI(TAG, "\n(net)-------------->Entering idle state!\n");
+
   return NULL_STATE;
 }
 
 static state_t state_write_func() {
   ESP_LOGI(TAG, "\n(net)-------------->Entering write state!\n");
+
+  create_kudpsend_cmd(misc_buff, MISC_BUFF_SIZE, "192.168.0.188", 33, 100);
+  send_write(misc_buff, strlen(misc_buff), dummy_callback, KUDPSND);
+
   return NULL_STATE;
 } 
 
@@ -140,12 +148,21 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
   if (*curr_state == network_attached_state) {
       switch(event){
         case (NETWORK_DETACHED):
-            puts("wtf?");
             ESP_LOGI(TAG, "attached->detached");
             *curr_state = network_attaching_state;
             break;
       }
   }
+
+  if (*curr_state == network_idle_state) {
+      switch(event){
+        case (NETWORK_WRITE_REQUEST):
+            ESP_LOGI(TAG, "writting!");
+            *curr_state = network_write_state;
+            break;
+      }
+  }
+
 }
 
 static char* event_print_func(state_event_t event) {
@@ -154,8 +171,9 @@ static char* event_print_func(state_event_t event) {
 
 static bool event_filter_func(state_event_t event) {
   switch(event){
-    case(NETWORK_ATTACHED): return true; 
-    case(NETWORK_DETACHED): return true; 
+    case(NETWORK_ATTACHED):      return true; 
+    case(NETWORK_DETACHED):      return true; 
+    case(NETWORK_WRITE_REQUEST): return true; 
   }
   return false;
 }
@@ -195,11 +213,6 @@ static void urc_hanlder(void * arg){
         }
     }
   }
-}
-
-void dummy_callbuck(){
-  puts("dumy callback");
-  print_parsed();
 }
 
 static int verify_kcnxfg(){
@@ -365,6 +378,56 @@ fail:
   return -1;
 }
 
+static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
+  ASSERT(cmd);
+  int ret;
+  at_parsed_s * parsed_p = get_parsed_struct();
+  
+  get_mailbox_sem();
+
+  ESP_LOGI(TAG, "Posting issue write! ");
+  state_post_event(EVENT_ISSUE_WRITE);
+
+  ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
+  if (!mailbox_wait(MAILBOX_WAIT_READY)) goto fail;
+  set_net_state_cmd(cmd_enum);
+  set_net_state_token();
+
+  ESP_LOGI(TAG, "ISSUE CMD-> %s", cmd);
+  if(at_command_issue_hal(cmd, len) == -1) goto fail;
+ 
+
+  if(!mailbox_wait(MAILBOX_WAIT_CONNECT)) goto fail;
+  at_command_issue_hal("Suzie my house is not rent free --EOF--Pattern--", 
+      strlen("Suzie my house is not rent free --EOF--Pattern--"));
+
+  if(!mailbox_post(MAILBOX_POST_WRITE)) goto fail;
+
+  ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
+
+  // verify status 
+  if (parsed_p->status != AT_PROCESSED_GOOD){
+    // unstuck parser_state
+     mailbox_post(MAILBOX_POST_CONSUME);
+
+    ESP_LOGE(TAG, "Error! status = %d", parsed_p->status);
+    //TODO: handle!
+    goto fail;
+  }
+
+  ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");
+  ret = clb();
+
+  put_mailbox_sem();
+  return ret;
+
+fail:
+  ESP_LOGE(TAG, "Failed to issue cmd!");
+  put_mailbox_sem(); 
+  return -1;
+}
+
 static void network_state_init_freertos_objects() {
     network_state_mutex = xSemaphoreCreateMutex();
 
@@ -422,6 +485,18 @@ int get_net_state_token(){
   return ret;
 }
 
+static void network_state_set_status(network_status_e status){
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+    ESP_LOGE(TAG, "Failed to take net state mutext!");
+    ASSERT(0);
+  }
+  net_context.net_state = status;
+
+  xSemaphoreGive(network_state_mutex);
+}
+
+
+
 void driver_b(void * arg){
   network_state_init();
 
@@ -431,6 +506,12 @@ void driver_b(void * arg){
   memset(str, 0, 100);
   int r = 0;
 
+  vTaskDelay(40000/portTICK_PERIOD_MS);
+
+  puts("hi sam!");
+
+  state_post_event(NETWORK_WRITE_REQUEST); 
+  
   vTaskDelay(1000000);
   for(;;){
         if (r & 1 == 1){
