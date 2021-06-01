@@ -36,6 +36,8 @@ static int verify_cereg();
 static int verify_cfun();
 static int set_cfun();
 static int verify_kudpcfg();
+
+static void handle_urc_kudp_notif();
 /*********************************************************
 *                                       STATIC VARIABLES *
 *********************************************************/
@@ -128,7 +130,7 @@ static state_t state_idle_func() {
 static state_t state_write_func() {
   ESP_LOGI(TAG, "\n(net)-------------->Entering write state!\n");
 
-  create_kudpsend_cmd(misc_buff, MISC_BUFF_SIZE, "192.168.0.188", 33, 100);
+  create_kudpsend_cmd(misc_buff, MISC_BUFF_SIZE, "54.201.113.74", 3333, 100);
   send_write(misc_buff, strlen(misc_buff), dummy_callback, KUDPSND);
 
   return NULL_STATE;
@@ -195,22 +197,78 @@ static state_init_s* get_network_state_handle() {
     return &(parser_state);
 }
 
+static void set_urc_handler(command_e urc, void (*handler) (void)){
+  ASSERT(handler);
+
+  at_urc_parsed_s urc_handler;
+  urc_register_s  urc_reg;
+  
+  urc_handler.cblk_reg = &urc_reg;
+  urc_reg.urc = urc;
+  urc_reg.clb = handler;
+
+  xQueueSendToBack(outgoing_urc_queue, &urc_handler, portMAX_DELAY);
+}
+
+static void pop_urc_handler(command_e urc){
+  at_urc_parsed_s urc_handler;
+  urc_register_s  urc_reg;
+  memset(&urc_reg, 0 , sizeof(urc_reg));
+
+  urc_handler.cblk_reg = &urc_reg;
+  urc_reg.urc = urc;
+
+  xQueueSendToBack(outgoing_urc_queue, &urc_handler, portMAX_DELAY);
+}
+
+static void handle_cereg_urc(){
+   if (urc_parsed.param_arr[0].val == 1){
+     ESP_LOGI(TAG, "Registered! - posting!");
+     state_post_event(NETWORK_ATTACHED);
+   } else if (urc_parsed.param_arr[0].val != 1){ //TODO: wrong! (roaming!)
+     ESP_LOGI(TAG, "detached! - posting!");
+     state_post_event(NETWORK_DETACHED);
+   }
+}
+
+static void handle_cereg_kudp_data(){
+}
 
 static void urc_hanlder(void * arg){
+  void (*callback_arr[LEN_KNOWN_COMMANDS])(void);
+  memset(callback_arr, 0, sizeof(callback_arr));
+
   for(;;){
     xQueueReceive(outgoing_urc_queue, &urc_parsed, portMAX_DELAY);
+    
+    if(urc_parsed.cblk_reg){
+      ESP_LOGI(TAG, "Adding/removing URC callback");
+      if(urc_parsed.cblk_reg->clb == NULL){
+        callback_arr[urc_parsed.cblk_reg->urc] = NULL;
+      } else {
+        callback_arr[urc_parsed.cblk_reg->urc] = urc_parsed.cblk_reg->clb;
+      }
+      continue;
+    }
+
     ESP_LOGI(TAG, "Got a new URC!");
     print_parsed_urc(&urc_parsed);
 
+    if(urc_parsed.type == UNKNOWN_TYPE){
+      ESP_LOGE(TAG, "Unknown type!");
+      continue;
+    }
+
+    if(callback_arr[urc_parsed.type]){
+      ESP_LOGI(TAG, "URC handler installed, caling handler!");
+
+      callback_arr[urc_parsed.type]();
+      continue; 
+    }
+
+    // default handlers
     switch(urc_parsed.type){
       case(CEREG):
-        if (urc_parsed.param_arr[0].val == 1){
-          ESP_LOGI(TAG, "Registered! - posting!");
-          state_post_event(NETWORK_ATTACHED);
-        } else if (urc_parsed.param_arr[0].val != 1){ //TODO: wrong! (roaming!)
-          ESP_LOGI(TAG, "detached! - posting!");
-          state_post_event(NETWORK_DETACHED);
-        }
     }
   }
 }
@@ -338,7 +396,7 @@ static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum
   state_post_event(EVENT_ISSUE_CMD);
 
   ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
-  if (!mailbox_wait(MAILBOX_WAIT_READY)) goto fail;
+  if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
   set_net_state_cmd(cmd_enum);
   set_net_state_token();
 
@@ -346,7 +404,7 @@ static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum
   if(at_command_issue_hal(cmd, len) == -1) goto fail;
   
   ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
-  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
 
   // verify token
   if (get_net_state_token() != parsed_p->token){
@@ -382,14 +440,16 @@ static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_en
   ASSERT(cmd);
   int ret;
   at_parsed_s * parsed_p = get_parsed_struct();
-  
+
+  set_urc_handler(KUDP_NOTIF, handle_urc_kudp_notif);
+
   get_mailbox_sem();
 
   ESP_LOGI(TAG, "Posting issue write! ");
   state_post_event(EVENT_ISSUE_WRITE);
 
   ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
-  if (!mailbox_wait(MAILBOX_WAIT_READY)) goto fail;
+  if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
   set_net_state_cmd(cmd_enum);
   set_net_state_token();
 
@@ -397,14 +457,14 @@ static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_en
   if(at_command_issue_hal(cmd, len) == -1) goto fail;
  
 
-  if(!mailbox_wait(MAILBOX_WAIT_CONNECT)) goto fail;
+  if(!mailbox_wait(MAILBOX_WAIT_CONNECT, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
   at_command_issue_hal("Suzie my house is not rent free --EOF--Pattern--", 
       strlen("Suzie my house is not rent free --EOF--Pattern--"));
 
   if(!mailbox_post(MAILBOX_POST_WRITE)) goto fail;
 
   ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
-  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED)) goto fail;
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
 
   // verify status 
   if (parsed_p->status != AT_PROCESSED_GOOD){
@@ -419,14 +479,31 @@ static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_en
   ESP_LOGI(TAG, "Calling CALLBACK for send_cmd!");
   ret = clb();
 
+  if(mailbox_wait(MAILBOX_WAIT_URC, MAILBOX_WAIT_TIME_URC))
+  {
+    // we got a URC... handle it
+    puts("got urc!");
+    mailbox_post(MAILBOX_POST_CONSUME);
+  }
+
+  pop_urc_handler(KUDP_NOTIF);
   put_mailbox_sem();
   return ret;
 
 fail:
   ESP_LOGE(TAG, "Failed to issue cmd!");
-  put_mailbox_sem(); 
+  put_mailbox_sem();
   return -1;
 }
+
+
+static void handle_urc_kudp_notif()
+{
+  mailbox_post(MAILBOX_POST_URC);
+  puts("callback called!");
+  mailbox_wait(MAILBOX_POST_CONSUME, MAILBOX_WAIT_TIME_URC);
+}
+
 
 static void network_state_init_freertos_objects() {
     network_state_mutex = xSemaphoreCreateMutex();

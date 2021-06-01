@@ -8,7 +8,8 @@
 /*********************************************************
 *                                                DEFINES *
 *********************************************************/
-#define EVENT_WAIT_PERIOD    (2500/portTICK_PERIOD_MS)
+#define MAILBOX_WAIT_TIME_NOMINAL (2500/portTICK_PERIOD_MS)
+//#define EVENT_WAIT_PERIOD    (2500/portTICK_PERIOD_MS)
 #define MUTEX_TIMEOUT_PERIOD (3000/portTICK_PERIOD_MS)
 
 #define MAILBOX_WAIT_READY     (1 << 0)
@@ -26,6 +27,9 @@
 #define MAILBOX_WAIT_CONSUME   (1 << 4)
 #define MAILBOX_POST_CONSUME   (1 << 4)
 
+#define MAILBOX_WAIT_URC       (1 << 5)
+#define MAILBOX_POST_URC       (1 << 5)
+
 /*********************************************************
 *                                               TYPEDEFS *
 *********************************************************/
@@ -34,13 +38,11 @@
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
 void create_mailbox_freertos_objects();
-bool mailbox_wait(EventBits_t wait_bits);
-bool mailbox_post(EventBits_t post_bits);
 
 void get_mailbox_sem();
 void put_mailbox_sem();
 bool mailbox_post(EventBits_t post_bits);
-bool mailbox_wait(EventBits_t wait_bits);
+bool mailbox_wait(EventBits_t wait_bits, TickType_t wait_period);
 
 /*********************************************************
 *                                                GLOBALS *   

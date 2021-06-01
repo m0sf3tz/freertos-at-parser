@@ -48,7 +48,7 @@ typedef enum {
 } at_processed_status_e;
 
 typedef enum {
-  KUDP_RCV     = 1,
+  KUDP_RCV     = 0,
   KUDP_NOTIF,
   CFUN,
   CEREG,
@@ -59,7 +59,10 @@ typedef enum {
   ATI,
   CESQ,
   KCNXCFG,
-  KUDPSND
+  KUDPSND,
+  KUDP_DATA,
+
+  LEN_KNOWN_COMMANDS
 } command_e;
 
 typedef enum {
@@ -129,6 +132,11 @@ typedef struct {
 
 }at_parsed_s;
 
+// Register for URC callbacks
+typedef struct{
+  void (*clb) (void);
+  command_e urc;
+}urc_register_s; 
 
 // Holds URC which are parsed
 typedef struct {
@@ -141,6 +149,11 @@ typedef struct {
 	// +KUDP_RCV: "54.189.156.244",...
   // the first param is "54.1...", etc
 	at_param_s param_arr[MAX_DELIMITERS];
+
+  // Callback registration (callbacks are registered
+  // in band) - if a higher level wants to register a 
+  // callback it will set this to not-null
+  urc_register_s * cblk_reg;
 }at_urc_parsed_s;
 
 // How uart_core packs responses to send to at_parser

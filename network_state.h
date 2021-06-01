@@ -69,3 +69,6 @@ typedef enum {
 #define NET_MUTEX_WAIT       (2500 / portTICK_PERIOD_MS)
 #define PDP_INVALID          (-1)
 #define MISC_BUFF_SIZE       (100)
+
+// keep this short - called every time
+#define MAILBOX_WAIT_TIME_URC (250/portTICK_PERIOD_MS)

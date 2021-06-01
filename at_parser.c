@@ -119,6 +119,7 @@ at_type_t get_type(char *s){
   if (strcmp(s, "CESQ")       == 0) return CESQ;
   if (strcmp(s, "KCNXCFG")    == 0) return KCNXCFG;
   if (strcmp(s, "KUDPSND")    == 0) return KUDPSND;
+  if (strcmp(s, "KUDP_DATA")  == 0) return KUDP_DATA;
 	// no match,
 	return UNKNOWN_TYPE;
 }

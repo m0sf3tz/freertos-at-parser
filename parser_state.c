@@ -98,7 +98,7 @@ static state_t state_handle_cmd_func () {
         mailbox_post(MAILBOX_POST_PROCESSED);
         ESP_LOGI(TAG, "watiing for done!");
         
-        mailbox_wait(MAILBOX_WAIT_CONSUME);
+        mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
         ESP_LOGI(TAG, "done comsuing "); 
         return parser_idle_state;  
       }
@@ -153,7 +153,7 @@ static state_t state_handle_cmd_func () {
         mailbox_post(MAILBOX_POST_PROCESSED);
         ESP_LOGI(TAG, "watiing for done!");
         
-        mailbox_wait(MAILBOX_WAIT_CONSUME);
+        mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
         ESP_LOGI(TAG, "done comsuing "); 
         return parser_idle_state;  
       }
@@ -182,7 +182,6 @@ static state_t state_handle_write_func() {
   TickType_t start = xTaskGetTickCount();
   TickType_t end = start + PARSER_WAIT_FOR_UART;
  
-
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
@@ -194,7 +193,7 @@ static state_t state_handle_write_func() {
         mailbox_post(MAILBOX_POST_PROCESSED);
         ESP_LOGI(TAG, "watiing for done!");
         
-        mailbox_wait(MAILBOX_WAIT_CONSUME);
+        mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
         ESP_LOGI(TAG, "done consuming (timeout) "); 
         return parser_idle_state;  
       }
@@ -241,7 +240,7 @@ static state_t state_handle_write_func() {
      ASSERT(0);
   }
  
-  mailbox_wait(MAILBOX_WAIT_WRITE);
+  mailbox_wait(MAILBOX_WAIT_WRITE, MAILBOX_WAIT_TIME_NOMINAL);
   puts(" got write in  parser!");
 
   // read termination

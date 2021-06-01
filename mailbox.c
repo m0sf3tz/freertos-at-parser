@@ -33,6 +33,7 @@ static void debug_print_wait(bool set, int wait_bits){
       wait_bits != MAILBOX_WAIT_CONNECT   &&
       wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
+      wait_bits != MAILBOX_WAIT_URC       &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -72,6 +73,12 @@ static void debug_print_wait(bool set, int wait_bits){
       else
         ESP_LOGI(TAG, "%s: MAILBOX_WAIT_CONSUME", to_s); 
       break;
+    case(MAILBOX_WAIT_URC):
+      if (set)
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_URC", set_s); 
+      else
+        ESP_LOGI(TAG, "%s: MAILBOX_WAIT_URC", to_s); 
+      break;
   }
 }
 
@@ -80,6 +87,7 @@ static void debug_print_post(int wait_bits){
       wait_bits != MAILBOX_POST_CONNECT   &&
       wait_bits != MAILBOX_POST_WRITE     &&
       wait_bits != MAILBOX_POST_PROCESSED &&
+      wait_bits != MAILBOX_POST_URC       &&
       wait_bits != MAILBOX_POST_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -96,11 +104,14 @@ static void debug_print_post(int wait_bits){
     case(MAILBOX_POST_WRITE):
       ESP_LOGI(TAG, "POSTING MAILBOX_POST_WRITE");
       break;
-    case(MAILBOX_WAIT_PROCESSED):
+    case(MAILBOX_POST_PROCESSED):
       ESP_LOGI(TAG, "POSTING MAILBOX_POST_PROCESSED ");
       break;
-    case(MAILBOX_WAIT_CONSUME):
+    case(MAILBOX_POST_CONSUME):
       ESP_LOGI(TAG, "POSTING MAILBOX_POST_CONSUME");
+      break;
+    case(MAILBOX_POST_URC):
+      ESP_LOGI(TAG, "POSTING MAILBOX_POST_URC");
       break;
   }
 }
@@ -113,11 +124,12 @@ void create_mailbox_freertos_objects(){
   ASSERT(mailbox_sem);
 }
 
-bool mailbox_wait(EventBits_t wait_bits) {
+bool mailbox_wait(EventBits_t wait_bits, TickType_t wait_period) {
   if (wait_bits != MAILBOX_WAIT_READY     &&
       wait_bits != MAILBOX_WAIT_CONNECT   &&
       wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
+      wait_bits != MAILBOX_WAIT_URC       &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -128,7 +140,7 @@ bool mailbox_wait(EventBits_t wait_bits) {
                       wait_bits,
                       pdTRUE,          // dont bit on exit (if multiple bits are set we want to handle them all)
                       pdFALSE,         // Just wait for 1 bit ( we only have 1 bit)
-                      EVENT_WAIT_PERIOD
+                      wait_period
       );
 
   if (uxBits == wait_bits){
@@ -145,6 +157,7 @@ bool mailbox_post(EventBits_t post_bits){
       post_bits != MAILBOX_POST_CONNECT   &&
       post_bits != MAILBOX_POST_WRITE     &&
       post_bits != MAILBOX_POST_PROCESSED &&
+      post_bits != MAILBOX_POST_URC       &&
       post_bits != MAILBOX_POST_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted!");
@@ -167,7 +180,7 @@ void put_mailbox_sem(){
     xSemaphoreGive(mailbox_sem);
 }
 
-
+/*
 void a(void * arg){
   mailbox_wait(MAILBOX_WAIT_CONSUME);
   mailbox_wait(MAILBOX_WAIT_READY);
@@ -193,3 +206,4 @@ void mailbox_test(){
   xTaskCreate(a, "", 1024, "", 5, NULL); 
   xTaskCreate(b, "", 1024, "", 5, NULL); 
 }
+*/
