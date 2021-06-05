@@ -155,10 +155,7 @@ int main( void )
     parser_state_spawner();
     network_driver();
 #else
-    char buff[200];
-    memset(buff, 0 , 200);
-    create_kudpsend_cmd(buff, 200, "192.168.0.188", 33, 100);
-    printf("%s \n", buff);
+    parser_test();
 #endif 
     vTaskStartScheduler();
     return 0;

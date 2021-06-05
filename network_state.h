@@ -16,6 +16,10 @@ int       get_net_state_token();
 *********************************************************/
 typedef int net_mode_t;
 
+typedef struct{
+  int read_data;
+}work_order_s;
+
 // from KCNX_IND
 typedef enum {
   disconnected,
@@ -45,6 +49,7 @@ typedef enum {
   network_attached_state,
   network_idle_state,
   network_write_state,
+  network_read_state,
 
   network_state_len //LEAVE AS LAST!
 } network_state_e;

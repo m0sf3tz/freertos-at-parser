@@ -175,7 +175,7 @@ bool verify_urc_and_parse(char * str, int len){
    // move it up to the first delimiter ":"
    lead = lead + 2;
    
-   // seperate the individual parameters
+    // seperate the individual parameters
     for(;;)
     {
         if (param==0){
@@ -475,10 +475,8 @@ at_modem_respond_e is_status_line(char * line, size_t len, int *cme_error){
        ESP_LOGE(TAG, "could not find CME error!");
        ASSERT(0);
     }
-
     return LINE_TERMINATION_INDICATION_CME_ERROR; 
   } 
-  
   return LINE_TERMINATION_INDICATION_NONE; 
 }
 
@@ -796,13 +794,29 @@ void parser_test(){
 
  puts("");
  puts("TESTING URC ");
- bool urc_test = verify_urc_and_parse("+CEREG: 1", strlen("+CREG: 1"));
+ char test_urc_string[] = "+KUDP_NOTIF: 9,2,3,4";
+ bool urc_test = verify_urc_and_parse(test_urc_string, strlen(test_urc_string));
  printf("%d == type \n", urc_parsed.type);
  for (int i = 0; i < MAX_DELIMITERS; i ++){
 		printf("%s %d %d \n", urc_parsed.param_arr[i].str, urc_parsed.param_arr[i].is_number, urc_parsed.param_arr[i].val);
 	}
 
- if (urc_parsed.param_arr[0].val != 1){
+ if (urc_parsed.param_arr[0].val != 9){
+  ASSERT(0);
+ }
+ if(urc_parsed.type != KUDP_NOTIF){
+  ASSERT(0);
+ }
+
+ memset(&urc_parsed, 0, sizeof(urc_parsed));
+ char test_urc_string_2[] = "+CEREG: 1234567";
+ urc_test = verify_urc_and_parse(test_urc_string_2, strlen(test_urc_string_2));
+ printf("%d == type \n", urc_parsed.type);
+ for (int i = 0; i < MAX_DELIMITERS; i ++){
+		printf("%s %d %d \n", urc_parsed.param_arr[i].str, urc_parsed.param_arr[i].is_number, urc_parsed.param_arr[i].val);
+	}
+
+ if (urc_parsed.param_arr[0].val != 1234567){
   ASSERT(0);
  }
  if(urc_parsed.type != CEREG){

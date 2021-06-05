@@ -303,8 +303,10 @@ static void post_urc_to_network_layer(at_urc_parsed_s * ptr){
   if(xStatus == pdFALSE){
     ESP_LOGE(TAG, "ran out of space in queue");
     ASSERT(0);
-    //TODO - handle gracefully?
   }
+
+  // reset structure! 
+  memset(ptr, 0, sizeof(at_urc_parsed_s));
 }
 
 static void parser_state_init_freertos_objects() {

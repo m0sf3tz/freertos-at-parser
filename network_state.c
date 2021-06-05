@@ -24,6 +24,7 @@ static state_t state_detached_func();
 static state_t state_attached_func();
 static state_t state_idle_func();
 static state_t state_write_func();
+static state_t state_read_func();
 
 static void set_net_state_cmd(command_e cmd);
 static void set_net_state_token();
@@ -46,6 +47,7 @@ static network_state_s    net_context;
 static at_urc_parsed_s    urc_parsed;
 static SemaphoreHandle_t  network_state_mutex;
 static char               misc_buff[MISC_BUFF_SIZE]; 
+static work_order_s       work_order; 
 
 // Translation Table
 static state_array_s network_translation_table[network_state_len] = {
@@ -54,6 +56,7 @@ static state_array_s network_translation_table[network_state_len] = {
        { state_attached_func      , portMAX_DELAY }, 
        { state_idle_func          , portMAX_DELAY }, 
        { state_write_func         , portMAX_DELAY }, 
+       { state_read_func          , portMAX_DELAY }, 
 };
 
 
@@ -231,7 +234,9 @@ static void handle_cereg_urc(){
    }
 }
 
-static void handle_cereg_kudp_data(){
+static void handle_kudp_data(){
+  work_order.read_data = urc_parsed.param_arr[1].val;
+  ESP_LOGI(TAG, "new data (UDP), len = %d", work_order.read_data);
 }
 
 static void urc_hanlder(void * arg){
@@ -239,6 +244,7 @@ static void urc_hanlder(void * arg){
   memset(callback_arr, 0, sizeof(callback_arr));
 
   for(;;){
+    memset(&urc_parsed, 0 , sizeof(urc_parsed));
     xQueueReceive(outgoing_urc_queue, &urc_parsed, portMAX_DELAY);
     
     if(urc_parsed.cblk_reg){
@@ -260,7 +266,7 @@ static void urc_hanlder(void * arg){
     }
 
     if(callback_arr[urc_parsed.type]){
-      ESP_LOGI(TAG, "URC handler installed, caling handler!");
+      ESP_LOGI(TAG, "URC handler installed, calling handler!");
 
       callback_arr[urc_parsed.type]();
       continue; 
@@ -268,7 +274,8 @@ static void urc_hanlder(void * arg){
 
     // default handlers
     switch(urc_parsed.type){
-      case(CEREG):
+      case(CEREG):     handle_cereg_urc();
+      case(KUDP_DATA): handle_kudp_data();
     }
   }
 }
@@ -631,8 +638,4 @@ void network_driver(){
   */
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
   xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
-  
 }
-
-
-
