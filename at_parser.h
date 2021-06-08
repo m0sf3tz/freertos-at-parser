@@ -60,6 +60,7 @@ typedef enum {
   CESQ,
   KCNXCFG,
   KUDPSND,
+  KUDPRCV,
   KUDP_DATA,
 
   LEN_KNOWN_COMMANDS

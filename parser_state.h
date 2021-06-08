@@ -26,6 +26,7 @@ typedef enum {
     parser_idle_state = 0,
     parser_handle_cmd_state,
     parser_handle_write_state,
+    parser_handle_read_state,
 
     parser_state_len //LEAVE AS LAST!
 } parser_state_e;
@@ -37,6 +38,7 @@ typedef enum {
     EVENT_ISSUE_CMD,
     EVENT_HANDLE_CMD_F,
     EVENT_ISSUE_WRITE,
+    EVENT_ISSUE_READ,
 
     parser_event_len //LEAVE AS LAST!
 } parser_event_e;

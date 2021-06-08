@@ -207,6 +207,7 @@ static void state_machine(void* arg) {
           // Recieved an event, see if we need to change state
           // Don't run if we had a timeout (looping)
           if (new_event != INVALID_EVENT){
+            ESP_LOGI(TAG, "(%s) In state %d, got event %d", state_init_ptr->state_name_string, state, new_event );
             state_init_ptr->next_state(&state, new_event);
           } else {
             // loop

@@ -15,6 +15,7 @@
 #include "mailbox.h"
 #include "uart_core.h"
 #include "threegpp.h"
+#include "network_constants.h"
 
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
@@ -31,6 +32,7 @@ static void set_net_state_token();
 static void network_state_set_status(network_status_e status);
 static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
+static bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 
 static int verify_kcnxfg();
 static int verify_cereg();
@@ -133,11 +135,20 @@ static state_t state_idle_func() {
 static state_t state_write_func() {
   ESP_LOGI(TAG, "\n(net)-------------->Entering write state!\n");
 
-  create_kudpsend_cmd(misc_buff, MISC_BUFF_SIZE, "54.201.113.74", 3333, 100);
+  create_kudpsend_cmd(misc_buff, MISC_BUFF_SIZE, REMOTE_SERVER_IP, 3333, 100);
   send_write(misc_buff, strlen(misc_buff), dummy_callback, KUDPSND);
 
-  return NULL_STATE;
+  return network_idle_state;
 } 
+
+static state_t state_read_func() {
+  ESP_LOGI(TAG, "\n(net)-------------->Entering read state!\n");
+
+  create_kudprcv_cmd(misc_buff, MISC_BUFF_SIZE, work_order.read_data);
+  send_read(misc_buff, strlen(misc_buff), dummy_callback, KUDPRCV);
+
+  return network_idle_state;
+}
 
 // Returns the next state
 static void next_state_func(state_t* curr_state, state_event_t event) {
@@ -146,7 +157,7 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
         case (NETWORK_ATTACHED):
             ESP_LOGI(TAG, "detached->attached");
             *curr_state = network_attached_state;
-            break;
+            return;
       }
   }
 
@@ -155,16 +166,26 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
         case (NETWORK_DETACHED):
             ESP_LOGI(TAG, "attached->detached");
             *curr_state = network_attaching_state;
-            break;
+            return;
       }
   }
 
   if (*curr_state == network_idle_state) {
       switch(event){
         case (NETWORK_WRITE_REQUEST):
-            ESP_LOGI(TAG, "writting!");
             *curr_state = network_write_state;
-            break;
+            return;
+        case(NETWORK_READ_REQUEST):
+            *curr_state = network_read_state;
+            return;
+      }
+  }
+
+  if (*curr_state == network_write_state) {
+      switch(event){
+        case (NETWORK_READ_REQUEST):
+            *curr_state = network_read_state;
+            return;
       }
   }
 
@@ -179,6 +200,7 @@ static bool event_filter_func(state_event_t event) {
     case(NETWORK_ATTACHED):      return true; 
     case(NETWORK_DETACHED):      return true; 
     case(NETWORK_WRITE_REQUEST): return true; 
+    case(NETWORK_READ_REQUEST):  return true;
   }
   return false;
 }
@@ -237,6 +259,8 @@ static void handle_cereg_urc(){
 static void handle_kudp_data(){
   work_order.read_data = urc_parsed.param_arr[1].val;
   ESP_LOGI(TAG, "new data (UDP), len = %d", work_order.read_data);
+
+  state_post_event(NETWORK_READ_REQUEST); 
 }
 
 static void urc_hanlder(void * arg){
@@ -494,6 +518,49 @@ static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_en
   }
 
   pop_urc_handler(KUDP_NOTIF);
+  put_mailbox_sem();
+  return ret;
+
+fail:
+  ESP_LOGE(TAG, "Failed to issue cmd!");
+  put_mailbox_sem();
+  return -1;
+}
+
+static bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
+  ASSERT(cmd);
+  int ret;
+  at_parsed_s * parsed_p = get_parsed_struct();
+
+  get_mailbox_sem();
+
+  ESP_LOGI(TAG, "Posting issue read! ");
+  state_post_event(EVENT_ISSUE_READ);
+
+  ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
+  if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
+  set_net_state_cmd(cmd_enum);
+  set_net_state_token();
+
+  ESP_LOGI(TAG, "ISSUE CMD-> %s", cmd);
+  if(at_command_issue_hal(cmd, len) == -1) goto fail;
+ 
+  if(!mailbox_wait(MAILBOX_WAIT_CONNECT, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
+
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
+
+  // verify status 
+  if (parsed_p->status != AT_PROCESSED_GOOD){
+    // unstuck parser_state
+     mailbox_post(MAILBOX_POST_CONSUME);
+
+    ESP_LOGE(TAG, "Error! status = %d", parsed_p->status);
+    //TODO: handle!
+    goto fail;
+  }
+
+  mailbox_post(MAILBOX_POST_CONSUME);
+
   put_mailbox_sem();
   return ret;
 

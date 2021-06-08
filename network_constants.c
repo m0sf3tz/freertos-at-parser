@@ -44,5 +44,20 @@ void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t 
   }
 
   memset(str, 0, size);
-  sprintf(str, "AT+KUDPSND=1,\"%s\",%d,%d\r\n", ip, port, len);
+  sprintf(str, "AT+KUDPSND=1,\"%s\",%d,%ld\r\n", ip, port, len);
+}
+
+void create_kudprcv_cmd(char * str, int size, size_t bytes){
+  if(!str){
+    ESP_LOGI(TAG, "NULL str!");
+    ASSERT(0);
+  }
+
+  if(bytes > size){
+    ESP_LOGE(TAG, "bytes > buffer size!");
+    ASSERT(0);
+  }
+
+  memset(str, 0, size);
+  sprintf(str, "AT+KUDPRCV=1,%lu\r\n", bytes);
 }

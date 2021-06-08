@@ -24,6 +24,7 @@ QueueSetHandle_t  outgoing_urc_queue;
 static state_t state_idle_func();
 static state_t state_handle_cmd_func();
 static state_t state_handle_write_func();
+static state_t state_handle_read_func();
 
 static void    post_urc_to_network_layer(at_urc_parsed_s * ptr);
 
@@ -38,6 +39,7 @@ static state_array_s parser_translation_table[parser_state_len] = {
        { state_idle_func          ,  300 },
        { state_handle_cmd_func    ,  portMAX_DELAY }, 
        { state_handle_write_func  ,  portMAX_DELAY }, 
+       { state_handle_read_func   ,  portMAX_DELAY }, 
 };
 
 
@@ -167,6 +169,114 @@ static state_t state_handle_cmd_func () {
   return NULL_STATE;
 }
 
+static state_t state_handle_read_func() {
+  ESP_LOGI(TAG, "entering handle read!!");
+  mailbox_post(MAILBOX_POST_READY); 
+
+  at_modem_respond_e term; 
+  int cme_err =0;
+  int len = 0;
+  int line = 0;
+  command_e cmd;
+  at_parsed_s * parsed_p = get_parsed_struct();
+  clear_at_parsed_struct();
+  
+  TickType_t start = xTaskGetTickCount();
+  TickType_t end = start + PARSER_WAIT_FOR_UART;
+ 
+  for(;;)
+  {
+    uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
+    if(!buff){
+      if (xTaskGetTickCount() > end){
+        ESP_LOGE(TAG, "Failed to AT response!");
+        parsed_p->status = AT_PROCESSED_TIMEOUT;
+
+        mailbox_post(MAILBOX_POST_PROCESSED);
+        ESP_LOGI(TAG, "watiing for done!");
+        
+        mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
+        ESP_LOGI(TAG, "done consuming (timeout) "); 
+        return parser_idle_state;  
+      }
+    }
+    if(buff)
+    {
+        printf("%d ECHO len \n", len);
+        if(is_status_line(buff, len, &cme_err)){
+        ESP_LOGI(TAG, "Error - unexpected status line!");
+        return parser_idle_state;
+        //TODO: handle  
+      }
+
+      if(verify_urc_and_parse(buff, len)){
+        continue;
+      }
+
+      if( !at_line_explode(buff,len, 0)){
+        // verifiy we are dealing with the correct command
+        if (get_net_state_cmd() == parsed_p->type){
+          break;
+        } else {
+          ESP_LOGE(TAG, "State machine out of sync - unexpected command! (%d)", parsed_p->type);
+          ASSERT(0);
+        }
+      } else {
+          ESP_LOGE(TAG, "State machine out of sync!");
+          ASSERT(0);
+      }
+    }
+  }
+
+
+  // TODO: could this be improved? - need a loop?
+  // read Connect
+  uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
+  if (!buff){
+    ASSERT(0);
+  }
+    
+  if (is_connect_line(buff, len) == true){
+      mailbox_post(MAILBOX_POST_CONNECT);
+  } else {
+     ESP_LOGE(TAG, "did not find connect string!");
+     ASSERT(0);
+  }
+ 
+  // read termination
+  start = xTaskGetTickCount();
+  end   = start + 1000;
+  for(;;){
+    buff = at_parser_stringer(PARSER_DATA_DEL, &len);
+    if(!buff){
+       vTaskDelay(100/portMAX_DELAY);
+       if (xTaskGetTickCount() > end){
+         ESP_LOGE(TAG, "Timeout!");
+         ASSERT(0);
+       }
+       continue;
+    } else {
+      break;
+    }
+  }
+
+
+  ESP_LOGI(TAG, "read --->%s", buff);
+  parsed_p->status = AT_PROCESSED_GOOD;
+
+  vTaskDelay(100/portMAX_DELAY);
+
+  buff = at_parser_stringer(PARSER_CMD_DEL, &len);
+  printf ("status = %d \n", is_status_line(buff, len, cme_err) );
+  
+  mailbox_post(MAILBOX_POST_PROCESSED);
+
+  mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
+  put_mailbox_sem();
+
+  return parser_idle_state;  
+}
+
 static state_t state_handle_write_func() {
   ESP_LOGI(TAG, "entering handle_write!");
   mailbox_post(MAILBOX_POST_READY); 
@@ -282,6 +392,11 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
             *curr_state = parser_handle_write_state;
             return;
         }
+        if (event == EVENT_ISSUE_READ) {
+            ESP_LOGI(TAG, "Old State: parser_idle_state, Next: parser_handle_read");
+            *curr_state = parser_handle_read_state;
+            return;
+        }
     }
     
 }
@@ -324,6 +439,7 @@ static bool event_filter_func(state_event_t event) {
     case(EVENT_DONE_URC_F)  : return true;
     case(EVENT_ISSUE_CMD)   : return true;
     case(EVENT_ISSUE_WRITE) : return true;
+    case(EVENT_ISSUE_READ) : return true;
     defaut                  : return false;
   }
 }

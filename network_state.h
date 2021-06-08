@@ -59,6 +59,7 @@ typedef enum {
   NETWORK_ATTACHED = NETWORK_EVENT_START,
   NETWORK_DETACHED,
   NETWORK_WRITE_REQUEST, 
+  NETWORK_READ_REQUEST, 
 
   network_event_len //LEAVE AS LAST!
 } network_event_e;
