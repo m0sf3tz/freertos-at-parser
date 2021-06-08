@@ -660,9 +660,13 @@ void driver_b(void * arg){
   vTaskDelay(40000/portTICK_PERIOD_MS);
 
   puts("hi sam!");
-
-  state_post_event(NETWORK_WRITE_REQUEST); 
   
+  vTaskDelay(1000000);
+a:
+  state_post_event(NETWORK_WRITE_REQUEST); 
+  vTaskDelay(5000/portTICK_PERIOD_MS);
+  goto a;
+
   vTaskDelay(1000000);
   for(;;){
         if (r & 1 == 1){

@@ -148,11 +148,13 @@ int main( void )
     extern void mailbox_test();
     extern void create_kcnxcfg_cmd(char * str, int size);
     extern void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t len);
+    extern void net_adaptor_spawner();
 #if 1
     create_mailbox_freertos_objects();
     spawn_uart_thread();
     state_core_spawner();
     parser_state_spawner();
+    net_adaptor_spawner();
     network_driver();
 #else
     parser_test();

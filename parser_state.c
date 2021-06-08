@@ -12,6 +12,7 @@
 #include "state_core.h"
 #include "at_parser.h"
 #include "mailbox.h"
+#include "net_adaptor.h"
 
 /*********************************************************
 *                                                GLOBALS *
@@ -88,7 +89,7 @@ static state_t state_handle_cmd_func () {
   command_e cmd;
   at_parsed_s * parsed_p = get_parsed_struct();
   clear_at_parsed_struct();
-  
+
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
@@ -183,7 +184,10 @@ static state_t state_handle_read_func() {
   
   TickType_t start = xTaskGetTickCount();
   TickType_t end = start + PARSER_WAIT_FOR_UART;
- 
+
+  udp_packet_s udp;
+  memset(&udp, 0, sizeof(udp_packet_s));
+
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
@@ -260,8 +264,11 @@ static state_t state_handle_read_func() {
     }
   }
 
+  udp.len = len;
+  memcpy(udp.data, buff, len);
+  xQueueSendToBack(incoming_udp_q, &udp, RTOS_DONT_WAIT);
 
-  ESP_LOGI(TAG, "read --->%s", buff);
+  //ESP_LOGI(TAG, "read --->%s", buff);
   parsed_p->status = AT_PROCESSED_GOOD;
 
   vTaskDelay(100/portMAX_DELAY);

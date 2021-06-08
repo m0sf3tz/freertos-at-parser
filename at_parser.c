@@ -483,7 +483,7 @@ at_modem_respond_e is_status_line(char * line, size_t len, int *cme_error){
 }
 
 // Hunts for two "EOL" delimiters
-//  1) '\n' [ for normal URC, response] (if data_mode == false)
+//  1) '\r\n' [ for normal URC, response] (if data_mode == false)
 //  2) '---EOF---Pattern---' , for TCP/UDP data pushes (if data_mode == true)
 int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){
   static char long_del[LONG_DELIMITER_LEN] = "--EOF--Pattern--";
@@ -493,9 +493,7 @@ int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){
   //used in searching for <CR><LF>
   static bool found_cr;
 
-  // if not in data mode, hunts for '\n'
-  // Note, technically <CR><LF> - but I never
-  // seen a CR not followed by a LF
+  // if not in data mode, hunts for '\r\n'
   if ( c == '\r' && (mode == PARSER_CMD_DEL) ){
     found_cr = true;
     return NO_DELIMITER;
