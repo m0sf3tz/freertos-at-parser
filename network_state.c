@@ -16,6 +16,7 @@
 #include "uart_core.h"
 #include "threegpp.h"
 #include "network_constants.h"
+#include "net_adaptor.h"
 
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
@@ -489,8 +490,16 @@ static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_en
  
 
   if(!mailbox_wait(MAILBOX_WAIT_CONNECT, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
-  at_command_issue_hal("Suzie my house is not rent free --EOF--Pattern--", 
-      strlen("Suzie my house is not rent free --EOF--Pattern--"));
+
+  BaseType_t xStatus = xQueueReceive(outgoing_udp_q, misc_buff, RTOS_DONT_WAIT);
+  if (xStatus != pdTRUE){
+     ESP_LOGE(TAG, "Failed to RX on event send data!");
+     ASSERT(0);
+  }
+
+  // save some space, reuse misc buff
+  udp_packet_s * pudp = (udp_packet_s*)misc_buff;
+  at_command_issue_hal(pudp->data, pudp->len);
 
   if(!mailbox_post(MAILBOX_POST_WRITE)) goto fail;
 
@@ -661,9 +670,13 @@ void driver_b(void * arg){
 
   puts("hi sam!");
   
-  vTaskDelay(1000000);
+  udp_packet_s test;
+  memset(&test, 0, sizeof(udp_packet_s));
 a:
-  state_post_event(NETWORK_WRITE_REQUEST); 
+  sprintf(test.data, "wtf lol??\n--EOF--Pattern--");
+  test.len = strlen(test.data);
+  enqueue_udp_write(&test);
+  
   vTaskDelay(5000/portTICK_PERIOD_MS);
   goto a;
 

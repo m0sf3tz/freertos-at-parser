@@ -23,8 +23,10 @@ typedef struct{
 *                                       GLOBAL FUNCTIONS *
 *********************************************************/
 void net_adaptor_spawner();
+void enqueue_udp_write(udp_packet_s * udp);
 
 /*********************************************************
 *                                                GLOBALS *   
 *********************************************************/
 extern QueueSetHandle_t incoming_udp_q; 
+extern QueueSetHandle_t outgoing_udp_q; 

@@ -46,10 +46,10 @@ static void process_reads(void * arg){
   } 
 }
 
-static void send_write(udp_packet_s * udp){
+void enqueue_udp_write(udp_packet_s * udp){
     BaseType_t xStatus = xQueueSendToBack(outgoing_udp_q, udp, RTOS_DONT_WAIT);
     if (xStatus != pdTRUE) {
-        ESP_LOGE(TAG, "Failed to send on event queue %s ", name);
+        ESP_LOGE(TAG, "Failed to send on outgoing Q!");
         ASSERT(0);
     }
     state_post_event(NETWORK_WRITE_REQUEST); 
