@@ -81,6 +81,7 @@ static state_t state_idle_func() {
 static state_t state_handle_cmd_func () {
   ESP_LOGI(TAG, "entering handle_cmd!");
   mailbox_post(MAILBOX_POST_READY); 
+  vTaskDelay(1);
 
   at_modem_respond_e term; 
   int cme_err =0;

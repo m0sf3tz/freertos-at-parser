@@ -7640,7 +7640,7 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
                 0x00000000000027a0                __ctype_b_loc@@GLIBC_2.3
                 0x00000000000027b0                usleep@@GLIBC_2.2.5
 
-.text           0x00000000000027c0    0x28ae5
+.text           0x00000000000027c0    0x28bc5
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
@@ -7671,445 +7671,446 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
                 0x0000000000003b1c                state_core_spawner
                 0x0000000000003b95                start_new_state_machine
  .text          0x0000000000003e4a        0x0 build/main_full.o
- .text          0x0000000000003e4a       0x1c build/network_test.o
+ .text          0x0000000000003e4a       0x71 build/network_test.o
                 0x0000000000003e4a                network_test
- .text          0x0000000000003e66      0x3f4 build/main.o
-                0x0000000000003e66                main
-                0x0000000000003ee2                vApplicationMallocFailedHook
-                0x0000000000003efe                vApplicationIdleHook
-                0x0000000000003f18                vApplicationStackOverflowHook
-                0x0000000000003f40                vApplicationTickHook
-                0x0000000000004032                vLoggingPrintf
-                0x0000000000004101                vApplicationDaemonTaskStartupHook
-                0x000000000000410c                vAssertCalled
-                0x00000000000041e0                vApplicationGetIdleTaskMemory
-                0x000000000000421d                vApplicationGetTimerTaskMemory
- .text          0x000000000000425a     0x1056 build/parser_state.o
-                0x0000000000005289                parser_state_spawner
- .text          0x00000000000052b0       0xa1 build/sim_stream.o
-                0x00000000000052b0                set_current_cmd
-                0x00000000000052dc                at_incomming_get_stream
-                0x000000000000533f                at_command_issue_hal
- .text          0x0000000000005351     0x1b1e build/network_state.o
-                0x0000000000005351                dummy_callback
-                0x0000000000005b70                verify_cgact
-                0x0000000000005c4c                verify_kcnxfg
-                0x0000000000005d5e                verify_cereg
-                0x0000000000005e74                verify_cfun
-                0x0000000000005fbd                set_cfun
-                0x0000000000006109                verify_kudpcfg
-                0x0000000000006227                send_cmd
-                0x0000000000006483                send_write
-                0x0000000000006779                send_read
-                0x0000000000006a87                get_net_state_cmd
-                0x0000000000006bb6                get_net_state_token
-                0x0000000000006d83                driver_b
-                0x0000000000006e64                network_driver
- .text          0x0000000000006e6f        0x0 build/cellular_state.o
- .text          0x0000000000006e6f     0x2799 build/at_parser.o
-                0x00000000000070dd                get_type_cmd
-                0x00000000000072d8                get_type
-                0x000000000000751d                verify_urc_and_parse
-                0x000000000000785a                at_print_lines
-                0x00000000000078ee                check_for_type
-                0x00000000000079e7                at_line_explode
-                0x0000000000007fdd                clear_at_parsed_struct
-                0x0000000000007ffe                get_parsed_struct
-                0x000000000000800f                get_urc_parsed_struct
-                0x0000000000008020                is_connect_line
-                0x00000000000080c5                is_status_line
-                0x0000000000008302                at_parser_delimiter_hunter
-                0x0000000000008847                at_parser_stringer
-                0x000000000000891a                print_parsed
-                0x0000000000008a92                print_parsed_urc
-                0x0000000000008b68                parser_test
- .text          0x0000000000009608      0x240 build/main_blinky.o
-                0x0000000000009608                main_blinky
- .text          0x0000000000009848      0xc1b build/code_coverage_additions.o
-                0x000000000000a40a                xRunCodeCoverageTestAdditions
- .text          0x000000000000a463      0x288 build/net_adaptor.o
-                0x000000000000a535                enqueue_udp_write
-                0x000000000000a672                net_adaptor_spawner
- .text          0x000000000000a6eb      0x35d build/network_constants.o
-                0x000000000000a6eb                create_cgact_cmd
-                0x000000000000a77e                create_cfun_en_cmd
-                0x000000000000a811                create_kcnxcfg_cmd
-                0x000000000000a8ab                create_kudpsend_cmd
-                0x000000000000a95b                create_kudprcv_cmd
- .text          0x000000000000aa48       0xbd build/run-time-stats-utils.o
-                0x000000000000aa48                vConfigureTimerForRunTimeStats
-                0x000000000000aaa4                ulGetRunTimeCounterValue
- .text          0x000000000000ab05     0x381b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
-                0x000000000000ab05                xQueueGenericReset
-                0x000000000000ac21                xQueueGenericCreateStatic
-                0x000000000000ad79                xQueueGenericCreate
-                0x000000000000b0ec                xQueueCreateMutex
-                0x000000000000b13a                xQueueCreateMutexStatic
-                0x000000000000b198                xQueueGetMutexHolder
-                0x000000000000b1e2                xQueueGetMutexHolderFromISR
-                0x000000000000b232                xQueueGiveMutexRecursive
-                0x000000000000b367                xQueueTakeMutexRecursive
-                0x000000000000b409                xQueueCreateCountingSemaphoreStatic
-                0x000000000000b494                xQueueCreateCountingSemaphore
-                0x000000000000b50e                xQueueGenericSend
-                0x000000000000bb00                xQueueGenericSendFromISR
-                0x000000000000be35                xQueueGiveFromISR
-                0x000000000000be63                MyWrapper_xQueueGiveFromISR
-                0x000000000000c15a                xQueueReceive
-                0x000000000000c6eb                xQueueSemaphoreTake
-                0x000000000000cce9                xQueuePeek
-                0x000000000000d207                xQueueReceiveFromISR
-                0x000000000000d493                xQueuePeekFromISR
-                0x000000000000d585                uxQueueMessagesWaiting
-                0x000000000000d5c9                uxQueueSpacesAvailable
-                0x000000000000d623                uxQueueMessagesWaitingFromISR
-                0x000000000000d665                vQueueDelete
-                0x000000000000d856                uxQueueGetQueueNumber
-                0x000000000000d86f                vQueueSetQueueNumber
-                0x000000000000d891                ucQueueGetQueueType
-                0x000000000000dc36                xQueueIsQueueEmptyFromISR
-                0x000000000000dcd2                xQueueIsQueueFullFromISR
-                0x000000000000dd2f                vQueueAddToRegistry
-                0x000000000000ddf6                pcQueueGetName
-                0x000000000000de5e                vQueueUnregisterQueue
-                0x000000000000ded6                vQueueWaitForMessageRestricted
-                0x000000000000df6b                xQueueCreateSet
-                0x000000000000df9b                xQueueAddToSet
-                0x000000000000e007                xQueueRemoveFromSet
-                0x000000000000e07c                xQueueSelectFromSet
-                0x000000000000e0d8                xQueueSelectFromSetFromISR
- .text          0x000000000000e320        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .text          0x000000000000e320      0x21f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
-                0x000000000000e320                vListInitialise
-                0x000000000000e376                vListInitialiseItem
-                0x000000000000e391                vListInsertEnd
-                0x000000000000e406                vListInsert
-                0x000000000000e4ba                uxListRemove
- .text          0x000000000000e53f     0x1de3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
-                0x000000000000e53f                xStreamBufferGenericCreate
-                0x000000000000e78e                xStreamBufferGenericCreateStatic
-                0x000000000000ea29                vStreamBufferDelete
-                0x000000000000ebdc                xStreamBufferReset
-                0x000000000000ed5c                xStreamBufferSetTriggerLevel
-                0x000000000000edd1                xStreamBufferSpacesAvailable
-                0x000000000000ee48                xStreamBufferBytesAvailable
-                0x000000000000ee8e                xStreamBufferSend
-                0x000000000000f2bb                xStreamBufferSendFromISR
-                0x000000000000f5c1                xStreamBufferReceive
-                0x000000000000f953                xStreamBufferNextMessageLengthBytes
-                0x000000000000fa3b                xStreamBufferReceiveFromISR
-                0x000000000000fd45                xStreamBufferIsEmpty
-                0x000000000000fda6                xStreamBufferIsFull
-                0x000000000000fe24                xStreamBufferSendCompletedFromISR
-                0x000000000000feca                xStreamBufferReceiveCompletedFromISR
-                0x00000000000102d4                uxStreamBufferGetStreamBufferNumber
-                0x00000000000102ea                vStreamBufferSetStreamBufferNumber
-                0x0000000000010309                ucStreamBufferGetStreamBufferType
- .text          0x0000000000010322      0xfbe build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
-                0x0000000000010322                xEventGroupCreateStatic
-                0x0000000000010498                xEventGroupCreate
-                0x00000000000105d5                xEventGroupSync
-                0x00000000000108d4                xEventGroupWaitBits
-                0x0000000000010c5b                xEventGroupClearBits
-                0x0000000000010d44                xEventGroupClearBitsFromISR
-                0x0000000000010dc8                xEventGroupGetBitsFromISR
-                0x0000000000010e06                xEventGroupSetBits
-                0x0000000000011002                vEventGroupDelete
-                0x000000000001114e                vEventGroupSetBitsCallback
-                0x0000000000011176                vEventGroupClearBitsCallback
-                0x00000000000111f4                xEventGroupSetBitsFromISR
-                0x000000000001128a                uxEventGroupGetNumber
-                0x00000000000112c1                vEventGroupSetNumber
- .text          0x00000000000112e0     0x465f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
-                0x00000000000112e0                xTaskCreateStatic
-                0x00000000000113fe                xTaskCreate
-                0x000000000001191f                vTaskDelete
-                0x0000000000011c4d                xTaskDelayUntil
-                0x0000000000011de3                vTaskDelay
-                0x0000000000011ec9                eTaskGetState
-                0x0000000000011fea                uxTaskPriorityGet
-                0x000000000001202e                uxTaskPriorityGetFromISR
-                0x000000000001207d                vTaskPrioritySet
-                0x0000000000012301                vTaskSuspend
-                0x000000000001251f                vTaskResume
-                0x0000000000012695                xTaskResumeFromISR
-                0x0000000000012821                vTaskStartScheduler
-                0x000000000001297f                vTaskEndScheduler
-                0x000000000001299f                vTaskSuspendAll
-                0x00000000000129bc                xTaskResumeAll
-                0x0000000000012b87                xTaskGetTickCount
-                0x0000000000012ba0                xTaskGetTickCountFromISR
-                0x0000000000012bc1                uxTaskGetNumberOfTasks
-                0x0000000000012bd2                pcTaskGetName
-                0x0000000000012d7c                xTaskGetHandle
-                0x0000000000012e8a                uxTaskGetSystemState
-                0x0000000000013016                xTaskGetIdleTaskHandle
-                0x0000000000013044                xTaskCatchUpTicks
-                0x000000000001309a                xTaskAbortDelay
-                0x00000000000131ec                xTaskIncrementTick
-                0x000000000001349e                vTaskSetApplicationTaskTag
-                0x00000000000134ea                xTaskGetApplicationTaskTag
-                0x0000000000013531                xTaskGetApplicationTaskTagFromISR
-                0x0000000000013583                xTaskCallApplicationTaskHook
-                0x00000000000135eb                vTaskSwitchContext
-                0x000000000001377d                vTaskPlaceOnEventList
-                0x00000000000137d7                vTaskPlaceOnUnorderedEventList
-                0x0000000000013866                vTaskPlaceOnEventListRestricted
-                0x0000000000013958                xTaskRemoveFromEventList
-                0x0000000000013a9a                vTaskRemoveFromUnorderedEventList
-                0x0000000000013bca                vTaskSetTimeOutState
-                0x0000000000013c1c                vTaskInternalSetTimeOutState
-                0x0000000000013c48                xTaskCheckForTimeOut
-                0x0000000000013d85                vTaskMissedYield
-                0x0000000000013d9b                uxTaskGetTaskNumber
-                0x0000000000013dd5                vTaskSetTaskNumber
-                0x0000000000013f4c                vTaskGetInfo
-                0x00000000000141df                uxTaskGetStackHighWaterMark2
-                0x0000000000014227                uxTaskGetStackHighWaterMark
-                0x0000000000014338                xTaskGetCurrentTaskHandle
-                0x0000000000014351                xTaskGetSchedulerState
-                0x0000000000014393                xTaskPriorityInherit
-                0x00000000000145b4                xTaskPriorityDisinherit
-                0x00000000000147c2                vTaskPriorityDisinheritAfterTimeout
-                0x0000000000014a09                uxTaskResetEventItemValue
-                0x0000000000014a47                pvTaskIncrementMutexHeldCount
-                0x0000000000014a7d                ulTaskGenericNotifyTake
-                0x0000000000014d0b                xTaskGenericNotifyWait
-                0x0000000000014f72                xTaskGenericNotify
-                0x0000000000015232                xTaskGenericNotifyFromISR
-                0x0000000000015527                vTaskGenericNotifyGiveFromISR
-                0x0000000000015733                xTaskGenericNotifyStateClear
-                0x00000000000157c5                ulTaskGenericNotifyValueClear
-                0x000000000001583f                ulTaskGetIdleRunTimeCounter
- .text          0x000000000001593f     0x146c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
-                0x000000000001593f                xTimerCreateTimerTask
-                0x0000000000015a1e                xTimerCreate
-                0x0000000000015a87                xTimerCreateStatic
-                0x0000000000015c99                xTimerGenericCommand
-                0x0000000000015fd9                xTimerGetTimerDaemonTaskHandle
-                0x0000000000016007                xTimerGetPeriod
-                0x0000000000016041                vTimerSetReloadMode
-                0x00000000000160b3                uxTimerGetReloadMode
-                0x0000000000016117                xTimerGetExpiryTime
-                0x0000000000016159                pcTimerGetName
-                0x0000000000016a68                xTimerIsTimerActive
-                0x0000000000016acc                pvTimerGetTimerID
-                0x0000000000016b18                vTimerSetTimerID
-                0x0000000000016b65                xTimerPendFunctionCallFromISR
-                0x0000000000016c1c                xTimerPendFunctionCall
-                0x0000000000016d76                uxTimerGetTimerNumber
-                0x0000000000016d8c                vTimerSetTimerNumber
- .text          0x0000000000016dab       0xb6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
-                0x0000000000016dab                pvPortMalloc
-                0x0000000000016e1c                vPortFree
- .text          0x0000000000016e61      0x205 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
-                0x0000000000016e61                event_create
-                0x0000000000016eaf                event_delete
-                0x0000000000016eea                event_wait
-                0x0000000000016f49                event_wait_timed
-                0x0000000000017023                event_signal
- .text          0x0000000000017066      0x95d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
-                0x00000000000170c7                pxPortInitialiseStack
-                0x0000000000017212                xPortStartScheduler
-                0x00000000000172db                vPortEndScheduler
-                0x00000000000173d5                vPortEnterCritical
-                0x0000000000017403                vPortExitCritical
-                0x0000000000017431                vPortYieldFromISR
-                0x000000000001747a                vPortYield
-                0x0000000000017494                vPortDisableInterrupts
-                0x00000000000174b5                vPortEnableInterrupts
-                0x00000000000174d6                xPortSetInterruptMask
-                0x00000000000174e5                vPortClearInterruptMask
-                0x000000000001767e                vPortThreadDying
-                0x00000000000176b1                vPortCancelThread
-                0x0000000000017982                ulPortGetRunTime
- .text          0x00000000000179c3      0xc6f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
-                0x00000000000179c3                vCreateAbortDelayTasks
-                0x00000000000185b5                xAreAbortDelayTestTasksStillRunning
- .text          0x0000000000018632      0x4a9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
-                0x0000000000018632                vStartBlockingQueueTasks
-                0x00000000000189f6                xAreBlockingQueuesStillRunning
- .text          0x0000000000018adb      0x955 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
-                0x0000000000018adb                vCreateBlockTimeTasks
-                0x00000000000193b3                xAreBlockTimeTestTasksStillRunning
- .text          0x0000000000019430      0x3fc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
-                0x0000000000019430                vStartCountingSemaphoreTasks
-                0x00000000000197ac                xAreCountingSemaphoreTasksStillRunning
- .text          0x000000000001982c      0x21c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
-                0x000000000001982c                vCreateSuicidalTasks
-                0x00000000000199b4                xIsCreateTaskStillRunning
- .text          0x0000000000019a48      0x533 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
-                0x0000000000019a48                vStartDynamicPriorityTasks
-                0x0000000000019eee                xAreDynamicPriorityTasksStillRunning
- .text          0x0000000000019f7b      0xfe9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
-                0x0000000000019f7b                vStartEventGroupTasks
-                0x000000000001ad7d                vPeriodicEventGroupsProcessing
-                0x000000000001aee2                xAreEventGroupTasksStillRunning
- .text          0x000000000001af64      0x5e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
-                0x000000000001af64                vStartMathTasks
-                0x000000000001b4e6                xAreMathsTaskStillRunning
- .text          0x000000000001b54a      0xed6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
-                0x000000000001b54a                vStartGenericQueueTasks
-                0x000000000001c3b8                xAreGenericQueueTasksStillRunning
- .text          0x000000000001c420      0x185 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
-                0x000000000001c420                vStartIntegerMathTasks
-                0x000000000001c532                xAreIntegerMathsTaskStillRunning
- .text          0x000000000001c5a5      0x882 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
-                0x000000000001c5a5                vStartInterruptSemaphoreTasks
-                0x000000000001ccc2                vInterruptSemaphorePeriodicTest
-                0x000000000001cdb6                xAreInterruptSemaphoreTasksStillRunning
- .text          0x000000000001ce27      0x446 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
-                0x000000000001ce27                vStartMessageBufferAMPTasks
-                0x000000000001d0ef                vGenerateCoreBInterrupt
-                0x000000000001d1dd                xAreMessageBufferAMPTasksStillRunning
- .text          0x000000000001d26d     0x1506 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
-                0x000000000001d26d                vStartMessageBufferTasks
-                0x000000000001e63f                xAreMessageBufferTasksStillRunning
- .text          0x000000000001e773      0x25a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
-                0x000000000001e773                vStartPolledQueueTasks
-                0x000000000001e97f                xArePollingQueuesStillRunning
- .text          0x000000000001e9cd      0x5da build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
-                0x000000000001e9cd                vStartQueuePeekTasks
-                0x000000000001ef66                xAreQueuePeekTasksStillRunning
- .text          0x000000000001efa7      0x36d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
-                0x000000000001efa7                vStartQueueOverwriteTask
-                0x000000000001f17c                xIsQueueOverwriteTaskStillRunning
-                0x000000000001f1c7                vQueueOverwritePeriodicISRDemo
- .text          0x000000000001f314     0x1485 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
-                0x000000000001f314                vStartQueueSetTasks
-                0x000000000001f393                xAreQueueSetTasksStillRunning
-                0x000000000001f73b                vQueueSetAccessQueueSetFromISR
- .text          0x0000000000020799      0x1d2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
-                0x0000000000020799                vStartQueueSetPollingTask
-                0x00000000000208cf                vQueueSetPollingInterruptAccess
-                0x0000000000020933                xAreQueueSetPollTasksStillRunning
- .text          0x000000000002096b      0x4f5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
-                0x000000000002096b                vStartRecursiveMutexTasks
-                0x0000000000020da9                xAreRecursiveMutexTasksStillRunning
- .text          0x0000000000020e60      0x409 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
-                0x0000000000020e60                vStartSemaphoreTasks
-                0x00000000000211e4                xAreSemaphoreTasksStillRunning
- .text          0x0000000000021269     0x1122 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
-                0x0000000000021269                vStartStaticallyAllocatedTasks
-                0x0000000000022331                xAreStaticAllocationTasksStillRunning
- .text          0x000000000002238b     0x2345 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
-                0x000000000002238b                vStartStreamBufferTasks
-                0x0000000000024289                vPeriodicStreamBufferProcessing
-                0x000000000002456f                xAreStreamBufferTasksStillRunning
- .text          0x00000000000246d0      0x2a0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
-                0x00000000000246d0                vStartStreamBufferInterruptDemo
-                0x0000000000024889                vBasicStreamBufferSendFromISR
-                0x0000000000024937                xIsInterruptStreamBufferDemoStillRunning
- .text          0x0000000000024970     0x11b4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
-                0x0000000000024970                vStartTaskNotifyTask
-                0x00000000000258d0                xNotifyTaskFromISR
-                0x0000000000025a6c                xAreTaskNotificationTasksStillRunning
- .text          0x0000000000025b24     0x1a0e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
-                0x0000000000025b24                vStartTimerDemoTask
-                0x0000000000025cb6                xAreTimerDemoTasksStillRunning
-                0x0000000000026a7c                vTimerPeriodicISRTests
- .text          0x0000000000027532      0x976 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
-                0x0000000000027532                prvTraceGetQueueNumber
-                0x0000000000027550                prvTraceGetQueueType
-                0x000000000002756e                prvTraceGetTaskNumberLow16
-                0x000000000002758c                prvTraceGetTaskNumberHigh16
-                0x00000000000275ae                prvTraceSetTaskNumberLow16
-                0x00000000000275f1                prvTraceSetTaskNumberHigh16
-                0x0000000000027634                prvTraceGetQueueNumberLow16
-                0x0000000000027652                prvTraceGetQueueNumberHigh16
-                0x0000000000027673                prvTraceSetQueueNumberLow16
-                0x00000000000276b5                prvTraceSetQueueNumberHigh16
-                0x00000000000276f7                prvTraceGetTimerNumberLow16
-                0x0000000000027715                prvTraceGetTimerNumberHigh16
-                0x0000000000027737                prvTraceSetTimerNumberLow16
-                0x000000000002777a                prvTraceSetTimerNumberHigh16
-                0x00000000000277bd                prvTraceGetEventGroupNumberLow16
-                0x00000000000277db                prvTraceGetEventGroupNumberHigh16
-                0x00000000000277fd                prvTraceSetEventGroupNumberLow16
-                0x0000000000027840                prvTraceSetEventGroupNumberHigh16
-                0x0000000000027883                prvTraceGetStreamBufferNumberLow16
-                0x00000000000278a1                prvTraceGetStreamBufferNumberHigh16
-                0x00000000000278c3                prvTraceSetStreamBufferNumberLow16
-                0x0000000000027906                prvTraceSetStreamBufferNumberHigh16
-                0x0000000000027949                vTraceSetQueueName
-                0x000000000002797f                vTraceSetSemaphoreName
-                0x00000000000279b5                vTraceSetMutexName
-                0x00000000000279eb                vTraceSetEventGroupName
-                0x0000000000027a21                vTraceSetStreamBufferName
-                0x0000000000027a57                vTraceSetMessageBufferName
-                0x0000000000027a8d                prvTraceGetCurrentTaskHandle
-                0x0000000000027a9c                vTraceEnable
-                0x0000000000027ae6                vTraceInitObjectPropertyTable
-                0x0000000000027cd5                vTraceInitObjectHandleStack
-                0x0000000000027e00                pszTraceGetErrorNotEnoughHandles
-                0x0000000000027e93                prvTraceIsSchedulerSuspended
- .text          0x0000000000027ea8     0x337a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
-                0x0000000000027ea8                vTraceSetStopHook
-                0x0000000000027ec2                vTraceClear
-                0x0000000000027f87                uiTraceStart
-                0x0000000000028094                vTraceStart
-                0x00000000000280a4                vTraceStop
-                0x00000000000280de                xTraceIsRecordingEnabled
-                0x0000000000028105                xTraceGetLastError
-                0x0000000000028116                vTraceClearError
-                0x0000000000028149                xTraceGetTraceBuffer
-                0x000000000002815a                uiTraceGetTraceBufferSize
-                0x0000000000028201                vTraceInstanceFinishedNext
-                0x0000000000028216                vTraceInstanceFinishedNow
-                0x000000000002822b                xTraceSetISRProperties
-                0x00000000000282f2                vTraceStoreISRBegin
-                0x000000000002843a                vTraceStoreISREnd
-                0x0000000000028d29                vTracePrintF
-                0x0000000000028e00                vTraceVPrintF
-                0x0000000000029084                vTracePrint
-                0x000000000002912c                xTraceRegisterString
-                0x0000000000029188                prvTraceSetReadyEventsEnabled
-                0x000000000002919f                prvTraceStoreTaskReady
-                0x0000000000029280                prvTraceStoreLowPower
-                0x0000000000029331                vTraceStoreMemMangEvent
-                0x0000000000029483                prvTraceStoreKernelCall
-                0x00000000000295a6                prvTraceStoreKernelCallWithParam
-                0x000000000002976f                prvTraceStoreKernelCallWithNumericParamOnly
-                0x0000000000029856                prvTraceStoreTaskswitch
-                0x000000000002995d                prvTraceStoreObjectNameOnCloseEvent
-                0x0000000000029a53                prvTraceStoreObjectPropertiesOnCloseEvent
-                0x0000000000029b7d                prvTraceSetPriorityProperty
-                0x0000000000029c1d                prvTraceGetPriorityProperty
-                0x0000000000029cbd                prvTraceSetObjectState
-                0x0000000000029df7                prvTraceSetTaskInstanceFinished
-                0x0000000000029e62                prvTraceInitTraceData
-                0x000000000002a182                uiIndexOfObject
-                0x000000000002a254                prvTraceGetObjectHandle
-                0x000000000002a44b                prvTraceFreeObjectHandle
-                0x000000000002a541                prvMarkObjectAsUsed
-                0x000000000002a5dc                prvTraceSetObjectName
-                0x000000000002a7c4                vTraceSetFrequency
-                0x000000000002a7db                prvTraceError
-                0x000000000002a858                vTraceSetFilterMask
-                0x000000000002a874                vTraceSetFilterGroup
-                0x000000000002b169                prvTracePortGetTimeStamp
- .text          0x000000000002b222        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
- .text          0x000000000002b222        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
- *fill*         0x000000000002b222        0xe 
- .text          0x000000000002b230       0x75 /usr/lib/x86_64-linux-gnu/libc_nonshared.a(elf-init.oS)
-                0x000000000002b230                __libc_csu_init
-                0x000000000002b2a0                __libc_csu_fini
- .text          0x000000000002b2a5        0x0 /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o
- .text          0x000000000002b2a5        0x0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+ .text          0x0000000000003ebb      0x3ea build/main.o
+                0x0000000000003ebb                main
+                0x0000000000003f2d                vApplicationMallocFailedHook
+                0x0000000000003f49                vApplicationIdleHook
+                0x0000000000003f63                vApplicationStackOverflowHook
+                0x0000000000003f8b                vApplicationTickHook
+                0x000000000000407d                vLoggingPrintf
+                0x000000000000414c                vApplicationDaemonTaskStartupHook
+                0x0000000000004157                vAssertCalled
+                0x000000000000422b                vApplicationGetIdleTaskMemory
+                0x0000000000004268                vApplicationGetTimerTaskMemory
+ .text          0x00000000000042a5     0x1060 build/parser_state.o
+                0x00000000000052de                parser_state_spawner
+ .text          0x0000000000005305       0xc4 build/sim_stream.o
+                0x0000000000005305                set_current_cmd
+                0x0000000000005331                at_incomming_get_stream
+                0x00000000000053b7                at_command_issue_hal
+ .text          0x00000000000053c9     0x1b8c build/network_state.o
+                0x00000000000053c9                dummy_callback
+                0x0000000000005be8                verify_cgact
+                0x0000000000005cc4                verify_kcnxfg
+                0x0000000000005dd6                verify_cereg
+                0x0000000000005eec                verify_cfun
+                0x0000000000006035                set_cfun
+                0x0000000000006181                verify_kudpcfg
+                0x000000000000629f                send_cmd
+                0x0000000000006516                send_write
+                0x000000000000680c                send_read
+                0x0000000000006b10                get_net_state_cmd
+                0x0000000000006c3f                get_net_state_token
+                0x0000000000006e0c                driver_b
+                0x0000000000006ee3                test
+                0x0000000000006f0b                network_driver
+ .text          0x0000000000006f55        0x0 build/cellular_state.o
+ .text          0x0000000000006f55     0x2799 build/at_parser.o
+                0x00000000000071c3                get_type_cmd
+                0x00000000000073be                get_type
+                0x0000000000007603                verify_urc_and_parse
+                0x0000000000007940                at_print_lines
+                0x00000000000079d4                check_for_type
+                0x0000000000007acd                at_line_explode
+                0x00000000000080c3                clear_at_parsed_struct
+                0x00000000000080e4                get_parsed_struct
+                0x00000000000080f5                get_urc_parsed_struct
+                0x0000000000008106                is_connect_line
+                0x00000000000081ab                is_status_line
+                0x00000000000083e8                at_parser_delimiter_hunter
+                0x000000000000892d                at_parser_stringer
+                0x0000000000008a00                print_parsed
+                0x0000000000008b78                print_parsed_urc
+                0x0000000000008c4e                parser_test
+ .text          0x00000000000096ee      0x240 build/main_blinky.o
+                0x00000000000096ee                main_blinky
+ .text          0x000000000000992e      0xc1b build/code_coverage_additions.o
+                0x000000000000a4f0                xRunCodeCoverageTestAdditions
+ .text          0x000000000000a549      0x288 build/net_adaptor.o
+                0x000000000000a61b                enqueue_udp_write
+                0x000000000000a758                net_adaptor_spawner
+ .text          0x000000000000a7d1      0x35d build/network_constants.o
+                0x000000000000a7d1                create_cgact_cmd
+                0x000000000000a864                create_cfun_en_cmd
+                0x000000000000a8f7                create_kcnxcfg_cmd
+                0x000000000000a991                create_kudpsend_cmd
+                0x000000000000aa41                create_kudprcv_cmd
+ .text          0x000000000000ab2e       0xbd build/run-time-stats-utils.o
+                0x000000000000ab2e                vConfigureTimerForRunTimeStats
+                0x000000000000ab8a                ulGetRunTimeCounterValue
+ .text          0x000000000000abeb     0x381b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+                0x000000000000abeb                xQueueGenericReset
+                0x000000000000ad07                xQueueGenericCreateStatic
+                0x000000000000ae5f                xQueueGenericCreate
+                0x000000000000b1d2                xQueueCreateMutex
+                0x000000000000b220                xQueueCreateMutexStatic
+                0x000000000000b27e                xQueueGetMutexHolder
+                0x000000000000b2c8                xQueueGetMutexHolderFromISR
+                0x000000000000b318                xQueueGiveMutexRecursive
+                0x000000000000b44d                xQueueTakeMutexRecursive
+                0x000000000000b4ef                xQueueCreateCountingSemaphoreStatic
+                0x000000000000b57a                xQueueCreateCountingSemaphore
+                0x000000000000b5f4                xQueueGenericSend
+                0x000000000000bbe6                xQueueGenericSendFromISR
+                0x000000000000bf1b                xQueueGiveFromISR
+                0x000000000000bf49                MyWrapper_xQueueGiveFromISR
+                0x000000000000c240                xQueueReceive
+                0x000000000000c7d1                xQueueSemaphoreTake
+                0x000000000000cdcf                xQueuePeek
+                0x000000000000d2ed                xQueueReceiveFromISR
+                0x000000000000d579                xQueuePeekFromISR
+                0x000000000000d66b                uxQueueMessagesWaiting
+                0x000000000000d6af                uxQueueSpacesAvailable
+                0x000000000000d709                uxQueueMessagesWaitingFromISR
+                0x000000000000d74b                vQueueDelete
+                0x000000000000d93c                uxQueueGetQueueNumber
+                0x000000000000d955                vQueueSetQueueNumber
+                0x000000000000d977                ucQueueGetQueueType
+                0x000000000000dd1c                xQueueIsQueueEmptyFromISR
+                0x000000000000ddb8                xQueueIsQueueFullFromISR
+                0x000000000000de15                vQueueAddToRegistry
+                0x000000000000dedc                pcQueueGetName
+                0x000000000000df44                vQueueUnregisterQueue
+                0x000000000000dfbc                vQueueWaitForMessageRestricted
+                0x000000000000e051                xQueueCreateSet
+                0x000000000000e081                xQueueAddToSet
+                0x000000000000e0ed                xQueueRemoveFromSet
+                0x000000000000e162                xQueueSelectFromSet
+                0x000000000000e1be                xQueueSelectFromSetFromISR
+ .text          0x000000000000e406        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .text          0x000000000000e406      0x21f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
+                0x000000000000e406                vListInitialise
+                0x000000000000e45c                vListInitialiseItem
+                0x000000000000e477                vListInsertEnd
+                0x000000000000e4ec                vListInsert
+                0x000000000000e5a0                uxListRemove
+ .text          0x000000000000e625     0x1de3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+                0x000000000000e625                xStreamBufferGenericCreate
+                0x000000000000e874                xStreamBufferGenericCreateStatic
+                0x000000000000eb0f                vStreamBufferDelete
+                0x000000000000ecc2                xStreamBufferReset
+                0x000000000000ee42                xStreamBufferSetTriggerLevel
+                0x000000000000eeb7                xStreamBufferSpacesAvailable
+                0x000000000000ef2e                xStreamBufferBytesAvailable
+                0x000000000000ef74                xStreamBufferSend
+                0x000000000000f3a1                xStreamBufferSendFromISR
+                0x000000000000f6a7                xStreamBufferReceive
+                0x000000000000fa39                xStreamBufferNextMessageLengthBytes
+                0x000000000000fb21                xStreamBufferReceiveFromISR
+                0x000000000000fe2b                xStreamBufferIsEmpty
+                0x000000000000fe8c                xStreamBufferIsFull
+                0x000000000000ff0a                xStreamBufferSendCompletedFromISR
+                0x000000000000ffb0                xStreamBufferReceiveCompletedFromISR
+                0x00000000000103ba                uxStreamBufferGetStreamBufferNumber
+                0x00000000000103d0                vStreamBufferSetStreamBufferNumber
+                0x00000000000103ef                ucStreamBufferGetStreamBufferType
+ .text          0x0000000000010408      0xfbe build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+                0x0000000000010408                xEventGroupCreateStatic
+                0x000000000001057e                xEventGroupCreate
+                0x00000000000106bb                xEventGroupSync
+                0x00000000000109ba                xEventGroupWaitBits
+                0x0000000000010d41                xEventGroupClearBits
+                0x0000000000010e2a                xEventGroupClearBitsFromISR
+                0x0000000000010eae                xEventGroupGetBitsFromISR
+                0x0000000000010eec                xEventGroupSetBits
+                0x00000000000110e8                vEventGroupDelete
+                0x0000000000011234                vEventGroupSetBitsCallback
+                0x000000000001125c                vEventGroupClearBitsCallback
+                0x00000000000112da                xEventGroupSetBitsFromISR
+                0x0000000000011370                uxEventGroupGetNumber
+                0x00000000000113a7                vEventGroupSetNumber
+ .text          0x00000000000113c6     0x465f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+                0x00000000000113c6                xTaskCreateStatic
+                0x00000000000114e4                xTaskCreate
+                0x0000000000011a05                vTaskDelete
+                0x0000000000011d33                xTaskDelayUntil
+                0x0000000000011ec9                vTaskDelay
+                0x0000000000011faf                eTaskGetState
+                0x00000000000120d0                uxTaskPriorityGet
+                0x0000000000012114                uxTaskPriorityGetFromISR
+                0x0000000000012163                vTaskPrioritySet
+                0x00000000000123e7                vTaskSuspend
+                0x0000000000012605                vTaskResume
+                0x000000000001277b                xTaskResumeFromISR
+                0x0000000000012907                vTaskStartScheduler
+                0x0000000000012a65                vTaskEndScheduler
+                0x0000000000012a85                vTaskSuspendAll
+                0x0000000000012aa2                xTaskResumeAll
+                0x0000000000012c6d                xTaskGetTickCount
+                0x0000000000012c86                xTaskGetTickCountFromISR
+                0x0000000000012ca7                uxTaskGetNumberOfTasks
+                0x0000000000012cb8                pcTaskGetName
+                0x0000000000012e62                xTaskGetHandle
+                0x0000000000012f70                uxTaskGetSystemState
+                0x00000000000130fc                xTaskGetIdleTaskHandle
+                0x000000000001312a                xTaskCatchUpTicks
+                0x0000000000013180                xTaskAbortDelay
+                0x00000000000132d2                xTaskIncrementTick
+                0x0000000000013584                vTaskSetApplicationTaskTag
+                0x00000000000135d0                xTaskGetApplicationTaskTag
+                0x0000000000013617                xTaskGetApplicationTaskTagFromISR
+                0x0000000000013669                xTaskCallApplicationTaskHook
+                0x00000000000136d1                vTaskSwitchContext
+                0x0000000000013863                vTaskPlaceOnEventList
+                0x00000000000138bd                vTaskPlaceOnUnorderedEventList
+                0x000000000001394c                vTaskPlaceOnEventListRestricted
+                0x0000000000013a3e                xTaskRemoveFromEventList
+                0x0000000000013b80                vTaskRemoveFromUnorderedEventList
+                0x0000000000013cb0                vTaskSetTimeOutState
+                0x0000000000013d02                vTaskInternalSetTimeOutState
+                0x0000000000013d2e                xTaskCheckForTimeOut
+                0x0000000000013e6b                vTaskMissedYield
+                0x0000000000013e81                uxTaskGetTaskNumber
+                0x0000000000013ebb                vTaskSetTaskNumber
+                0x0000000000014032                vTaskGetInfo
+                0x00000000000142c5                uxTaskGetStackHighWaterMark2
+                0x000000000001430d                uxTaskGetStackHighWaterMark
+                0x000000000001441e                xTaskGetCurrentTaskHandle
+                0x0000000000014437                xTaskGetSchedulerState
+                0x0000000000014479                xTaskPriorityInherit
+                0x000000000001469a                xTaskPriorityDisinherit
+                0x00000000000148a8                vTaskPriorityDisinheritAfterTimeout
+                0x0000000000014aef                uxTaskResetEventItemValue
+                0x0000000000014b2d                pvTaskIncrementMutexHeldCount
+                0x0000000000014b63                ulTaskGenericNotifyTake
+                0x0000000000014df1                xTaskGenericNotifyWait
+                0x0000000000015058                xTaskGenericNotify
+                0x0000000000015318                xTaskGenericNotifyFromISR
+                0x000000000001560d                vTaskGenericNotifyGiveFromISR
+                0x0000000000015819                xTaskGenericNotifyStateClear
+                0x00000000000158ab                ulTaskGenericNotifyValueClear
+                0x0000000000015925                ulTaskGetIdleRunTimeCounter
+ .text          0x0000000000015a25     0x146c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+                0x0000000000015a25                xTimerCreateTimerTask
+                0x0000000000015b04                xTimerCreate
+                0x0000000000015b6d                xTimerCreateStatic
+                0x0000000000015d7f                xTimerGenericCommand
+                0x00000000000160bf                xTimerGetTimerDaemonTaskHandle
+                0x00000000000160ed                xTimerGetPeriod
+                0x0000000000016127                vTimerSetReloadMode
+                0x0000000000016199                uxTimerGetReloadMode
+                0x00000000000161fd                xTimerGetExpiryTime
+                0x000000000001623f                pcTimerGetName
+                0x0000000000016b4e                xTimerIsTimerActive
+                0x0000000000016bb2                pvTimerGetTimerID
+                0x0000000000016bfe                vTimerSetTimerID
+                0x0000000000016c4b                xTimerPendFunctionCallFromISR
+                0x0000000000016d02                xTimerPendFunctionCall
+                0x0000000000016e5c                uxTimerGetTimerNumber
+                0x0000000000016e72                vTimerSetTimerNumber
+ .text          0x0000000000016e91       0xb6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
+                0x0000000000016e91                pvPortMalloc
+                0x0000000000016f02                vPortFree
+ .text          0x0000000000016f47      0x205 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+                0x0000000000016f47                event_create
+                0x0000000000016f95                event_delete
+                0x0000000000016fd0                event_wait
+                0x000000000001702f                event_wait_timed
+                0x0000000000017109                event_signal
+ .text          0x000000000001714c      0x95d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+                0x00000000000171ad                pxPortInitialiseStack
+                0x00000000000172f8                xPortStartScheduler
+                0x00000000000173c1                vPortEndScheduler
+                0x00000000000174bb                vPortEnterCritical
+                0x00000000000174e9                vPortExitCritical
+                0x0000000000017517                vPortYieldFromISR
+                0x0000000000017560                vPortYield
+                0x000000000001757a                vPortDisableInterrupts
+                0x000000000001759b                vPortEnableInterrupts
+                0x00000000000175bc                xPortSetInterruptMask
+                0x00000000000175cb                vPortClearInterruptMask
+                0x0000000000017764                vPortThreadDying
+                0x0000000000017797                vPortCancelThread
+                0x0000000000017a68                ulPortGetRunTime
+ .text          0x0000000000017aa9      0xc6f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+                0x0000000000017aa9                vCreateAbortDelayTasks
+                0x000000000001869b                xAreAbortDelayTestTasksStillRunning
+ .text          0x0000000000018718      0x4a9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+                0x0000000000018718                vStartBlockingQueueTasks
+                0x0000000000018adc                xAreBlockingQueuesStillRunning
+ .text          0x0000000000018bc1      0x955 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+                0x0000000000018bc1                vCreateBlockTimeTasks
+                0x0000000000019499                xAreBlockTimeTestTasksStillRunning
+ .text          0x0000000000019516      0x3fc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+                0x0000000000019516                vStartCountingSemaphoreTasks
+                0x0000000000019892                xAreCountingSemaphoreTasksStillRunning
+ .text          0x0000000000019912      0x21c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+                0x0000000000019912                vCreateSuicidalTasks
+                0x0000000000019a9a                xIsCreateTaskStillRunning
+ .text          0x0000000000019b2e      0x533 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+                0x0000000000019b2e                vStartDynamicPriorityTasks
+                0x0000000000019fd4                xAreDynamicPriorityTasksStillRunning
+ .text          0x000000000001a061      0xfe9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+                0x000000000001a061                vStartEventGroupTasks
+                0x000000000001ae63                vPeriodicEventGroupsProcessing
+                0x000000000001afc8                xAreEventGroupTasksStillRunning
+ .text          0x000000000001b04a      0x5e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+                0x000000000001b04a                vStartMathTasks
+                0x000000000001b5cc                xAreMathsTaskStillRunning
+ .text          0x000000000001b630      0xed6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+                0x000000000001b630                vStartGenericQueueTasks
+                0x000000000001c49e                xAreGenericQueueTasksStillRunning
+ .text          0x000000000001c506      0x185 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+                0x000000000001c506                vStartIntegerMathTasks
+                0x000000000001c618                xAreIntegerMathsTaskStillRunning
+ .text          0x000000000001c68b      0x882 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+                0x000000000001c68b                vStartInterruptSemaphoreTasks
+                0x000000000001cda8                vInterruptSemaphorePeriodicTest
+                0x000000000001ce9c                xAreInterruptSemaphoreTasksStillRunning
+ .text          0x000000000001cf0d      0x446 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+                0x000000000001cf0d                vStartMessageBufferAMPTasks
+                0x000000000001d1d5                vGenerateCoreBInterrupt
+                0x000000000001d2c3                xAreMessageBufferAMPTasksStillRunning
+ .text          0x000000000001d353     0x1506 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+                0x000000000001d353                vStartMessageBufferTasks
+                0x000000000001e725                xAreMessageBufferTasksStillRunning
+ .text          0x000000000001e859      0x25a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+                0x000000000001e859                vStartPolledQueueTasks
+                0x000000000001ea65                xArePollingQueuesStillRunning
+ .text          0x000000000001eab3      0x5da build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+                0x000000000001eab3                vStartQueuePeekTasks
+                0x000000000001f04c                xAreQueuePeekTasksStillRunning
+ .text          0x000000000001f08d      0x36d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+                0x000000000001f08d                vStartQueueOverwriteTask
+                0x000000000001f262                xIsQueueOverwriteTaskStillRunning
+                0x000000000001f2ad                vQueueOverwritePeriodicISRDemo
+ .text          0x000000000001f3fa     0x1485 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+                0x000000000001f3fa                vStartQueueSetTasks
+                0x000000000001f479                xAreQueueSetTasksStillRunning
+                0x000000000001f821                vQueueSetAccessQueueSetFromISR
+ .text          0x000000000002087f      0x1d2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+                0x000000000002087f                vStartQueueSetPollingTask
+                0x00000000000209b5                vQueueSetPollingInterruptAccess
+                0x0000000000020a19                xAreQueueSetPollTasksStillRunning
+ .text          0x0000000000020a51      0x4f5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+                0x0000000000020a51                vStartRecursiveMutexTasks
+                0x0000000000020e8f                xAreRecursiveMutexTasksStillRunning
+ .text          0x0000000000020f46      0x409 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+                0x0000000000020f46                vStartSemaphoreTasks
+                0x00000000000212ca                xAreSemaphoreTasksStillRunning
+ .text          0x000000000002134f     0x1122 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+                0x000000000002134f                vStartStaticallyAllocatedTasks
+                0x0000000000022417                xAreStaticAllocationTasksStillRunning
+ .text          0x0000000000022471     0x2345 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+                0x0000000000022471                vStartStreamBufferTasks
+                0x000000000002436f                vPeriodicStreamBufferProcessing
+                0x0000000000024655                xAreStreamBufferTasksStillRunning
+ .text          0x00000000000247b6      0x2a0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+                0x00000000000247b6                vStartStreamBufferInterruptDemo
+                0x000000000002496f                vBasicStreamBufferSendFromISR
+                0x0000000000024a1d                xIsInterruptStreamBufferDemoStillRunning
+ .text          0x0000000000024a56     0x11b4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+                0x0000000000024a56                vStartTaskNotifyTask
+                0x00000000000259b6                xNotifyTaskFromISR
+                0x0000000000025b52                xAreTaskNotificationTasksStillRunning
+ .text          0x0000000000025c0a     0x1a0e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+                0x0000000000025c0a                vStartTimerDemoTask
+                0x0000000000025d9c                xAreTimerDemoTasksStillRunning
+                0x0000000000026b62                vTimerPeriodicISRTests
+ .text          0x0000000000027618      0x976 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+                0x0000000000027618                prvTraceGetQueueNumber
+                0x0000000000027636                prvTraceGetQueueType
+                0x0000000000027654                prvTraceGetTaskNumberLow16
+                0x0000000000027672                prvTraceGetTaskNumberHigh16
+                0x0000000000027694                prvTraceSetTaskNumberLow16
+                0x00000000000276d7                prvTraceSetTaskNumberHigh16
+                0x000000000002771a                prvTraceGetQueueNumberLow16
+                0x0000000000027738                prvTraceGetQueueNumberHigh16
+                0x0000000000027759                prvTraceSetQueueNumberLow16
+                0x000000000002779b                prvTraceSetQueueNumberHigh16
+                0x00000000000277dd                prvTraceGetTimerNumberLow16
+                0x00000000000277fb                prvTraceGetTimerNumberHigh16
+                0x000000000002781d                prvTraceSetTimerNumberLow16
+                0x0000000000027860                prvTraceSetTimerNumberHigh16
+                0x00000000000278a3                prvTraceGetEventGroupNumberLow16
+                0x00000000000278c1                prvTraceGetEventGroupNumberHigh16
+                0x00000000000278e3                prvTraceSetEventGroupNumberLow16
+                0x0000000000027926                prvTraceSetEventGroupNumberHigh16
+                0x0000000000027969                prvTraceGetStreamBufferNumberLow16
+                0x0000000000027987                prvTraceGetStreamBufferNumberHigh16
+                0x00000000000279a9                prvTraceSetStreamBufferNumberLow16
+                0x00000000000279ec                prvTraceSetStreamBufferNumberHigh16
+                0x0000000000027a2f                vTraceSetQueueName
+                0x0000000000027a65                vTraceSetSemaphoreName
+                0x0000000000027a9b                vTraceSetMutexName
+                0x0000000000027ad1                vTraceSetEventGroupName
+                0x0000000000027b07                vTraceSetStreamBufferName
+                0x0000000000027b3d                vTraceSetMessageBufferName
+                0x0000000000027b73                prvTraceGetCurrentTaskHandle
+                0x0000000000027b82                vTraceEnable
+                0x0000000000027bcc                vTraceInitObjectPropertyTable
+                0x0000000000027dbb                vTraceInitObjectHandleStack
+                0x0000000000027ee6                pszTraceGetErrorNotEnoughHandles
+                0x0000000000027f79                prvTraceIsSchedulerSuspended
+ .text          0x0000000000027f8e     0x337a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+                0x0000000000027f8e                vTraceSetStopHook
+                0x0000000000027fa8                vTraceClear
+                0x000000000002806d                uiTraceStart
+                0x000000000002817a                vTraceStart
+                0x000000000002818a                vTraceStop
+                0x00000000000281c4                xTraceIsRecordingEnabled
+                0x00000000000281eb                xTraceGetLastError
+                0x00000000000281fc                vTraceClearError
+                0x000000000002822f                xTraceGetTraceBuffer
+                0x0000000000028240                uiTraceGetTraceBufferSize
+                0x00000000000282e7                vTraceInstanceFinishedNext
+                0x00000000000282fc                vTraceInstanceFinishedNow
+                0x0000000000028311                xTraceSetISRProperties
+                0x00000000000283d8                vTraceStoreISRBegin
+                0x0000000000028520                vTraceStoreISREnd
+                0x0000000000028e0f                vTracePrintF
+                0x0000000000028ee6                vTraceVPrintF
+                0x000000000002916a                vTracePrint
+                0x0000000000029212                xTraceRegisterString
+                0x000000000002926e                prvTraceSetReadyEventsEnabled
+                0x0000000000029285                prvTraceStoreTaskReady
+                0x0000000000029366                prvTraceStoreLowPower
+                0x0000000000029417                vTraceStoreMemMangEvent
+                0x0000000000029569                prvTraceStoreKernelCall
+                0x000000000002968c                prvTraceStoreKernelCallWithParam
+                0x0000000000029855                prvTraceStoreKernelCallWithNumericParamOnly
+                0x000000000002993c                prvTraceStoreTaskswitch
+                0x0000000000029a43                prvTraceStoreObjectNameOnCloseEvent
+                0x0000000000029b39                prvTraceStoreObjectPropertiesOnCloseEvent
+                0x0000000000029c63                prvTraceSetPriorityProperty
+                0x0000000000029d03                prvTraceGetPriorityProperty
+                0x0000000000029da3                prvTraceSetObjectState
+                0x0000000000029edd                prvTraceSetTaskInstanceFinished
+                0x0000000000029f48                prvTraceInitTraceData
+                0x000000000002a268                uiIndexOfObject
+                0x000000000002a33a                prvTraceGetObjectHandle
+                0x000000000002a531                prvTraceFreeObjectHandle
+                0x000000000002a627                prvMarkObjectAsUsed
+                0x000000000002a6c2                prvTraceSetObjectName
+                0x000000000002a8aa                vTraceSetFrequency
+                0x000000000002a8c1                prvTraceError
+                0x000000000002a93e                vTraceSetFilterMask
+                0x000000000002a95a                vTraceSetFilterGroup
+                0x000000000002b24f                prvTracePortGetTimeStamp
+ .text          0x000000000002b308        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
+ .text          0x000000000002b308        0x0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
+ *fill*         0x000000000002b308        0x8 
+ .text          0x000000000002b310       0x75 /usr/lib/x86_64-linux-gnu/libc_nonshared.a(elf-init.oS)
+                0x000000000002b310                __libc_csu_init
+                0x000000000002b380                __libc_csu_fini
+ .text          0x000000000002b385        0x0 /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o
+ .text          0x000000000002b385        0x0 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  *(.gnu.warning)
 
-.fini           0x000000000002b2a8        0xd
+.fini           0x000000000002b388        0xd
  *(SORT_NONE(.fini))
- .fini          0x000000000002b2a8        0x8 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o
-                0x000000000002b2a8                _fini
- .fini          0x000000000002b2b0        0x5 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
+ .fini          0x000000000002b388        0x8 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crti.o
+                0x000000000002b388                _fini
+ .fini          0x000000000002b390        0x5 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
                 [!provide]                        PROVIDE (__etext = .)
                 [!provide]                        PROVIDE (_etext = .)
                 [!provide]                        PROVIDE (etext = .)
                 0x000000000002c000                . = ALIGN (CONSTANT (MAXPAGESIZE))
                 0x000000000002c000                . = SEGMENT_START ("rodata-segment", (ALIGN (CONSTANT (MAXPAGESIZE)) + (. & (CONSTANT (MAXPAGESIZE) - 0x1))))
 
-.rodata         0x000000000002c000     0x373b
+.rodata         0x000000000002c000     0x377b
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.cst4   0x000000000002c000        0x4 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
                 0x000000000002c000                _IO_stdin_used
@@ -8122,210 +8123,210 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  *fill*         0x000000000002c35c        0x4 
  .rodata        0x000000000002c360      0x2f3 build/state_core.o
  *fill*         0x000000000002c653        0x5 
- .rodata        0x000000000002c658        0xd build/network_test.o
- *fill*         0x000000000002c665        0x3 
- .rodata        0x000000000002c668       0xf4 build/main.o
- *fill*         0x000000000002c75c        0x4 
- .rodata        0x000000000002c760      0x2d9 build/parser_state.o
- *fill*         0x000000000002ca39        0x7 
- .rodata        0x000000000002ca40        0xb build/sim_stream.o
- *fill*         0x000000000002ca4b        0x5 
- .rodata        0x000000000002ca50      0x537 build/network_state.o
- *fill*         0x000000000002cf87        0x1 
- .rodata        0x000000000002cf88      0x420 build/at_parser.o
- .rodata        0x000000000002d3a8       0x62 build/main_blinky.o
- .rodata        0x000000000002d40a       0x19 build/code_coverage_additions.o
- *fill*         0x000000000002d423        0x5 
- .rodata        0x000000000002d428       0x5c build/net_adaptor.o
- *fill*         0x000000000002d484        0xc 
- .rodata        0x000000000002d490       0xca build/network_constants.o
- *fill*         0x000000000002d55a        0x6 
- .rodata        0x000000000002d560       0x3f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
- *fill*         0x000000000002d59f        0x1 
- .rodata        0x000000000002d5a0       0x47 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
- *fill*         0x000000000002d5e7        0x1 
- .rodata        0x000000000002d5e8       0x46 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
- *fill*         0x000000000002d62e        0x2 
- .rodata        0x000000000002d630       0x6c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
- *fill*         0x000000000002d69c        0x4 
- .rodata        0x000000000002d6a0       0x75 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
- *fill*         0x000000000002d715        0x3 
- .rodata        0x000000000002d718       0x96 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- *fill*         0x000000000002d7ae        0x2 
- .rodata        0x000000000002d7b0       0x9c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
-                0x000000000002d7c0                xMaxBlockTime
-                0x000000000002d7c8                xHalfMaxBlockTime
-                0x000000000002d7d0                xAllowableMargin
- .rodata        0x000000000002d84c       0x30 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
- .rodata        0x000000000002d87c       0x1f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
- *fill*         0x000000000002d89b        0x5 
- .rodata        0x000000000002d8a0       0x77 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
- *fill*         0x000000000002d917        0x1 
- .rodata        0x000000000002d918       0x20 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
- .rodata        0x000000000002d938       0x8e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
- *fill*         0x000000000002d9c6        0x2 
- .rodata        0x000000000002d9c8       0x66 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
- *fill*         0x000000000002da2e        0x2 
- .rodata        0x000000000002da30       0x70 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .rodata        0x000000000002daa0       0x8f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
- .rodata        0x000000000002db2f        0x8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
- *fill*         0x000000000002db37        0x1 
- .rodata        0x000000000002db38       0x6e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
-                0x000000000002db38                xInterruptGivePeriod
- *fill*         0x000000000002dba6        0x2 
- .rodata        0x000000000002dba8       0x75 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
- *fill*         0x000000000002dc1d        0x3 
- .rodata        0x000000000002dc20       0xea build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
- .rodata        0x000000000002dd0a       0x20 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
- .rodata        0x000000000002dd2a       0x2b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
- *fill*         0x000000000002dd55        0x3 
- .rodata        0x000000000002dd58       0x5d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
- *fill*         0x000000000002ddb5        0x3 
- .rodata        0x000000000002ddb8       0x5f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
- .rodata        0x000000000002de17        0x8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
- *fill*         0x000000000002de1f        0x1 
- .rodata        0x000000000002de20       0x6f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
- .rodata        0x000000000002de8f       0x3e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
- *fill*         0x000000000002decd        0x3 
- .rodata        0x000000000002ded0       0x71 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
- *fill*         0x000000000002df41        0x7 
- .rodata        0x000000000002df48      0x146 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
- *fill*         0x000000000002e08e        0x2 
- .rodata        0x000000000002e090       0x94 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
- *fill*         0x000000000002e124        0x4 
- .rodata        0x000000000002e128       0x77 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
- *fill*         0x000000000002e19f        0x1 
- .rodata        0x000000000002e1a0       0x7f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
- *fill*         0x000000000002e21f        0x1 
- .rodata        0x000000000002e220      0x3b4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
- *fill*         0x000000000002e5d4        0x4 
- .rodata        0x000000000002e5d8     0x1163 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .rodata        0x000000000002c658       0x12 build/network_test.o
+ *fill*         0x000000000002c66a        0x6 
+ .rodata        0x000000000002c670       0xf4 build/main.o
+ *fill*         0x000000000002c764        0x4 
+ .rodata        0x000000000002c768      0x2d9 build/parser_state.o
+ *fill*         0x000000000002ca41        0x7 
+ .rodata        0x000000000002ca48       0x17 build/sim_stream.o
+ *fill*         0x000000000002ca5f        0x1 
+ .rodata        0x000000000002ca60      0x56b build/network_state.o
+ *fill*         0x000000000002cfcb        0x5 
+ .rodata        0x000000000002cfd0      0x420 build/at_parser.o
+ .rodata        0x000000000002d3f0       0x62 build/main_blinky.o
+ .rodata        0x000000000002d452       0x19 build/code_coverage_additions.o
+ *fill*         0x000000000002d46b        0x5 
+ .rodata        0x000000000002d470       0x5c build/net_adaptor.o
+ *fill*         0x000000000002d4cc        0x4 
+ .rodata        0x000000000002d4d0       0xca build/network_constants.o
+ *fill*         0x000000000002d59a        0x6 
+ .rodata        0x000000000002d5a0       0x3f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+ *fill*         0x000000000002d5df        0x1 
+ .rodata        0x000000000002d5e0       0x47 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+ *fill*         0x000000000002d627        0x1 
+ .rodata        0x000000000002d628       0x46 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+ *fill*         0x000000000002d66e        0x2 
+ .rodata        0x000000000002d670       0x6c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ *fill*         0x000000000002d6dc        0x4 
+ .rodata        0x000000000002d6e0       0x75 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+ *fill*         0x000000000002d755        0x3 
+ .rodata        0x000000000002d758       0x96 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ *fill*         0x000000000002d7ee        0x2 
+ .rodata        0x000000000002d7f0       0x9c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+                0x000000000002d800                xMaxBlockTime
+                0x000000000002d808                xHalfMaxBlockTime
+                0x000000000002d810                xAllowableMargin
+ .rodata        0x000000000002d88c       0x30 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+ .rodata        0x000000000002d8bc       0x1f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+ *fill*         0x000000000002d8db        0x5 
+ .rodata        0x000000000002d8e0       0x77 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+ *fill*         0x000000000002d957        0x1 
+ .rodata        0x000000000002d958       0x20 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+ .rodata        0x000000000002d978       0x8e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+ *fill*         0x000000000002da06        0x2 
+ .rodata        0x000000000002da08       0x66 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+ *fill*         0x000000000002da6e        0x2 
+ .rodata        0x000000000002da70       0x70 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .rodata        0x000000000002dae0       0x8f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+ .rodata        0x000000000002db6f        0x8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+ *fill*         0x000000000002db77        0x1 
+ .rodata        0x000000000002db78       0x6e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+                0x000000000002db78                xInterruptGivePeriod
+ *fill*         0x000000000002dbe6        0x2 
+ .rodata        0x000000000002dbe8       0x75 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+ *fill*         0x000000000002dc5d        0x3 
+ .rodata        0x000000000002dc60       0xea build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+ .rodata        0x000000000002dd4a       0x20 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+ .rodata        0x000000000002dd6a       0x2b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+ *fill*         0x000000000002dd95        0x3 
+ .rodata        0x000000000002dd98       0x5d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+ *fill*         0x000000000002ddf5        0x3 
+ .rodata        0x000000000002ddf8       0x5f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+ .rodata        0x000000000002de57        0x8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+ *fill*         0x000000000002de5f        0x1 
+ .rodata        0x000000000002de60       0x6f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+ .rodata        0x000000000002decf       0x3e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+ *fill*         0x000000000002df0d        0x3 
+ .rodata        0x000000000002df10       0x71 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+ *fill*         0x000000000002df81        0x7 
+ .rodata        0x000000000002df88      0x146 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+ *fill*         0x000000000002e0ce        0x2 
+ .rodata        0x000000000002e0d0       0x94 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+ *fill*         0x000000000002e164        0x4 
+ .rodata        0x000000000002e168       0x77 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+ *fill*         0x000000000002e1df        0x1 
+ .rodata        0x000000000002e1e0       0x7f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+ *fill*         0x000000000002e25f        0x1 
+ .rodata        0x000000000002e260      0x3b4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+ *fill*         0x000000000002e614        0x4 
+ .rodata        0x000000000002e618     0x1163 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
 
 .rodata1
  *(.rodata1)
 
-.eh_frame_hdr   0x000000000002f73c     0x140c
+.eh_frame_hdr   0x000000000002f77c     0x1414
  *(.eh_frame_hdr)
- .eh_frame_hdr  0x000000000002f73c     0x140c /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
-                0x000000000002f73c                __GNU_EH_FRAME_HDR
+ .eh_frame_hdr  0x000000000002f77c     0x1414 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
+                0x000000000002f77c                __GNU_EH_FRAME_HDR
  *(.eh_frame_entry .eh_frame_entry.*)
 
-.eh_frame       0x0000000000030b48     0x5010
+.eh_frame       0x0000000000030b90     0x5030
  *(.eh_frame)
- .eh_frame      0x0000000000030b48       0x30 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
+ .eh_frame      0x0000000000030b90       0x30 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
                                          0x2c (size before relaxing)
- *fill*         0x0000000000030b78        0x0 
- .eh_frame      0x0000000000030b78       0x28 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
+ *fill*         0x0000000000030bc0        0x0 
+ .eh_frame      0x0000000000030bc0       0x28 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
                                          0x40 (size before relaxing)
- .eh_frame      0x0000000000030ba0       0x18 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
+ .eh_frame      0x0000000000030be8       0x18 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
                                          0x30 (size before relaxing)
- .eh_frame      0x0000000000030bb8       0x18 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
+ .eh_frame      0x0000000000030c00       0x18 /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/Scrt1.o
                                          0x30 (size before relaxing)
- .eh_frame      0x0000000000030bd0       0x40 build/uart_core.o
+ .eh_frame      0x0000000000030c18       0x40 build/uart_core.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000030c10       0xe0 build/mailbox.o
+ .eh_frame      0x0000000000030c58       0xe0 build/mailbox.o
                                          0xf8 (size before relaxing)
- .eh_frame      0x0000000000030cf0       0x40 build/console.o
+ .eh_frame      0x0000000000030d38       0x40 build/console.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000030d30      0x158 build/state_core.o
+ .eh_frame      0x0000000000030d78      0x158 build/state_core.o
                                         0x170 (size before relaxing)
- .eh_frame      0x0000000000030e88       0x20 build/network_test.o
+ .eh_frame      0x0000000000030ed0       0x20 build/network_test.o
                                          0x38 (size before relaxing)
- .eh_frame      0x0000000000030ea8      0x180 build/main.o
+ .eh_frame      0x0000000000030ef0      0x180 build/main.o
                                         0x198 (size before relaxing)
- .eh_frame      0x0000000000031028      0x160 build/parser_state.o
+ .eh_frame      0x0000000000031070      0x160 build/parser_state.o
                                         0x178 (size before relaxing)
- .eh_frame      0x0000000000031188       0x60 build/sim_stream.o
+ .eh_frame      0x00000000000311d0       0x60 build/sim_stream.o
                                          0x78 (size before relaxing)
- .eh_frame      0x00000000000311e8      0x478 build/network_state.o
-                                        0x490 (size before relaxing)
- .eh_frame      0x0000000000031660      0x248 build/at_parser.o
+ .eh_frame      0x0000000000031230      0x498 build/network_state.o
+                                        0x4b0 (size before relaxing)
+ .eh_frame      0x00000000000316c8      0x248 build/at_parser.o
                                         0x260 (size before relaxing)
- .eh_frame      0x00000000000318a8       0x78 build/main_blinky.o
+ .eh_frame      0x0000000000031910       0x78 build/main_blinky.o
                                          0x90 (size before relaxing)
- .eh_frame      0x0000000000031920      0x128 build/code_coverage_additions.o
+ .eh_frame      0x0000000000031988      0x128 build/code_coverage_additions.o
                                         0x140 (size before relaxing)
- .eh_frame      0x0000000000031a48       0x80 build/net_adaptor.o
+ .eh_frame      0x0000000000031ab0       0x80 build/net_adaptor.o
                                          0x98 (size before relaxing)
- .eh_frame      0x0000000000031ac8       0xa0 build/network_constants.o
+ .eh_frame      0x0000000000031b30       0xa0 build/network_constants.o
                                          0xb8 (size before relaxing)
- .eh_frame      0x0000000000031b68       0x40 build/run-time-stats-utils.o
+ .eh_frame      0x0000000000031bd0       0x40 build/run-time-stats-utils.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000031ba8      0x618 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+ .eh_frame      0x0000000000031c10      0x618 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
                                         0x630 (size before relaxing)
- .eh_frame      0x00000000000321c0       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
+ .eh_frame      0x0000000000032228       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
                                          0xb8 (size before relaxing)
- .eh_frame      0x0000000000032260      0x338 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+ .eh_frame      0x00000000000322c8      0x338 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
                                         0x350 (size before relaxing)
- .eh_frame      0x0000000000032598      0x1f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+ .eh_frame      0x0000000000032600      0x1f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
                                         0x210 (size before relaxing)
- .eh_frame      0x0000000000032790      0x920 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ .eh_frame      0x00000000000327f8      0x920 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
                                         0x938 (size before relaxing)
- .eh_frame      0x00000000000330b0      0x360 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+ .eh_frame      0x0000000000033118      0x360 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
                                         0x378 (size before relaxing)
- .eh_frame      0x0000000000033410       0x40 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
+ .eh_frame      0x0000000000033478       0x40 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
                                          0x58 (size before relaxing)
- .eh_frame      0x0000000000033450       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .eh_frame      0x00000000000334b8       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
                                          0xb8 (size before relaxing)
- .eh_frame      0x00000000000334f0      0x320 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .eh_frame      0x0000000000033558      0x320 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
                                         0x338 (size before relaxing)
- .eh_frame      0x0000000000033810      0x1b8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+ .eh_frame      0x0000000000033878      0x1b8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
                                         0x1d0 (size before relaxing)
- .eh_frame      0x00000000000339c8       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+ .eh_frame      0x0000000000033a30       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
                                          0x90 (size before relaxing)
- .eh_frame      0x0000000000033a40       0x98 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+ .eh_frame      0x0000000000033aa8       0x98 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
                                          0xb0 (size before relaxing)
- .eh_frame      0x0000000000033ad8       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+ .eh_frame      0x0000000000033b40       0xa0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
                                          0xb8 (size before relaxing)
- .eh_frame      0x0000000000033b78       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+ .eh_frame      0x0000000000033be0       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
                                          0x90 (size before relaxing)
- .eh_frame      0x0000000000033bf0       0xd0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+ .eh_frame      0x0000000000033c58       0xd0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
                                          0xe8 (size before relaxing)
- .eh_frame      0x0000000000033cc0      0x138 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+ .eh_frame      0x0000000000033d28      0x138 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
                                         0x150 (size before relaxing)
- .eh_frame      0x0000000000033df8       0xb0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .eh_frame      0x0000000000033e60       0xb0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
                                          0xc8 (size before relaxing)
- .eh_frame      0x0000000000033ea8      0x118 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+ .eh_frame      0x0000000000033f10      0x118 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
                                         0x130 (size before relaxing)
- .eh_frame      0x0000000000033fc0       0x60 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+ .eh_frame      0x0000000000034028       0x60 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
                                          0x78 (size before relaxing)
- .eh_frame      0x0000000000034020       0xf8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+ .eh_frame      0x0000000000034088       0xf8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
                                         0x110 (size before relaxing)
- .eh_frame      0x0000000000034118       0xb8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+ .eh_frame      0x0000000000034180       0xb8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
                                          0xd0 (size before relaxing)
- .eh_frame      0x00000000000341d0      0x108 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+ .eh_frame      0x0000000000034238      0x108 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
                                         0x120 (size before relaxing)
- .eh_frame      0x00000000000342d8       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+ .eh_frame      0x0000000000034340       0x78 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
                                          0x90 (size before relaxing)
- .eh_frame      0x0000000000034350       0xb0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+ .eh_frame      0x00000000000343b8       0xb0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
                                          0xc8 (size before relaxing)
- .eh_frame      0x0000000000034400       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+ .eh_frame      0x0000000000034468       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
                                          0x98 (size before relaxing)
- .eh_frame      0x0000000000034480      0x1f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+ .eh_frame      0x00000000000344e8      0x1f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
                                         0x210 (size before relaxing)
- .eh_frame      0x0000000000034678       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+ .eh_frame      0x00000000000346e0       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
                                          0x98 (size before relaxing)
- .eh_frame      0x00000000000346f8       0x98 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+ .eh_frame      0x0000000000034760       0x98 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
                                          0xb0 (size before relaxing)
- .eh_frame      0x0000000000034790       0x60 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+ .eh_frame      0x00000000000347f8       0x60 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
                                          0x78 (size before relaxing)
- .eh_frame      0x00000000000347f0      0x260 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+ .eh_frame      0x0000000000034858      0x260 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
                                         0x278 (size before relaxing)
- .eh_frame      0x0000000000034a50      0x168 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+ .eh_frame      0x0000000000034ab8      0x168 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
                                         0x180 (size before relaxing)
- .eh_frame      0x0000000000034bb8       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+ .eh_frame      0x0000000000034c20       0x80 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
                                          0x98 (size before relaxing)
- .eh_frame      0x0000000000034c38      0x100 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+ .eh_frame      0x0000000000034ca0      0x100 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
                                         0x118 (size before relaxing)
- .eh_frame      0x0000000000034d38      0x1e0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+ .eh_frame      0x0000000000034da0      0x1e0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
                                         0x1f8 (size before relaxing)
- .eh_frame      0x0000000000034f18      0x440 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+ .eh_frame      0x0000000000034f80      0x440 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
                                         0x458 (size before relaxing)
- .eh_frame      0x0000000000035358      0x7a0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .eh_frame      0x00000000000353c0      0x7a0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
                                         0x7b8 (size before relaxing)
- .eh_frame      0x0000000000035af8       0x5c /usr/lib/x86_64-linux-gnu/libc_nonshared.a(elf-init.oS)
+ .eh_frame      0x0000000000035b60       0x5c /usr/lib/x86_64-linux-gnu/libc_nonshared.a(elf-init.oS)
                                          0x78 (size before relaxing)
- .eh_frame      0x0000000000035b54        0x4 /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o
+ .eh_frame      0x0000000000035bbc        0x4 /usr/lib/gcc/x86_64-linux-gnu/9/crtendS.o
  *(.eh_frame.*)
 
 .gcc_except_table
@@ -8892,7 +8893,7 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x2f5df
+.debug_info     0x0000000000000000    0x2f60f
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x0000000000000000      0xa8c build/uart_core.o
  .debug_info    0x0000000000000a8c      0xb4f build/mailbox.o
@@ -8904,53 +8905,53 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  .debug_info    0x0000000000004dc8     0x1085 build/main.o
  .debug_info    0x0000000000005e4d     0x12eb build/parser_state.o
  .debug_info    0x0000000000007138      0xbb6 build/sim_stream.o
- .debug_info    0x0000000000007cee     0x188a build/network_state.o
- .debug_info    0x0000000000009578      0x944 build/cellular_state.o
- .debug_info    0x0000000000009ebc     0x17a3 build/at_parser.o
- .debug_info    0x000000000000b65f      0xafd build/main_blinky.o
- .debug_info    0x000000000000c15c      0xe24 build/code_coverage_additions.o
- .debug_info    0x000000000000cf80      0xb4d build/net_adaptor.o
- .debug_info    0x000000000000dacd      0xadc build/network_constants.o
- .debug_info    0x000000000000e5a9      0x7b1 build/run-time-stats-utils.o
- .debug_info    0x000000000000ed5a     0x1f1e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
- .debug_info    0x0000000000010c78      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .debug_info    0x0000000000011309      0x90b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
- .debug_info    0x0000000000011c14     0x14bc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
- .debug_info    0x00000000000130d0      0xfcd build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
- .debug_info    0x000000000001409d     0x29de build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
- .debug_info    0x0000000000016a7b     0x18af build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
- .debug_info    0x000000000001832a      0x73a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
- .debug_info    0x0000000000018a64      0x4bc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_info    0x0000000000018f20     0x161b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_info    0x000000000001a53b      0xffa build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
- .debug_info    0x000000000001b535      0x98e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
- .debug_info    0x000000000001bec3      0x9a1 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
- .debug_info    0x000000000001c864      0x8cb build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
- .debug_info    0x000000000001d12f      0x892 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
- .debug_info    0x000000000001d9c1      0x9e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
- .debug_info    0x000000000001e3a7      0xb41 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
- .debug_info    0x000000000001eee8      0xa1e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_info    0x000000000001f906      0xa7b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
- .debug_info    0x0000000000020381      0x7e4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
- .debug_info    0x0000000000020b65      0x9c7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
- .debug_info    0x000000000002152c      0xbce build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
- .debug_info    0x00000000000220fa     0x10ed build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
- .debug_info    0x00000000000231e7      0x855 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
- .debug_info    0x0000000000023a3c      0x90c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
- .debug_info    0x0000000000024348      0x889 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
- .debug_info    0x0000000000024bd1      0xd8b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
- .debug_info    0x000000000002595c      0x83b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
- .debug_info    0x0000000000026197      0x931 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
- .debug_info    0x0000000000026ac8      0x8e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
- .debug_info    0x00000000000273ae     0x125c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
- .debug_info    0x000000000002860a     0x1319 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
- .debug_info    0x0000000000029923      0xac7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
- .debug_info    0x000000000002a3ea      0xb27 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
- .debug_info    0x000000000002af11      0xbc9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
- .debug_info    0x000000000002bada      0xdfb build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
- .debug_info    0x000000000002c8d5     0x1fe8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
- .debug_info    0x000000000002e8bd      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
- .debug_info    0x000000000002ef4e      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
+ .debug_info    0x0000000000007cee     0x18ba build/network_state.o
+ .debug_info    0x00000000000095a8      0x944 build/cellular_state.o
+ .debug_info    0x0000000000009eec     0x17a3 build/at_parser.o
+ .debug_info    0x000000000000b68f      0xafd build/main_blinky.o
+ .debug_info    0x000000000000c18c      0xe24 build/code_coverage_additions.o
+ .debug_info    0x000000000000cfb0      0xb4d build/net_adaptor.o
+ .debug_info    0x000000000000dafd      0xadc build/network_constants.o
+ .debug_info    0x000000000000e5d9      0x7b1 build/run-time-stats-utils.o
+ .debug_info    0x000000000000ed8a     0x1f1e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+ .debug_info    0x0000000000010ca8      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .debug_info    0x0000000000011339      0x90b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
+ .debug_info    0x0000000000011c44     0x14bc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+ .debug_info    0x0000000000013100      0xfcd build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+ .debug_info    0x00000000000140cd     0x29de build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ .debug_info    0x0000000000016aab     0x18af build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+ .debug_info    0x000000000001835a      0x73a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
+ .debug_info    0x0000000000018a94      0x4bc build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_info    0x0000000000018f50     0x161b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_info    0x000000000001a56b      0xffa build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+ .debug_info    0x000000000001b565      0x98e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+ .debug_info    0x000000000001bef3      0x9a1 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+ .debug_info    0x000000000001c894      0x8cb build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+ .debug_info    0x000000000001d15f      0x892 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+ .debug_info    0x000000000001d9f1      0x9e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+ .debug_info    0x000000000001e3d7      0xb41 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+ .debug_info    0x000000000001ef18      0xa1e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_info    0x000000000001f936      0xa7b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+ .debug_info    0x00000000000203b1      0x7e4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+ .debug_info    0x0000000000020b95      0x9c7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+ .debug_info    0x000000000002155c      0xbce build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+ .debug_info    0x000000000002212a     0x10ed build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+ .debug_info    0x0000000000023217      0x855 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+ .debug_info    0x0000000000023a6c      0x90c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+ .debug_info    0x0000000000024378      0x889 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+ .debug_info    0x0000000000024c01      0xd8b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+ .debug_info    0x000000000002598c      0x83b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+ .debug_info    0x00000000000261c7      0x931 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+ .debug_info    0x0000000000026af8      0x8e6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+ .debug_info    0x00000000000273de     0x125c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+ .debug_info    0x000000000002863a     0x1319 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+ .debug_info    0x0000000000029953      0xac7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+ .debug_info    0x000000000002a41a      0xb27 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+ .debug_info    0x000000000002af41      0xbc9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+ .debug_info    0x000000000002bb0a      0xdfb build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+ .debug_info    0x000000000002c905     0x1fe8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .debug_info    0x000000000002e8ed      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
+ .debug_info    0x000000000002ef7e      0x691 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
 
 .debug_abbrev   0x0000000000000000     0x7684
  *(.debug_abbrev)
@@ -9012,7 +9013,7 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  .debug_abbrev  0x0000000000007492       0xf9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
  .debug_abbrev  0x000000000000758b       0xf9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
 
-.debug_line     0x0000000000000000    0x22977
+.debug_line     0x0000000000000000    0x229af
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x0000000000000000      0x91c build/uart_core.o
  .debug_line    0x000000000000091c      0x921 build/mailbox.o
@@ -9020,57 +9021,57 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  .debug_line    0x00000000000019fb      0x537 build/console.o
  .debug_line    0x0000000000001f32      0xa31 build/state_core.o
  .debug_line    0x0000000000002963      0x954 build/main_full.o
- .debug_line    0x00000000000032b7      0x806 build/network_test.o
- .debug_line    0x0000000000003abd      0x814 build/main.o
- .debug_line    0x00000000000042d1      0xb87 build/parser_state.o
- .debug_line    0x0000000000004e58      0x812 build/sim_stream.o
- .debug_line    0x000000000000566a      0xe6a build/network_state.o
- .debug_line    0x00000000000064d4      0x7b4 build/cellular_state.o
- .debug_line    0x0000000000006c88     0x11b4 build/at_parser.o
- .debug_line    0x0000000000007e3c      0x733 build/main_blinky.o
- .debug_line    0x000000000000856f      0x89d build/code_coverage_additions.o
- .debug_line    0x0000000000008e0c      0x8b1 build/net_adaptor.o
- .debug_line    0x00000000000096bd      0x82b build/network_constants.o
- .debug_line    0x0000000000009ee8      0x55b build/run-time-stats-utils.o
- .debug_line    0x000000000000a443     0x172f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
- .debug_line    0x000000000000bb72      0x47c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .debug_line    0x000000000000bfee      0x71c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
- .debug_line    0x000000000000c70a      0xe0c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
- .debug_line    0x000000000000d516      0xaf2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
- .debug_line    0x000000000000e008     0x1d85 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
- .debug_line    0x000000000000fd8d      0xc5c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
- .debug_line    0x00000000000109e9      0x6ab build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
- .debug_line    0x0000000000011094      0x5e9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_line    0x000000000001167d      0xc18 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_line    0x0000000000012295      0x7fe build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
- .debug_line    0x0000000000012a93      0x806 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
- .debug_line    0x0000000000013299      0x823 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
- .debug_line    0x0000000000013abc      0x655 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
- .debug_line    0x0000000000014111      0x760 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
- .debug_line    0x0000000000014871      0x86d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
- .debug_line    0x00000000000150de      0x9a8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
- .debug_line    0x0000000000015a86      0x952 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_line    0x00000000000163d8      0xba6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
- .debug_line    0x0000000000016f7e      0x75c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
- .debug_line    0x00000000000176da      0x94d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
- .debug_line    0x0000000000018027      0x728 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
- .debug_line    0x000000000001874f      0xb9a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
- .debug_line    0x00000000000192e9      0x78c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
- .debug_line    0x0000000000019a75      0x861 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
- .debug_line    0x000000000001a2d6      0x5f7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
- .debug_line    0x000000000001a8cd      0xc6e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
- .debug_line    0x000000000001b53b      0x769 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
- .debug_line    0x000000000001bca4      0x697 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
- .debug_line    0x000000000001c33b      0x815 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
- .debug_line    0x000000000001cb50      0x9f0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
- .debug_line    0x000000000001d540      0xf52 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
- .debug_line    0x000000000001e492      0x6b7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
- .debug_line    0x000000000001eb49      0x981 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
- .debug_line    0x000000000001f4ca      0xe3a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
- .debug_line    0x0000000000020304      0x7a5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
- .debug_line    0x0000000000020aa9     0x15c3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
- .debug_line    0x000000000002206c      0x47f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
- .debug_line    0x00000000000224eb      0x48c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
+ .debug_line    0x00000000000032b7      0x811 build/network_test.o
+ .debug_line    0x0000000000003ac8      0x812 build/main.o
+ .debug_line    0x00000000000042da      0xb88 build/parser_state.o
+ .debug_line    0x0000000000004e62      0x814 build/sim_stream.o
+ .debug_line    0x0000000000005676      0xe96 build/network_state.o
+ .debug_line    0x000000000000650c      0x7b4 build/cellular_state.o
+ .debug_line    0x0000000000006cc0     0x11b4 build/at_parser.o
+ .debug_line    0x0000000000007e74      0x733 build/main_blinky.o
+ .debug_line    0x00000000000085a7      0x89d build/code_coverage_additions.o
+ .debug_line    0x0000000000008e44      0x8b1 build/net_adaptor.o
+ .debug_line    0x00000000000096f5      0x82b build/network_constants.o
+ .debug_line    0x0000000000009f20      0x55b build/run-time-stats-utils.o
+ .debug_line    0x000000000000a47b     0x172f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+ .debug_line    0x000000000000bbaa      0x47c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .debug_line    0x000000000000c026      0x71c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
+ .debug_line    0x000000000000c742      0xe0c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+ .debug_line    0x000000000000d54e      0xaf2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+ .debug_line    0x000000000000e040     0x1d85 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ .debug_line    0x000000000000fdc5      0xc5c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+ .debug_line    0x0000000000010a21      0x6ab build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
+ .debug_line    0x00000000000110cc      0x5e9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_line    0x00000000000116b5      0xc18 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_line    0x00000000000122cd      0x7fe build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+ .debug_line    0x0000000000012acb      0x806 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+ .debug_line    0x00000000000132d1      0x823 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+ .debug_line    0x0000000000013af4      0x655 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+ .debug_line    0x0000000000014149      0x760 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+ .debug_line    0x00000000000148a9      0x86d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+ .debug_line    0x0000000000015116      0x9a8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+ .debug_line    0x0000000000015abe      0x952 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_line    0x0000000000016410      0xba6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+ .debug_line    0x0000000000016fb6      0x75c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+ .debug_line    0x0000000000017712      0x94d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+ .debug_line    0x000000000001805f      0x728 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+ .debug_line    0x0000000000018787      0xb9a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+ .debug_line    0x0000000000019321      0x78c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+ .debug_line    0x0000000000019aad      0x861 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+ .debug_line    0x000000000001a30e      0x5f7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+ .debug_line    0x000000000001a905      0xc6e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+ .debug_line    0x000000000001b573      0x769 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+ .debug_line    0x000000000001bcdc      0x697 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+ .debug_line    0x000000000001c373      0x815 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+ .debug_line    0x000000000001cb88      0x9f0 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+ .debug_line    0x000000000001d578      0xf52 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+ .debug_line    0x000000000001e4ca      0x6b7 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+ .debug_line    0x000000000001eb81      0x981 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+ .debug_line    0x000000000001f502      0xe3a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+ .debug_line    0x000000000002033c      0x7a5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+ .debug_line    0x0000000000020ae1     0x15c3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .debug_line    0x00000000000220a4      0x47f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
+ .debug_line    0x0000000000022523      0x48c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
 
 .debug_frame
  *(.debug_frame)
@@ -9220,7 +9221,7 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  .debug_ranges  0x0000000000000060      0x120 build/parser_state.o
  .debug_ranges  0x0000000000000180       0x60 build/at_parser.o
 
-.debug_macro    0x0000000000000000    0x14bac
+.debug_macro    0x0000000000000000    0x14bb0
  *(.debug_macro)
  .debug_macro   0x0000000000000000      0x61e build/uart_core.o
  .debug_macro   0x000000000000061e      0x820 build/uart_core.o
@@ -9349,103 +9350,103 @@ LOAD /usr/lib/gcc/x86_64-linux-gnu/9/../../../x86_64-linux-gnu/crtn.o
  .debug_macro   0x0000000000007c7a      0x56c build/parser_state.o
  .debug_macro   0x00000000000081e6       0x10 build/parser_state.o
  .debug_macro   0x00000000000081f6      0x552 build/sim_stream.o
- .debug_macro   0x0000000000008748      0x590 build/network_state.o
- .debug_macro   0x0000000000008cd8       0x40 build/network_state.o
- .debug_macro   0x0000000000008d18       0x10 build/network_state.o
- .debug_macro   0x0000000000008d28      0x537 build/cellular_state.o
- .debug_macro   0x000000000000925f       0x1c build/cellular_state.o
- .debug_macro   0x000000000000927b      0x50d build/at_parser.o
- .debug_macro   0x0000000000009788      0x171 build/at_parser.o
- .debug_macro   0x00000000000098f9      0x454 build/main_blinky.o
- .debug_macro   0x0000000000009d4d       0x16 build/main_blinky.o
- .debug_macro   0x0000000000009d63       0x1c build/main_blinky.o
- .debug_macro   0x0000000000009d7f       0x5e build/main_blinky.o
- .debug_macro   0x0000000000009ddd       0x10 build/main_blinky.o
- .debug_macro   0x0000000000009ded       0x91 build/main_blinky.o
- .debug_macro   0x0000000000009e7e       0x91 build/main_blinky.o
- .debug_macro   0x0000000000009f0f       0x8d build/main_blinky.o
- .debug_macro   0x0000000000009f9c      0x2dd build/code_coverage_additions.o
- .debug_macro   0x000000000000a279       0x18 build/code_coverage_additions.o
- .debug_macro   0x000000000000a291       0x6d build/code_coverage_additions.o
- .debug_macro   0x000000000000a2fe      0x563 build/net_adaptor.o
- .debug_macro   0x000000000000a861      0x532 build/network_constants.o
- .debug_macro   0x000000000000ad93      0x2be build/run-time-stats-utils.o
- .debug_macro   0x000000000000b051       0x10 build/run-time-stats-utils.o
- .debug_macro   0x000000000000b061       0x52 build/run-time-stats-utils.o
- .debug_macro   0x000000000000b0b3      0x486 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
- .debug_macro   0x000000000000b539      0x242 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .debug_macro   0x000000000000b77b      0x174 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .debug_macro   0x000000000000b8ef       0x49 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
- .debug_macro   0x000000000000b938      0x3e5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
- .debug_macro   0x000000000000bd1d      0x2c3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
- .debug_macro   0x000000000000bfe0      0x434 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
- .debug_macro   0x000000000000c414      0x4e9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
- .debug_macro   0x000000000000c8fd       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
- .debug_macro   0x000000000000c90d      0x42e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
- .debug_macro   0x000000000000cd3b      0x3f4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
- .debug_macro   0x000000000000d12f      0x339 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_macro   0x000000000000d468       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_macro   0x000000000000d478       0x59 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_macro   0x000000000000d4d1       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
- .debug_macro   0x000000000000d4f3      0x6c4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dbb7       0xee build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dca5       0x94 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dd39       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dd49       0xb4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000ddfd      0x169 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000df66       0x1c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000df82       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dfa4       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000dfb6       0x6a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e020       0x1c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e03c       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e04c       0x23 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e06f       0x16 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e085       0x16 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e09b       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e0ad       0x47 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e0f4       0x3f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
- .debug_macro   0x000000000000e133      0x2d2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
- .debug_macro   0x000000000000e405      0x411 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
- .debug_macro   0x000000000000e816      0x292 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
- .debug_macro   0x000000000000eaa8      0x283 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
- .debug_macro   0x000000000000ed2b      0x3f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
- .debug_macro   0x000000000000f123      0x43e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
- .debug_macro   0x000000000000f561      0x2f1 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
- .debug_macro   0x000000000000f852      0x47d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fccf       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fcdf      0x172 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fe51       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fe73       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fe83       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000fe95       0x58 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000feed       0x3c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000ff29       0x43 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000000ff6c       0xac build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x0000000000010018      0x1f5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
- .debug_macro   0x000000000001020d      0x44e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
- .debug_macro   0x000000000001065b      0x41c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
- .debug_macro   0x0000000000010a77      0x432 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
- .debug_macro   0x0000000000010ea9      0x344 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
- .debug_macro   0x00000000000111ed      0x362 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
- .debug_macro   0x000000000001154f      0x42f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
- .debug_macro   0x000000000001197e      0x442 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
- .debug_macro   0x0000000000011dc0      0x262 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
- .debug_macro   0x0000000000012022      0x451 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
- .debug_macro   0x0000000000012473      0x41b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
- .debug_macro   0x000000000001288e      0x295 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
- .debug_macro   0x0000000000012b23      0x432 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
- .debug_macro   0x0000000000012f55      0x2ab build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
- .debug_macro   0x0000000000013200      0x365 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
- .debug_macro   0x0000000000013565      0x323 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
- .debug_macro   0x0000000000013888      0x27e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
- .debug_macro   0x0000000000013b06      0x2b6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
- .debug_macro   0x0000000000013dbc      0x276 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
- .debug_macro   0x0000000000014032      0x27d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
- .debug_macro   0x00000000000142af      0x486 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
- .debug_macro   0x0000000000014735       0x35 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
- .debug_macro   0x000000000001476a      0x221 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
- .debug_macro   0x000000000001498b      0x221 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
+ .debug_macro   0x0000000000008748      0x594 build/network_state.o
+ .debug_macro   0x0000000000008cdc       0x40 build/network_state.o
+ .debug_macro   0x0000000000008d1c       0x10 build/network_state.o
+ .debug_macro   0x0000000000008d2c      0x537 build/cellular_state.o
+ .debug_macro   0x0000000000009263       0x1c build/cellular_state.o
+ .debug_macro   0x000000000000927f      0x50d build/at_parser.o
+ .debug_macro   0x000000000000978c      0x171 build/at_parser.o
+ .debug_macro   0x00000000000098fd      0x454 build/main_blinky.o
+ .debug_macro   0x0000000000009d51       0x16 build/main_blinky.o
+ .debug_macro   0x0000000000009d67       0x1c build/main_blinky.o
+ .debug_macro   0x0000000000009d83       0x5e build/main_blinky.o
+ .debug_macro   0x0000000000009de1       0x10 build/main_blinky.o
+ .debug_macro   0x0000000000009df1       0x91 build/main_blinky.o
+ .debug_macro   0x0000000000009e82       0x91 build/main_blinky.o
+ .debug_macro   0x0000000000009f13       0x8d build/main_blinky.o
+ .debug_macro   0x0000000000009fa0      0x2dd build/code_coverage_additions.o
+ .debug_macro   0x000000000000a27d       0x18 build/code_coverage_additions.o
+ .debug_macro   0x000000000000a295       0x6d build/code_coverage_additions.o
+ .debug_macro   0x000000000000a302      0x563 build/net_adaptor.o
+ .debug_macro   0x000000000000a865      0x532 build/network_constants.o
+ .debug_macro   0x000000000000ad97      0x2be build/run-time-stats-utils.o
+ .debug_macro   0x000000000000b055       0x10 build/run-time-stats-utils.o
+ .debug_macro   0x000000000000b065       0x52 build/run-time-stats-utils.o
+ .debug_macro   0x000000000000b0b7      0x486 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/queue.o
+ .debug_macro   0x000000000000b53d      0x242 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .debug_macro   0x000000000000b77f      0x174 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .debug_macro   0x000000000000b8f3       0x49 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/croutine.o
+ .debug_macro   0x000000000000b93c      0x3e5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/list.o
+ .debug_macro   0x000000000000bd21      0x2c3 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/stream_buffer.o
+ .debug_macro   0x000000000000bfe4      0x434 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/event_groups.o
+ .debug_macro   0x000000000000c418      0x4e9 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ .debug_macro   0x000000000000c901       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/tasks.o
+ .debug_macro   0x000000000000c911      0x42e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/timers.o
+ .debug_macro   0x000000000000cd3f      0x3f4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/MemMang/heap_3.o
+ .debug_macro   0x000000000000d133      0x339 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_macro   0x000000000000d46c       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_macro   0x000000000000d47c       0x59 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_macro   0x000000000000d4d5       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/utils/wait_for_event.o
+ .debug_macro   0x000000000000d4f7      0x6c4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dbbb       0xee build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dca9       0x94 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dd3d       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dd4d       0xb4 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000de01      0x169 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000df6a       0x1c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000df86       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dfa8       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000dfba       0x6a build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e024       0x1c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e040       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e050       0x23 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e073       0x16 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e089       0x16 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e09f       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e0b1       0x47 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e0f8       0x3f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Source/portable/ThirdParty/GCC/Posix/port.o
+ .debug_macro   0x000000000000e137      0x2d2 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/AbortDelay.o
+ .debug_macro   0x000000000000e409      0x411 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/BlockQ.o
+ .debug_macro   0x000000000000e81a      0x292 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/blocktim.o
+ .debug_macro   0x000000000000eaac      0x283 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/countsem.o
+ .debug_macro   0x000000000000ed2f      0x3f8 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/death.o
+ .debug_macro   0x000000000000f127      0x43e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/dynamic.o
+ .debug_macro   0x000000000000f565      0x2f1 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/EventGroupsDemo.o
+ .debug_macro   0x000000000000f856      0x47d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fcd3       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fce3      0x172 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fe55       0x22 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fe77       0x10 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fe87       0x12 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fe99       0x58 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000fef1       0x3c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000ff2d       0x43 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000000ff70       0xac build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x000000000001001c      0x1f5 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/flop.o
+ .debug_macro   0x0000000000010211      0x44e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/GenQTest.o
+ .debug_macro   0x000000000001065f      0x41c build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/integer.o
+ .debug_macro   0x0000000000010a7b      0x432 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/IntSemTest.o
+ .debug_macro   0x0000000000010ead      0x344 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferAMP.o
+ .debug_macro   0x00000000000111f1      0x362 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/MessageBufferDemo.o
+ .debug_macro   0x0000000000011553      0x42f build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/PollQ.o
+ .debug_macro   0x0000000000011982      0x442 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QPeek.o
+ .debug_macro   0x0000000000011dc4      0x262 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueOverwrite.o
+ .debug_macro   0x0000000000012026      0x451 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSet.o
+ .debug_macro   0x0000000000012477      0x41b build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/QueueSetPolling.o
+ .debug_macro   0x0000000000012892      0x295 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/recmutex.o
+ .debug_macro   0x0000000000012b27      0x432 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/semtest.o
+ .debug_macro   0x0000000000012f59      0x2ab build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StaticAllocation.o
+ .debug_macro   0x0000000000013204      0x365 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferDemo.o
+ .debug_macro   0x0000000000013569      0x323 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/StreamBufferInterrupt.o
+ .debug_macro   0x000000000001388c      0x27e build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TaskNotify.o
+ .debug_macro   0x0000000000013b0a      0x2b6 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Common/Minimal/TimerDemo.o
+ .debug_macro   0x0000000000013dc0      0x276 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcKernelPort.o
+ .debug_macro   0x0000000000014036      0x27d build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .debug_macro   0x00000000000142b3      0x486 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .debug_macro   0x0000000000014739       0x35 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcSnapshotRecorder.o
+ .debug_macro   0x000000000001476e      0x221 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/trcStreamingRecorder.o
+ .debug_macro   0x000000000001498f      0x221 build//home/sam/Downloads/FreeRTOSv202012.00/FreeRTOS-Plus/Source/FreeRTOS-Plus-Trace/streamports/File/trcStreamingPort.o
 
 .debug_addr
  *(.debug_addr)

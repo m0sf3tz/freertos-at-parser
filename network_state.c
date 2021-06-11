@@ -434,7 +434,7 @@ bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ESP_LOGI(TAG, "Posting issue cmd!");
   state_post_event(EVENT_ISSUE_CMD);
 
-  ESP_LOGI(TAG, "waiting for ready from PARSER_STARTE!");
+  ESP_LOGI(TAG, "waiting for ready from parser state");
   if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
   set_net_state_cmd(cmd_enum);
   set_net_state_token();
@@ -446,6 +446,7 @@ bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
 
   // verify token
+  ESP_LOGI(TAG, "Verying token");
   if (get_net_state_token() != parsed_p->token){
     ESP_LOGE(TAG, "TOKEN NOT CORRECT!");
     ASSERT(0);
@@ -603,7 +604,6 @@ static void network_state_init_freertos_objects() {
 }
 
 static void network_state_init(){
-  network_state_init_freertos_objects();
 
   // State the state machine
   start_new_state_machine(get_network_state_handle());
@@ -674,7 +674,6 @@ static void network_state_set_timeout(uint32_t timeout_ticks){
 
 
 void driver_b(void * arg){
-  network_state_init();
 
   puts("Test");
   int len;
@@ -729,16 +728,21 @@ a:
   vTaskDelay(1000000);
 }
 
+void test(void * arg){
+  for(;;){
+    puts("yo");
+    vTaskDelay(1000/portTICK_PERIOD_MS);
+  }
+}
+
 void network_driver(){
-  /*
-  char str[] = "+CEREG: 1\r\n";
-  int len = strlen(str);
-  verify_urc_and_parse(str, len);
-  print_parsed_urc(get_urc_parsed_struct());
-  */
+  network_state_init_freertos_objects();
 #ifdef FAKE_INPUT_STREAM_MODE
+  xTaskCreate(test, "", 1024, "", 5, NULL); 
   network_test();
 #else
+  network_state_init();
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
   xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
+#endif
 }

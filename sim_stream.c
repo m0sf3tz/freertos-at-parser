@@ -30,10 +30,10 @@ static const char         TAG[] = "SIM_STREAM";
 **********************************************************/
 
 
-static char at_cfun_0[] = "AT+CFUN\n\r";
-static char at_cfun_1[] = "+CFUN=1\n\r";
-static char at_cfun_2[] = "+CFUN=2\n\r";
-static char at_cfun_3[] = "OK\n\r";
+static char at_cfun_0[] = "AT+CFUN\r\n";
+static char at_cfun_1[] = "+CFUN=1\r\n";
+static char at_cfun_2[] = "+CFUN=2\r\n";
+static char at_cfun_3[] = "OK\r\n";
 
 static delay_command_s at_cfun = {
   .units[0] = {1000, at_cfun_0},
@@ -58,11 +58,13 @@ void set_current_cmd(command_e cmd){
 
 
 uint8_t* at_incomming_get_stream(int *len){
+   puts("READ!");
    delay_command_s * tmp = curr_cmd;
    delay_unit_s      unit = curr_cmd->units[curr_unit];
 
    curr_unit++;
-   vTaskDelay(unit.delay);
+   printf("%d %s", unit.delay, unit.info);
+   vTaskDelay(1000);
    return (unit.info);
 }
 
