@@ -51,6 +51,7 @@ static state_t state_idle_func() {
   int cme_err;
   int len;
 
+#ifndef FAKE_INPUT_STREAM_MODE
   // read the new line
   uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL,  &len);
   if(buff == NULL){
@@ -72,6 +73,7 @@ static state_t state_idle_func() {
    ESP_LOGE(TAG, "unknown sequence followed!");
    ASSERT(0);
    //TODO: handle
+#endif 
 
    return NULL_STATE;
 }
@@ -85,7 +87,7 @@ static state_t state_handle_cmd_func () {
   int len = 0;
   int line = 0;
   TickType_t start = xTaskGetTickCount();
-  TickType_t end = start + PARSER_WAIT_FOR_UART;
+  TickType_t end = start + PARSER_WAIT_FOR_ECHO;
   command_e cmd;
   at_parsed_s * parsed_p = get_parsed_struct();
   clear_at_parsed_struct();
@@ -135,7 +137,7 @@ static state_t state_handle_cmd_func () {
   }
 
   // parse the lines of a command (not including first)
-  for(line =1; line < MAX_LINES_AT; line++)
+  for(line = 1; line < MAX_LINES_AT; line++)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if (buff){
@@ -161,7 +163,7 @@ static state_t state_handle_cmd_func () {
         return parser_idle_state;  
       }
 
-      if(at_line_explode(buff,len, 1)){
+      if(at_line_explode(buff,len, line)){
         ESP_LOGE(TAG, "Failed to pars!");
         // TODO: handle...
       } 

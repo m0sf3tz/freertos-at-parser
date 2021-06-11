@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include "uart_core.h"
+#include "sim_stream.h"
 #include "at_parser.h"
 #include "global_defines.h"
 
@@ -98,6 +99,7 @@ at_type_t get_type_cmd(char *s){
   if (strncmp(s, "AT+CEREG",8)     == 0) return CEREG;
   if (strncmp(s, "AT+KUDPSND",10)  == 0) return KUDPSND;
   if (strncmp(s, "AT+KUDPRCV",10)  == 0) return KUDPRCV;
+  if (strncmp(s, "AT+CGACT",8)     == 0) return CGACT;
   // no match,
 	return UNKNOWN_TYPE ;
 }
@@ -122,6 +124,7 @@ at_type_t get_type(char *s){
   if (strcmp(s, "KUDPSND")    == 0) return KUDPSND;
   if (strcmp(s, "KUDPRCV")    == 0) return KUDPRCV;
   if (strcmp(s, "KUDP_DATA")  == 0) return KUDP_DATA;
+  if (strcmp(s, "CGACT")      == 0) return CGACT;
 	// no match,
 	return UNKNOWN_TYPE;
 }
@@ -309,6 +312,10 @@ int at_line_explode (char * str, const int len, int line) {
         extended_at = READ_CMD;
         goto exit;
       case('='):
+        if(*iter+1 == '?'){
+          extended_at = TEST_CMD;
+          goto exit;
+        }
         ESP_LOGI(TAG, "Discovered a write");
         iter++;
         extended_at = WRITE_CMD;
@@ -633,6 +640,7 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, int * size){
     }
   }
 }
+
 // like above, but does not properagte zero lenght reads
 uint8_t * at_parser_stringer(parser_del_e mode, int * len){
   if (!len){
@@ -669,7 +677,7 @@ void print_parsed(){
   printf("form     == (%d) \n", parsed.form);
   printf("response == (%d) \n", parsed.response);
   printf("token    == (%d) \n", parsed.token);
-#if 0
+#if 1
   for (int j = 0; j < MAX_LINES_AT ; j++){
       ESP_LOGI(TAG, "Printing line %d", j);
       for (int i = 0; i < MAX_DELIMITERS; i ++){

@@ -7,6 +7,18 @@
 *********************************************************/
 command_e get_net_state_cmd();
 int       get_net_state_token();
+
+// need these here for unit testing
+bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
+bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
+bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
+
+int verify_cgact();
+int verify_kcnxfg();
+int verify_cereg();
+int verify_cfun();
+int set_cfun();
+int verify_kudpcfg();
 /*********************************************************
 *                                                GLOBALS *
 *********************************************************/
@@ -36,11 +48,12 @@ typedef enum {
 typedef struct{
   net_mode_t         mode;
   command_e          curr_cmd;
+  uint32_t           timeout_in_seconds; // each tick is a 1 second
   network_status_e   net_state;  
-  pdp_network_status pdp_status;  // from KCNX_IND
-  int                pdp_session; // expect this to be only == 1 (won't use 2 sessions)
-  bool               udp_status;  // from KUDP_IND
-  int                token;       // used to keep parser and network states in sync 
+  pdp_network_status pdp_status;         // from KCNX_IND
+  int                pdp_session;        // expect this to be only == 1 (won't use 2 sessions)
+  bool               udp_status;         // from KUDP_IND
+  int                token;              // used to keep parser and network states in sync 
 }network_state_s;
 
 typedef enum {

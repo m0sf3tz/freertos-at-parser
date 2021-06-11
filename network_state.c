@@ -17,6 +17,8 @@
 #include "threegpp.h"
 #include "network_constants.h"
 #include "net_adaptor.h"
+#include "network_state.h"
+#include "network_test.h"
 
 /*********************************************************
 *                                   FORWARD DECLARATIONS *
@@ -31,15 +33,6 @@ static state_t state_read_func();
 static void set_net_state_cmd(command_e cmd);
 static void set_net_state_token();
 static void network_state_set_status(network_status_e status);
-static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
-static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
-static bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
-
-static int verify_kcnxfg();
-static int verify_cereg();
-static int verify_cfun();
-static int set_cfun();
-static int verify_kudpcfg();
 
 static void handle_urc_kudp_notif();
 /*********************************************************
@@ -73,26 +66,16 @@ int dummy_callback(){
 
 static state_t state_airplain_mode_func() {
   ESP_LOGI(TAG, "Entering airplaine mode state!");
- /* 
-  memcpy(misc_buff, "AT+CFUN?\r\n", strlen("AT+CFUN?\r\n"));
-  int len = strlen(misc_buff);
- 
-  // verify we are detatched 
-  // If we are, leave state function and wait for kick into attached
-  if (1 == send_cmd(misc_buff, len, verify_cfun, CFUN)){
-    ESP_LOGI(TAG, "Radio is on, forcing next state!");
-    return network_attaching_state;
-  }
-  vTaskDelay(1000/portTICK_PERIOD_MS);
-*/
-  // if we get here, CFUN return 0, set it on!
-  ESP_LOGE(TAG, "Forcing CFUN=1");
-  
-  memcpy(misc_buff, "AT+CFUN=1\r\n", strlen("AT+CFUN=1\r\n"));
-  int len = strlen(misc_buff);
-  send_cmd(misc_buff, len, set_cfun, CFUN);
 
-  vTaskDelay(1000/portTICK_PERIOD_MS);
+  ESP_LOGE(TAG, "Forcing CFUN=1");
+  memcpy(misc_buff, CFUN_ENABLE_STR  , strlen(CFUN_ENABLE_STR));
+  int len = strlen(misc_buff);
+  int rc  = send_cmd(misc_buff, len, set_cfun, CFUN);
+  if (rc != pdTRUE){
+    ESP_LOGE(TAG, "Failed to CFUN=1! - not much to do.... retry");
+    vTaskDelay(60000/portTICK_PERIOD_MS);
+    return network_airplaine_mode_state;
+  }
 
   return network_attaching_state;
 }
@@ -305,7 +288,22 @@ static void urc_hanlder(void * arg){
   }
 }
 
-static int verify_kcnxfg(){
+int verify_cgact(){
+  print_parsed();
+  
+  at_parsed_s *parsed = get_parsed_struct();
+  if(parsed->type != CGACT){
+    ESP_LOGE(TAG, "CMD type not CGACT -> (%d)", parsed->type);
+    ASSERT(0);
+  }
+
+  if(parsed->form != READ_CMD ){
+    ESP_LOGE(TAG, "form type not read -> (%d)", parsed->form);
+    ASSERT(0);
+  } 
+}
+
+int verify_kcnxfg(){
   print_parsed();
   
   at_parsed_s *parsed = get_parsed_struct();
@@ -317,9 +315,16 @@ static int verify_kcnxfg(){
     ESP_LOGE(TAG, "form type not write -> (%d)", parsed->form);
     ASSERT(0);
   }
+
+  if (parsed->param_arr[CEREG_STATUS_LINE][CEREG_STATUS_INDEX].val == CEREG_CONNECTED){
+    ESP_LOGI(TAG, "Registered! - posting!");
+    return pdTRUE;
+  }
+
+  return pdFALSE;
 }
 
-static int verify_cereg(){
+int verify_cereg(){
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -340,7 +345,7 @@ static int verify_cereg(){
 }
 
 
-static int verify_cfun(){
+int verify_cfun(){
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -365,7 +370,7 @@ static int verify_cfun(){
   }  
 }
 
-static int set_cfun(){
+int set_cfun(){
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -381,16 +386,19 @@ static int set_cfun(){
 
   if(parsed->response != LINE_TERMINATION_INDICATION_OK){
     ESP_LOGE(TAG, "response type not OK -> (%d)", parsed->response);
-    return -1;
+    return pdFALSE;
   }
 
   if (parsed->param_arr[CFUN_SET_STATUS_LINE][CFUN_STATUS_INDEX].val == CFUN_RADIO_ON){
     ESP_LOGI(TAG, "Radio on!!");
-    return 1;
-  }  
+    return pdTRUE;
+  }
+ 
+  // should not get here
+  return pdFALSE;
 }
 
-static int verify_kudpcfg(){
+int verify_kudpcfg(){
   print_parsed();
 
   at_parsed_s *parsed = get_parsed_struct();
@@ -416,8 +424,7 @@ static int verify_kudpcfg(){
   return 1;
 }
 
-
-static bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
+bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
   int ret;
   at_parsed_s * parsed_p = get_parsed_struct();
@@ -468,7 +475,7 @@ fail:
   return -1;
 }
 
-static bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
+bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
   int ret;
   at_parsed_s * parsed_p = get_parsed_struct();
@@ -536,7 +543,7 @@ fail:
   return -1;
 }
 
-static bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
+bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   ASSERT(cmd);
   int ret;
   at_parsed_s * parsed_p = get_parsed_struct();
@@ -655,6 +662,15 @@ static void network_state_set_status(network_status_e status){
   xSemaphoreGive(network_state_mutex);
 }
 
+static void network_state_set_timeout(uint32_t timeout_ticks){
+  if (pdTRUE != xSemaphoreTake(network_state_mutex, NET_MUTEX_WAIT)) {
+    ESP_LOGE(TAG, "Failed to take net state mutext!");
+    ASSERT(0);
+  }
+  net_context.timeout_in_seconds = timeout_ticks;
+
+  xSemaphoreGive(network_state_mutex);
+}
 
 
 void driver_b(void * arg){
@@ -720,6 +736,9 @@ void network_driver(){
   verify_urc_and_parse(str, len);
   print_parsed_urc(get_urc_parsed_struct());
   */
+#ifdef FAKE_INPUT_STREAM_MODE
+  network_test();
+#else
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
   xTaskCreate(driver_b, "", 1024, "", 5, NULL); 
 }

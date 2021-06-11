@@ -34,7 +34,6 @@
 static const char      TAG[] = "UART_CORE";
 static const char  AT_PORT[] = "/dev/ttyUSB1";
 static int atfd;
-static QueueSetHandle_t command_issue_q;
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!
 static uint8_t buff_s[512];
 
@@ -59,6 +58,8 @@ bool at_incomming_peek(){
 #endif
 }
 
+#ifndef FAKE_INPUT_STREAM_MODE
+
 // Returns a refernce to a bunffer,
 // len == -1 on error, data read otherwise
 uint8_t* at_incomming_get_stream(int *len){
@@ -70,16 +71,16 @@ uint8_t* at_incomming_get_stream(int *len){
   int rc = read(atfd, buff_s, sizeof(buff_s));
   if ( rc > 0 ){
     *len = rc;
-
+#ifdef POSIX_FREERTOS_SIM
     { // test. can remov
-      char test[200];
+      char test[2000];
       memset(test, 0 , 200);
       memcpy(test, buff_s, rc);
       printf("ECHO (%d):> %s \n", rc, test);
     }
+#endif 
     return buff_s;
   }
-
   return NULL;
 }
 
@@ -102,11 +103,7 @@ int at_command_issue_hal(char *cmd, int len){
 #endif
 }
 
-void init_cellular_freertos_objects (){
- command_issue_q = xQueueCreate(2, MAX_WRITE_COMMAND_LEN); //TODO: make constant
- 
- ASSERT(command_issue_q);
-}
+#endif 
 
 
 void spawn_uart_thread(){

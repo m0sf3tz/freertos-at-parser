@@ -11,6 +11,9 @@
 #define PARSER_CORE_EVENT_START (100)
 #define NETWORK_EVENT_START     (200)
 
+// if set, a fake uart stream is provided to simulate the HL7800
+#define FAKE_INPUT_STREAM_MODE
+
 /**********************************************************
 *                                                 HELPERS *
 **********************************************************/

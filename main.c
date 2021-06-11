@@ -149,6 +149,7 @@ int main( void )
     extern void create_kcnxcfg_cmd(char * str, int size);
     extern void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t len);
     extern void net_adaptor_spawner();
+    extern uint8_t * get_stream();
 #if 1
     create_mailbox_freertos_objects();
     spawn_uart_thread();
@@ -157,7 +158,7 @@ int main( void )
     net_adaptor_spawner();
     network_driver();
 #else
-    parser_test();
+    get_stream();
 #endif 
     vTaskStartScheduler();
     return 0;

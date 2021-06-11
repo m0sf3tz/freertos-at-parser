@@ -13,6 +13,11 @@
 #define CFUN_STATUS_INDEX     (0)
 #define CFUN_RADIO_ON         (1)
 
+#define CGACT_STATUS_LINE     (1)
+#define CFUN_STATUS_INDEX     (0)
+#define CFUN_STATUS_INDEX     (0)
+
+
 
 
 /*********************************************************

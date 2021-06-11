@@ -9,10 +9,10 @@
 **********************************************************/
 #define UNKNOWN_TYPE  (-1)
 
-#define MAX_LINES_AT   (10)
+#define MAX_LINES_AT   (17) // Max.. AT+CGACT?
 #define MAX_DELIMITERS (7)
 #define MAX_LEN_TYPE   (50)
-#define MAX_LEN_PARAM  (35)
+#define MAX_LEN_PARAM  (50)
 #define MAX_LEN_RAW    (150)
 
 #define LINE_WAS_NOT_DATA_RELATED (0)
@@ -62,6 +62,7 @@ typedef enum {
   KUDPSND,
   KUDPRCV,
   KUDP_DATA,
+  CGACT,
 
   LEN_KNOWN_COMMANDS
 } command_e;

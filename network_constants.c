@@ -27,6 +27,26 @@ static const char         NET_APN[] = "m2minternet.apn";
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
+void create_cgact_cmd(char * str, int size){
+  if(!str){
+    ESP_LOGI(TAG, "NULL str!");
+    ASSERT(0);
+  }
+
+  memset(str, 0, size);
+  sprintf(str, "AT+CGACT=1\r\n");
+}
+
+void create_cfun_en_cmd(char * str, int size){
+  if(!str){
+    ESP_LOGI(TAG, "NULL str!");
+    ASSERT(0);
+  }
+
+  memset(str, 0, size);
+  sprintf(str, "AT+CFUN=1\r\n");
+}
+
 void create_kcnxcfg_cmd(char * str, int size){
   if(!str){
     ESP_LOGI(TAG, "NULL str!");
