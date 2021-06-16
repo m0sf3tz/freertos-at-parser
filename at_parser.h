@@ -44,7 +44,8 @@ typedef enum {
 
 typedef enum {
   AT_PROCESSED_GOOD,
-  AT_PROCESSED_TIMEOUT
+  AT_PROCESSED_TIMEOUT,
+  AT_PROCESSED_DERAIL     //sequence no longer followed
 } at_processed_status_e;
 
 typedef enum {

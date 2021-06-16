@@ -39,9 +39,9 @@
 #define FALSE (0)
 
 #ifdef POSIX_FREERTOS_SIM
- #define ESP_LOGE( tag, format, ... ) do {printf(format, ##__VA_ARGS__); printf("\n");} while(0)
- #define ESP_LOGI( tag, format, ... ) do {printf(format, ##__VA_ARGS__); printf("\n");} while(0)
- #define ESP_LOGW( tag, format, ... ) do {printf(format, ##__VA_ARGS__); printf("\n");} while(0)
+ #define ESP_LOGE( tag, format, ... ) do {printf("%s:",tag); printf(format, ##__VA_ARGS__); printf("\n");} while(0)
+ #define ESP_LOGI( tag, format, ... ) do {printf("%s:",tag); printf(format, ##__VA_ARGS__); printf("\n");} while(0)
+ #define ESP_LOGW( tag, format, ... ) do {printf("%s:",tag); printf(format, ##__VA_ARGS__); printf("\n");} while(0)
 #endif 
 
 /**********************************************************

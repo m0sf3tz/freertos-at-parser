@@ -27,7 +27,8 @@ static state_t state_handle_cmd_func();
 static state_t state_handle_write_func();
 static state_t state_handle_read_func();
 
-static void    post_urc_to_network_layer(at_urc_parsed_s * ptr);
+static void     post_urc_to_network_layer(at_urc_parsed_s * ptr);
+static uint32_t get_cmd_timeout(command_e cmd);
 
 /*********************************************************
 *                                       STATIC VARIABLES *
@@ -42,7 +43,6 @@ static state_array_s parser_translation_table[parser_state_len] = {
        { state_handle_write_func  ,  portMAX_DELAY }, 
        { state_handle_read_func   ,  portMAX_DELAY }, 
 };
-
 
 /**********************************************************
 *                                         STATE FUNCTIONS *
@@ -79,60 +79,55 @@ static state_t state_idle_func() {
 }
 
 static state_t state_handle_cmd_func () {
-  ESP_LOGI(TAG, "entering handle_cmd!");
-  mailbox_post(MAILBOX_POST_READY); 
-  vTaskDelay(1);
-
   at_modem_respond_e term; 
   int cme_err =0;
   int len = 0;
   int line = 0;
-  TickType_t start = xTaskGetTickCount();
-  TickType_t end = start + PARSER_WAIT_FOR_ECHO;
+  TickType_t echo_to = xTaskGetTickCount() + PARSER_WAIT_FOR_ECHO;
   command_e cmd;
   at_parsed_s * parsed_p = get_parsed_struct();
   clear_at_parsed_struct();
+  
+  ESP_LOGI(TAG, "entering handle_cmd!");
+  mailbox_post(MAILBOX_POST_READY); 
 
   for(;;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if(!buff){
-      if (xTaskGetTickCount() > end){
-        ESP_LOGE(TAG, "Failed to AT response!");
-        parsed_p->status = AT_PROCESSED_TIMEOUT;
-
-        mailbox_post(MAILBOX_POST_PROCESSED);
-        ESP_LOGI(TAG, "watiing for done!");
-        
-        mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
-        ESP_LOGI(TAG, "done comsuing "); 
-        return parser_idle_state;  
+      if (xTaskGetTickCount() > echo_to){
+         ESP_LOGE(TAG, "Failed to get AT echo!");
+         parsed_p->status = AT_PROCESSED_TIMEOUT;
+         goto error;
+      } else {
+        vTaskDelay(50/portTICK_PERIOD_MS);
       }
     }
     if(buff)
     {
-        printf("%d ECHO len \n", len);
-        if(is_status_line(buff, len, &cme_err)){
+      if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Error - unexpected status line!");
-        return parser_idle_state;
-        //TODO: handle  
+        parsed_p->status = AT_PROCESSED_DERAIL;
+        goto error;
       }
 
       if(verify_urc_and_parse(buff, len)){
         continue;
       }
 
-      if( !at_line_explode(buff,len, 0)){
+      if( at_line_explode(buff,len, 0) == 0 ){
         // verifiy we are dealing with the correct command
         if (get_net_state_cmd() == parsed_p->type){
           break;
         } else {
           ESP_LOGE(TAG, "State machine out of sync - unexpected command! (%d)", parsed_p->type);
-          ASSERT(0);
+          parsed_p->status = AT_PROCESSED_DERAIL;
+          goto error;
         }
       } else {
           ESP_LOGE(TAG, "State machine out of sync!");
-          //ASSERT(0);
+          parsed_p->status = AT_PROCESSED_DERAIL;
+          goto error;
       }
     }
   }
@@ -143,7 +138,7 @@ static state_t state_handle_cmd_func () {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if (buff){
       if (len == 0){
-         ESP_LOGE(TAG, "Failed to pars!");
+         ESP_LOGE(TAG, "Failed to parse!");
         // TODO: handle...
       }
       
@@ -160,16 +155,24 @@ static state_t state_handle_cmd_func () {
         ESP_LOGI(TAG, "watiing for done!");
         
         mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
-        ESP_LOGI(TAG, "done comsuing "); 
+        ESP_LOGI(TAG, "done consuming"); 
         return parser_idle_state;  
       }
 
       if(at_line_explode(buff,len, line)){
-        ESP_LOGE(TAG, "Failed to pars!");
+        ESP_LOGE(TAG, "Failed to parse line!");
         // TODO: handle...
       } 
+    } else{
+      puts("here");
     }
-  } 
+  }
+error:
+  mailbox_post(MAILBOX_POST_PROCESSED);
+  ESP_LOGI(TAG, " Posting Processed!");
+        
+  mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
+  ESP_LOGI(TAG, "finished consuming!"); 
   return NULL_STATE;
 }
 
@@ -196,20 +199,19 @@ static state_t state_handle_read_func() {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if(!buff){
       if (xTaskGetTickCount() > end){
-        ESP_LOGE(TAG, "Failed to AT response!");
+        ESP_LOGE(TAG, "Failed to AT response! (timeout)");
         parsed_p->status = AT_PROCESSED_TIMEOUT;
 
         mailbox_post(MAILBOX_POST_PROCESSED);
-        ESP_LOGI(TAG, "watiing for done!");
+        ESP_LOGI(TAG, "Waiting for done! (timeout)");
         
         mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
-        ESP_LOGI(TAG, "done consuming (timeout) "); 
+        ESP_LOGI(TAG, "Done consuming (timeout) "); 
         return parser_idle_state;  
       }
     }
     if(buff)
     {
-        printf("%d ECHO len \n", len);
         if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Error - unexpected status line!");
         return parser_idle_state;
@@ -320,7 +322,6 @@ static state_t state_handle_write_func() {
     }
     if(buff)
     {
-        printf("%d ECHO len \n", len);
         if(is_status_line(buff, len, &cme_err)){
         ESP_LOGI(TAG, "Error - unexpected status line!");
         return parser_idle_state;
@@ -355,7 +356,6 @@ static state_t state_handle_write_func() {
   if (is_connect_line(buff, len) == true){
       mailbox_post(MAILBOX_POST_CONNECT);
   } else {
-    printf("%s asfasdf \n", buff);
      ESP_LOGE(TAG, "did not find connect string!");
      ASSERT(0);
   }
@@ -418,6 +418,13 @@ static char* event_print_func(state_event_t event) {
 /*********************************************************
                                     NON-STATE  FUNCTIONS *
 *********************************************************/
+static uint32_t get_cmd_timeout(command_e cmd){
+ switch(cmd){
+  case CFUN: return CFUN_CMD_TIMEOUT;
+  default: ASSERT(0);
+  } 
+}
+
 static void post_urc_to_network_layer(at_urc_parsed_s * ptr){
   if(!ptr){
     ESP_LOGE(TAG, "NULL ARG!");
