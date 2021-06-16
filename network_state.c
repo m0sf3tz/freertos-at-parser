@@ -728,18 +728,17 @@ a:
   vTaskDelay(1000000);
 }
 
-void test(void * arg){
+void network_test_thread(void * arg){
   for(;;){
-    puts("yo");
-    vTaskDelay(1000/portTICK_PERIOD_MS);
+    network_test();
+    vTaskDelay(10000000);  
   }
 }
 
 void network_driver(){
   network_state_init_freertos_objects();
 #ifdef FAKE_INPUT_STREAM_MODE
-  xTaskCreate(test, "", 1024, "", 5, NULL); 
-  network_test();
+  xTaskCreate(network_test_thread, "", 1024, "", 5, NULL); 
 #else
   network_state_init();
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 

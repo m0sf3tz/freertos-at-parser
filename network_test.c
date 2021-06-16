@@ -30,9 +30,13 @@ static char               misc_buff[150];
 *                                               FUNCTIONS *
 **********************************************************/
 
+static int verify_cfun_test(){
+  return pdTRUE;
+}
+
 void network_test(){
   set_current_cmd(CFUN);
   create_cfun_en_cmd(misc_buff, 150);
   printf("%s \n", misc_buff);
-  send_cmd(misc_buff, strlen(misc_buff), verify_kcnxfg, KCNXCFG);
+  send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);
 }

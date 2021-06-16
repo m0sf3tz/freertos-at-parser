@@ -561,10 +561,11 @@ static uint8_t * at_parser_stringer_private(parser_del_e mode, int * size){
 
   for(;;){
     if(iter_lead == len){ // exhausted current buffer 
-
+  
       vTaskDelay(250/portTICK_PERIOD_MS);
       int new_len = 0;
       uint8_t * new_buff = at_incomming_get_stream(&new_len);
+      printf("%s <-\n, len = %d", new_buff, new_len);
       if(new_buff == NULL){
           return NULL;
       }

@@ -32,7 +32,7 @@
 *                                        STATIC VARIABLES *
 **********************************************************/
 static const char      TAG[] = "UART_CORE";
-static const char  AT_PORT[] = "/dev/ttyUSB1";
+static const char  AT_PORT[] = "/dev/ttyUSB0";
 static int atfd;
 extern QueueSetHandle_t line_feed_q; //todo move into proper place!
 static uint8_t buff_s[512];
@@ -77,6 +77,10 @@ uint8_t* at_incomming_get_stream(int *len){
       memset(test, 0 , 200);
       memcpy(test, buff_s, rc);
       printf("ECHO (%d):> %s \n", rc, test);
+      
+      for(int i = 0; i < rc; i++){
+        printf("%c (%d), \n", test[i], test[i]);
+      }
     }
 #endif 
     return buff_s;
@@ -107,6 +111,7 @@ int at_command_issue_hal(char *cmd, int len){
 
 
 void spawn_uart_thread(){
+#ifndef FAKE_INPUT_STREAM_MODE
   atfd = open( AT_PORT, O_RDWR);
   if (atfd == -1){
      ESP_LOGE(TAG, "Failed to open UART PORT!"); 
@@ -116,13 +121,5 @@ void spawn_uart_thread(){
   // set to non-blocking 
   int flags = fcntl(atfd, F_GETFL, 0);
   fcntl(atfd, F_SETFL, flags | O_NONBLOCK);
-
-/*
-  char buff[512];
-  for(;;){T
-    memset(buff, 0, 512);
-    read(atfd, buff, 200);
-    printf("read = %s \n", buff);
-  }
-  */
+#endif
 }
