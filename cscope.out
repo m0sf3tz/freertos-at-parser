@@ -1,4 +1,4 @@
-cscope 15 $HOME/Downloads/FreeRTOSv202012.00/FreeRTOS/Demo/Posix_GCC               0000373322
+cscope 15 $HOME/Downloads/FreeRTOSv202104.00/FreeRTOS/Demo/freertos-at-parser               0000389746
 	@FreeRTOSConfig.h
 
 26 #i‚de‡
@@ -516,36 +516,40 @@ X
 "
 
 8 
-	~"©_∑r£r.h
+	~"sim_°ªam.h
 "
 
 9 
+	~"©_∑r£r.h
+"
+
+10 
 	~"globÆ_deföes.h
 "
 
-15 c⁄° 
+16 c⁄° 
 	gTAG
 [] = "AT_PARSER";
 
-16 
+17 
 ©_∑r£d_s
  
 	g∑r£d
 ;
 
-17 
+18 
 ©_urc_∑r£d_s
  
 	gurc_∑r£d
 ;
 
-18 
+19 
 uöt8_t
  
 	gbuf„r
 [1024];
 
-19 
+20 
 uöt8_t
  
 	glöe_found
@@ -553,7 +557,7 @@ uöt8_t
 MAX_LINE_SIZE
 ];
 
-27 
+28 
 boﬁ
  
 	$my©oi
@@ -563,37 +567,37 @@ boﬁ
 ªsu…
 ) {
 
-28 
+29 
 buff
 [32];
 
-30 i‡(!
+31 i‡(!
 ªsu…
  || !
 §c
 ){
 
-31 
+32 
 	`ESP_LOGE
 (
 TAG
 , "NULL INPUTS!");
 
-32 
+33 
 	`ASSERT
 (0);
 
-34 
+35 
 	`mem£t
 (
 buff
 , 0, (buff));
 
-38 i‡(*
+39 i‡(*
 §c
  == '"'){
 
-39 
+40 
 	`mem˝y
 (
 buff
@@ -603,7 +607,7 @@ buff
 	`°æí
 (src) - 2);
 
-41 
+42 
 	`mem˝y
 (
 buff
@@ -613,79 +617,79 @@ buff
 	`°æí
 (src));
 
-44 * 
+45 * 
 s
  = 
 buff
 ;
 
-45 
+46 
 ªs
  = 0;
 
-46 
+47 
 möus
  = *
 s
  == '-';
 
-47 i‡(
+48 i‡(
 möus
 ){
 
-48 
+49 
 s
 ++;
 
-52 *
+53 *
 t
  = 
 s
 ;
 
-53 
+54 
 	`isdigô
 (*
 t
 )) {
 
-54 *
+55 *
 t
 ++;
 
-56 if(*
+57 if(*
 t
  == '\0'){
 
-58 
+59 
 numbî
 ;
 
-63 
+64 
 t
  = 
 s
 ;
 
-64 
+65 
 	`isxdigô
 (*
 t
 )) {
 
-65 *
+66 *
 t
 ++;
 
-67 if(*
+68 if(*
 t
  != '\0'){
 
-69  
+70  
 Ál£
 ;
 
-72 
+73 
 ªs
  = 
 	`°πﬁ
@@ -695,7 +699,7 @@ s
 NULL
 ,16);
 
-73 *
+74 *
 ªsu…
  = ( 
 möus
@@ -703,27 +707,27 @@ möus
 ªs
  :Ñes );
 
-74  
+75  
 åue
 ;
 
-76 
+77 
 numbî
 :
 
-77 
+78 
 	`isdigô
 (*
 s
 )) {
 
-78 
+79 
 ªs
 ªs*10 + (*
 s
 ++ - '0');
 
-81 *
+82 *
 ªsu…
  = ( 
 möus
@@ -731,15 +735,15 @@ möus
 ªs
  :Ñes );
 
-82  
+83  
 åue
 ;
 
-83 
+84 
 	}
 }
 
-85 
+86 
 ©_ty≥_t
  
 	$gë_ty≥_cmd
@@ -747,21 +751,21 @@ möus
 s
 ){
 
-86 i‡(!
+87 i‡(!
 s
 ){
 
-87 
+88 
 	`ESP_LOGE
 (
 TAG
 , "Null string!");
 
-88 
+89 
 	`ASSERT
 (0);
 
-91 i‡(
+92 i‡(
 	`°∫cmp
 (
 s
@@ -769,7 +773,7 @@ s
 CFUN
 ;
 
-92 i‡(
+93 i‡(
 	`°∫cmp
 (
 s
@@ -777,7 +781,7 @@ s
 KUDPCFG
 ;
 
-93 i‡(
+94 i‡(
 	`°∫cmp
 (
 s
@@ -785,7 +789,7 @@ s
 KALTCFG
 ;
 
-94 i‡(
+95 i‡(
 	`°∫cmp
 (
 s
@@ -793,7 +797,7 @@ s
 KBNDCFG
 ;
 
-95 i‡(
+96 i‡(
 	`°∫cmp
 (
 s
@@ -801,7 +805,7 @@ s
 ATI
 ;
 
-96 i‡(
+97 i‡(
 	`°∫cmp
 (
 s
@@ -809,7 +813,7 @@ s
 CESQ
 ;
 
-97 i‡(
+98 i‡(
 	`°∫cmp
 (
 s
@@ -817,7 +821,7 @@ s
 KCNXCFG
 ;
 
-98 i‡(
+99 i‡(
 	`°∫cmp
 (
 s
@@ -825,7 +829,7 @@ s
 CEREG
 ;
 
-99 i‡(
+100 i‡(
 	`°∫cmp
 (
 s
@@ -833,15 +837,31 @@ s
 KUDPSND
 ;
 
-101  
+101 i‡(
+	`°∫cmp
+(
+s
+, "AT+KUDPRCV",10Ë=0Ë 
+KUDPRCV
+;
+
+102 i‡(
+	`°∫cmp
+(
+s
+, "AT+CGACT",8Ë=0Ë 
+CGACT
+;
+
+104  
 UNKNOWN_TYPE
  ;
 
-102 
+105 
 	}
 }
 
-104 
+107 
 ©_ty≥_t
  
 	$gë_ty≥
@@ -849,21 +869,21 @@ UNKNOWN_TYPE
 s
 ){
 
-105 i‡(!
+108 i‡(!
 s
 ){
 
-106 
+109 
 	`ESP_LOGE
 (
 TAG
 , "Null string!");
 
-107 
+110 
 	`ASSERT
 (0);
 
-110 i‡(
+113 i‡(
 	`°rcmp
 (
 s
@@ -871,7 +891,7 @@ s
 KUDP_RCV
 ;
 
-111 i‡(
+114 i‡(
 	`°rcmp
 (
 s
@@ -879,7 +899,7 @@ s
 KUDP_NOTIF
 ;
 
-112 i‡(
+115 i‡(
 	`°rcmp
 (
 s
@@ -887,7 +907,7 @@ s
 CFUN
 ;
 
-113 i‡(
+116 i‡(
 	`°rcmp
 (
 s
@@ -895,7 +915,7 @@ s
 CEREG
 ;
 
-114 i‡(
+117 i‡(
 	`°rcmp
 (
 s
@@ -903,7 +923,7 @@ s
 CGREG
 ;
 
-115 i‡(
+118 i‡(
 	`°rcmp
 (
 s
@@ -911,7 +931,7 @@ s
 KUDPCFG
 ;
 
-116 i‡(
+119 i‡(
 	`°rcmp
 (
 s
@@ -919,7 +939,7 @@ s
 KALTCFG
 ;
 
-117 i‡(
+120 i‡(
 	`°rcmp
 (
 s
@@ -927,7 +947,7 @@ s
 KBNDCFG
 ;
 
-118 i‡(
+121 i‡(
 	`°rcmp
 (
 s
@@ -935,7 +955,7 @@ s
 ATI
 ;
 
-119 i‡(
+122 i‡(
 	`°rcmp
 (
 s
@@ -943,7 +963,7 @@ s
 CESQ
 ;
 
-120 i‡(
+123 i‡(
 	`°rcmp
 (
 s
@@ -951,7 +971,7 @@ s
 KCNXCFG
 ;
 
-121 i‡(
+124 i‡(
 	`°rcmp
 (
 s
@@ -959,15 +979,39 @@ s
 KUDPSND
 ;
 
-123  
+125 i‡(
+	`°rcmp
+(
+s
+, "KUDPRCV"Ë=0Ë 
+KUDPRCV
+;
+
+126 i‡(
+	`°rcmp
+(
+s
+, "KUDP_DATA"Ë=0Ë 
+KUDP_DATA
+;
+
+127 i‡(
+	`°rcmp
+(
+s
+, "CGACT"Ë=0Ë 
+CGACT
+;
+
+129  
 UNKNOWN_TYPE
 ;
 
-124 
+130 
 	}
 }
 
-127 
+133 
 boﬁ
  
 	$vîify_urc_™d_∑r£
@@ -977,45 +1021,45 @@ boﬁ
 Àn
 ){
 
-128 
+134 
 ty≥
 [
 MAX_LEN_TYPE
 ];
 
-129 c⁄° 
+135 c⁄° 
 c
 [2] = ",";
 
-130 
+136 
 Àad
  = 0;
 
-131 
+137 
 œg
  = 0;
 
-132 
+138 
 ty≥_öt
 ;
 
-133 * 
+139 * 
 ôî
  = 
 °r
 ;
 
-134 
+140 
 ∑øm
  = 0;
 
-135 * 
+141 * 
 tokí
  = 
 NULL
 ;
 
-136 
+142 
 	`mem£t
 (
 ty≥
@@ -1023,97 +1067,97 @@ ty≥
 MAX_LEN_TYPE
 );
 
-138 i‡(!
+144 i‡(!
 °r
 ){
 
-139 
+145 
 	`ESP_LOGE
 (
 TAG
 , "NULL INPUT!");
 
-140 
+146 
 	`ASSERT
 (0);
 
-143 i‡(
+149 i‡(
 Àn
  == 0){
 
-144 
+150 
 	`ESP_LOGE
 (
 TAG
 , "WRONG PARAM INPUT!");
 
-145 
+151 
 	`ASSERT
 (0);
 
-149 if(
+155 if(
 °r
 [0] != '+'){
 
-150  
+156  
 Ál£
 ;
 
-152 
+158 
 œg
 ++;
 
-153 
+159 
 Àad
 ++;
 
-156 
+162 
 Àad
  != '\0'){
 
-157 i‡(
+163 i‡(
 Àad
  > 
 Àn
  - 1){
 
-158 
+164 
 	`ESP_LOGE
 (
 TAG
 , "Parsing failed! cant find :");
 
-159  
+165  
 Ál£
 ;
 
-161 i‡(
+167 i‡(
 °r
 [
 Àad
 ] == ':'){
 
-164 
+170 
 Àad
 ++;
 
-167 i‡–0 >(
+173 i‡–0 >(
 Àad
  - 
 œg
 ) ) {
 
-168 
+174 
 	`ESP_LOGE
 (
 TAG
 , "Logic failed!");
 
-169  
+175  
 Ál£
 ;
 
-171 
+177 
 	`mem˝y
 (
 ty≥
@@ -1125,7 +1169,7 @@ ty≥
 Àad
 -lag);
 
-172 
+178 
 urc_∑r£d
 .
 ty≥
@@ -1133,15 +1177,15 @@ ty≥
 	`gë_ty≥
 (type);
 
-175 
+181 
 Àad
  =Üead + 2;
 
-180 i‡(
+186 i‡(
 ∑øm
 ==0){
 
-181 
+187 
 tokí
  = 
 	`°πok
@@ -1151,7 +1195,7 @@ tokí
 Àad
 , ",");
 
-183 
+189 
 tokí
  = 
 	`°πok
@@ -1161,25 +1205,25 @@ NULL
 c
 );
 
-186 i‡(
+192 i‡(
 tokí
  =
 NULL
 ){
 
-190 i‡(
+196 i‡(
 ∑øm
  =
 MAX_DELIMITERS
 ){
 
-191 
+197 
 	`ESP_LOGE
 (
 TAG
 , "Exceed maxÖarams!");
 
-194 
+200 
 	`°∫˝y
 (
 urc_∑r£d
@@ -1195,11 +1239,11 @@ tokí
 MAX_LEN_PARAM
 );
 
-196 
+202 
 ã°_©oi
 ;
 
-197 if–
+203 if–
 	`my©oi
 (
 urc_∑r£d
@@ -1213,7 +1257,7 @@ urc_∑r£d
 ã°_©oi
 )) {
 
-199 
+205 
 urc_∑r£d
 .
 ∑øm_¨r
@@ -1225,7 +1269,7 @@ is_numbî
 åue
 ;
 
-200 
+206 
 urc_∑r£d
 .
 ∑øm_¨r
@@ -1237,7 +1281,7 @@ vÆ
 ã°_©oi
 ;
 
-202 
+208 
 urc_∑r£d
 .
 ∑øm_¨r
@@ -1249,19 +1293,19 @@ is_numbî
 Ál£
 ;
 
-204 
+210 
 ∑øm
 ++;
 
-206  
+212  
 åue
 ;
 
-207 
+213 
 	}
 }
 
-210 
+216 
 	$©_¥öt_löes
 (
 uöt8_t
@@ -1273,11 +1317,11 @@ löe
 ª°
 ){
 
-211 
+217 
 cuºít_ª•⁄£_löes
  = 0;
 
-212 
+218 
 buff
 [
 MAX_LINES_AT
@@ -1285,21 +1329,21 @@ MAX_LINES_AT
 MAX_LINE_SIZE
 ];
 
-214 i‡(
+220 i‡(
 Àn
  == 0) ;
 
-216 
+222 
 Ákebuf
 [100];
 
-217 
+223 
 	`mem£t
 (
 Ákebuf
 , 0, 100);
 
-218 
+224 
 	`mem˝y
 (
 Ákebuf
@@ -1309,7 +1353,7 @@ löe
 Àn
 );
 
-219 
+225 
 	`¥ötf
 ("---->√wÜöê÷í = %d), :%†\n", 
 Àn
@@ -1317,11 +1361,11 @@ löe
 Ákebuf
 );
 
-220 
+226 
 	}
 }
 
-224 
+230 
 boﬁ
  
 	$check_f‹_ty≥
@@ -1335,97 +1379,97 @@ boﬁ
 mode
 ){
 
-225 i‡(!
+231 i‡(!
 °r
  || 
 Àn
  == 0){
 
-226 
+232 
 	`ESP_LOGE
 (
 TAG
 , "NULL INPUT!");
 
-227 
+233 
 	`ASSERT
 (0);
 
-231 
+237 
 i
  = 0;
 
-232 if(
+238 if(
 mode
  =
 PARSER_CMD_MODE
 ){
 
-233 * 
+239 * 
 ôî
  = 
 °r
 ;
 
-234 ; 
+240 ; 
 i
  < 
 Àn
 ; i++){
 
-235 i‡(*
+241 i‡(*
 ôî
  == '='){
 
-240 i‡(*
+246 i‡(*
 ôî
  !
 Àn
 ){
 
-241  
+247  
 åue
 ;
 
-243  
+249  
 Ál£
 ;
 
-245 * 
+251 * 
 ôî
  = 
 °r
 ;
 
-246 ; 
+252 ; 
 i
  < 
 Àn
 ; i++){
 
-247 i‡(*
+253 i‡(*
 ôî
  == '?'){
 
-252 i‡(*
+258 i‡(*
 ôî
  !
 Àn
 ){
 
-253  
+259  
 åue
 ;
 
-255  
+261  
 Ál£
 ;
 
-257 
+263 
 	}
 }
 
-260 
+266 
 	$©_löe_ex∂ode
  (* 
 °r
@@ -1435,89 +1479,89 @@ i
 löe
 ) {
 
-261 
+267 
 ty≥
 [
 MAX_LEN_TYPE
 ];
 
-262 c⁄° 
+268 c⁄° 
 c
 [2] = ",";
 
-263 
+269 
 Àad
  = 0;
 
-264 
+270 
 œg
  = 0;
 
-265 
+271 
 cuºë_löe
  = 0;
 
-266 
+272 
 ty≥_öt
 ;
 
-267 * 
+273 * 
 ôî
  = 
 °r
 ;
 
-268 
+274 
 discovîed_f‹m
  
 exãnded_©
 ;
 
-269 
+275 
 ∑øm
  = 0;
 
-270 * 
+276 * 
 tokí
  = 
 NULL
 ;
 
-272 
+278 
 	`mem£t
 (
 ty≥
 , 0, (type));
 
-274 i‡(!
+280 i‡(!
 °r
 ){
 
-275 
+281 
 	`ESP_LOGE
 (
 TAG
 , "NULL INPUT!");
 
-276 
+282 
 	`ASSERT
 (0);
 
-279 i‡(
+285 i‡(
 Àn
  == 0){
 
-280 
+286 
 	`ESP_LOGE
 (
 TAG
 , "WRONG PARAM INPUT!");
 
-281 
+287 
 	`ASSERT
 (0);
 
-284 i‡(0 =
+290 i‡(0 =
 	`°∫cmp
  (
 °r
@@ -1525,25 +1569,25 @@ TAG
 	`°æí
 ("AT+"))){
 
-287 i‡(
+293 i‡(
 löe
  != 0){
 
-288 
+294 
 	`ESP_LOGE
 (
 TAG
 , "Malformed input stream!");
 
-292 i‡(
+298 i‡(
 löe
  != 0){
 
-293 
+299 
 föd_fú°_ª•⁄d
 ;
 
-295 
+301 
 	`ESP_LOGE
 (
 TAG
@@ -1553,83 +1597,97 @@ löe
 °r
 );
 
-302 
+308 
 i
  = 0; i <
 Àn
 ; i++){
 
-303 *
+309 *
 ôî
 ){
 
-305 
+311 
 	`ESP_LOGI
 (
 TAG
 , "DiscoveredáÑead");
 
-306 
+312 
 exãnded_©
  = 
 READ_CMD
 ;
 
-307 
+313 
 exô
 ;
 
-309 
+315 if(*
+ôî
++1 == '?'){
+
+316 
+exãnded_©
+ = 
+TEST_CMD
+;
+
+317 
+exô
+;
+
+319 
 	`ESP_LOGI
 (
 TAG
 , "Discoveredá write");
 
-310 
+320 
 ôî
 ++;
 
-311 
+321 
 exãnded_©
  = 
 WRITE_CMD
 ;
 
-312 
+322 
 exô
 ;
 
-314 
+324 
 	`ESP_LOGI
 (
 TAG
 , "DiscoveredáÉxec");
 
-315 
+325 
 exãnded_©
  = 
 EXEC_CMD
 ;
 
-316 
+326 
 exô
 ;
 
-318 
+328 
 ôî
 ++;
 
-323 
+333 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo findÉxtendedÅype!");
 
-326 
+336 
 exô
 :
 
-327 
+337 
 ∑r£d
 .
 f‹m
@@ -1637,7 +1695,7 @@ f‹m
 exãnded_©
 ;
 
-328 
+338 
 ∑r£d
 .
 ty≥
@@ -1647,85 +1705,85 @@ ty≥
 °r
 );
 
-330 i‡(
+340 i‡(
 exãnded_©
  =
 WRITE_CMD
 ){
 
-333 
+343 
 °r
  = 
 ôî
 ;
 
-334 
+344 
 £≥øã_¨gs
 ;
 
-342 
+352 
 föd_fú°_ª•⁄d
 :
 
-344 i‡(
+354 i‡(
 °r
 [
 Àad
 ] != '+'){
 
-345 
+355 
 	`ESP_LOGE
 (
 TAG
 , "can't handle,ÜeadingÇot +");
 
-348 
+358 
 œg
 ++;
 
-349 
+359 
 Àad
 ++;
 
-352 
+362 
 Àad
  != '\0'){
 
-353 i‡(
+363 i‡(
 Àad
  > 
 Àn
  - 1){
 
-354 
+364 
 	`ESP_LOGE
 (
 TAG
 , "Parsing failed! cant find :");
 
-357 i‡(
+367 i‡(
 °r
 [
 Àad
 ] == ':'){
 
-360 
+370 
 Àad
 ++;
 
-363 i‡–0 >(
+373 i‡–0 >(
 Àad
  - 
 œg
 ) ) {
 
-364 
+374 
 	`ESP_LOGE
 (
 TAG
 , "Logic failed!");
 
-367 
+377 
 	`mem˝y
 (
 ty≥
@@ -1737,7 +1795,7 @@ ty≥
 Àad
 -lag);
 
-368 i‡(
+378 i‡(
 ∑r£d
 .
 ty≥
@@ -1745,25 +1803,25 @@ ty≥
 	`gë_ty≥
 (type)){
 
-369 
+379 
 	`ESP_LOGE
 (
 TAG
 , "type miss-match!");
 
-374 
+384 
 Àad
  =Üead + 2;
 
-376 
+386 
 £≥øã_¨gs
 :
 
-380 i‡(
+390 i‡(
 ∑øm
 ==0){
 
-381 
+391 
 tokí
  = 
 	`°πok
@@ -1773,7 +1831,7 @@ tokí
 Àad
 , ",");
 
-383 
+393 
 tokí
  = 
 	`°πok
@@ -1783,25 +1841,25 @@ NULL
 c
 );
 
-386 i‡(
+396 i‡(
 tokí
  =
 NULL
 ){
 
-390 i‡(
+400 i‡(
 ∑øm
  =
 MAX_DELIMITERS
 ){
 
-391 
+401 
 	`ESP_LOGE
 (
 TAG
 , "Exceed maxÖarams!");
 
-394 
+404 
 	`°∫˝y
 (
 ∑r£d
@@ -1819,11 +1877,11 @@ tokí
 MAX_LEN_PARAM
 );
 
-396 
+406 
 ã°_©oi
 ;
 
-397 if–
+407 if–
 	`my©oi
 (
 ∑r£d
@@ -1839,7 +1897,7 @@ löe
 ã°_©oi
 )) {
 
-399 
+409 
 ∑r£d
 .
 ∑øm_¨r
@@ -1853,7 +1911,7 @@ is_numbî
 åue
 ;
 
-400 
+410 
 ∑r£d
 .
 ∑øm_¨r
@@ -1867,7 +1925,7 @@ vÆ
 ã°_©oi
 ;
 
-402 
+412 
 ∑r£d
 .
 ∑øm_¨r
@@ -1881,19 +1939,19 @@ is_numbî
 Ál£
 ;
 
-404 
+414 
 ∑øm
 ++;
 
-407 
+417 
 	}
 }
 
-409 
+419 
 	$˛ór_©_∑r£d_°ru˘
 (){
 
-410 
+420 
 	`mem£t
 (&
 ∑r£d
@@ -1901,39 +1959,39 @@ is_numbî
 ©_∑r£d_s
 ));
 
-411 
+421 
 	}
 }
 
-413 
+423 
 ©_∑r£d_s
  * 
 	$gë_∑r£d_°ru˘
 (){
 
-414  &
+424  &
 ∑r£d
 ;
 
-415 
+425 
 	}
 }
 
-417 
+427 
 ©_urc_∑r£d_s
  * 
 	$gë_urc_∑r£d_°ru˘
 (){
 
-418  &
+428  &
 urc_∑r£d
 ;
 
-419 
+429 
 	}
 }
 
-422 
+432 
 boﬁ
  
 	$is_c⁄√˘_löe
@@ -1945,31 +2003,31 @@ size_t
 Àn
 ){
 
-423 i‡(!
+433 i‡(!
 löe
 ){
 
-424 
+434 
 	`ESP_LOGE
 (
 TAG
 , "NULLÜine!");
 
-425 
+435 
 	`ASSERT
 (0);
 
-428 i‡(
+438 i‡(
 Àn
  < 
 	`°æí
 ("CONNECT")){
 
-429  
+439  
 Ál£
 ;
 
-432 i‡–
+442 i‡–
 	`°∫cmp
 (
 löe
@@ -1979,15 +2037,15 @@ löe
 åue
 ;
 
-434  
+444  
 Ál£
 ;
 
-435 
+445 
 	}
 }
 
-439 
+449 
 ©_modem_ª•⁄d_e
  
 	$is_°©us_löe
@@ -2001,37 +2059,37 @@ size_t
 cme_îr‹
 ){
 
-440 i‡(!
+450 i‡(!
 löe
 ){
 
-441 
+451 
 	`ESP_LOGE
 (
 TAG
 , "NULLÜine!");
 
-442 
+452 
 	`ASSERT
 (0);
 
-445 i‡(
+455 i‡(
 Àn
  < 
 	`°æí
 ("OK")){
 
-447 
+457 
 	`ESP_LOGW
 (
 TAG
 , "line wasÑeally short!");
 
-448  
+458  
 LINE_TERMINATION_INDICATION_NONE
 ;
 
-451 i‡–
+461 i‡–
 	`°∫cmp
 (
 löe
@@ -2041,7 +2099,7 @@ löe
 LINE_TERMINATION_INDICATION_OK
 ;
 
-452 i‡–
+462 i‡–
 	`°∫cmp
 (
 löe
@@ -2051,7 +2109,7 @@ löe
 LINE_TERMINATION_INDICATION_ERROR
 ;
 
-453 i‡–
+463 i‡–
 	`°∫cmp
 (
 löe
@@ -2059,57 +2117,57 @@ löe
 	`°æí
 ("+CME ERROR:")) == 0 ){
 
-454 
+464 
 ôî
  = 0;
 
-455 
+465 
 löe
 [
 ôî
 ] != ':'){
 
-456 if(
+466 if(
 ôî
  > 
 Àn
 ){
 
-457 
+467 
 	`ESP_LOGE
 (
 TAG
 , "didÇot findÅermination whereÉxpected!");
 
-458 
+468 
 	`ASSERT
 (0);
 
-460 
+470 
 ôî
 ++;
 
-466 
+476 
 ôî
  = iter + 2;
 
-467 if(
+477 if(
 ôî
  > 
 Àn
 ){
 
-468 
+478 
 	`ESP_LOGE
 (
 TAG
 , "didÇot findÅermination whereÉxpected!");
 
-469 
+479 
 	`ASSERT
 (0);
 
-472 if(!
+482 if(!
 	`my©oi
 (
 löe
@@ -2119,29 +2177,29 @@ löe
 cme_îr‹
 )){
 
-473 
+483 
 	`ESP_LOGE
 (
 TAG
 , "couldÇot find CMEÉrror!");
 
-474 
+484 
 	`ASSERT
 (0);
 
-477  
+486  
 LINE_TERMINATION_INDICATION_CME_ERROR
 ;
 
-480  
+488  
 LINE_TERMINATION_INDICATION_NONE
 ;
 
-481 
+489 
 	}
 }
 
-486 
+494 
 	$©_∑r£r_dñimôî_hu¡î
 (c⁄° 
 uöt8_t
@@ -2153,29 +2211,29 @@ c
 mode
 ){
 
-487 
+495 
 l⁄g_dñ
 [
 LONG_DELIMITER_LEN
 ] = "--EOF--Pattern--";
 
-488 
+496 
 cuºít_hu¡
 [
 LONG_DELIMITER_LEN
 ];
 
-489 
+497 
 ôî
  = 0;
 
-492 
+500 
 boﬁ
  
 found_¸
 ;
 
-497 i‡–
+503 i‡–
 c
  ='\r' && (
 mode
@@ -2183,45 +2241,45 @@ mode
 PARSER_CMD_DEL
 ) ){
 
-498 
+504 
 found_¸
  = 
 åue
 ;
 
-499  
+505  
 NO_DELIMITER
 ;
 
-501 i‡(
+507 i‡(
 found_¸
 ){
 
-502 i‡–
+508 i‡–
 c
  == '\n'){
 
-503 
+509 
 found_¸
  = 
 Ál£
 ;
 
-504  
+510  
 NEW_LINE_DELIMITER
 ;
 
-506 
+512 
 found_¸
  = 
 Ál£
 ;
 
-507  
+513  
 NO_DELIMITER
 ;
 
-511 
+517 
 cuºít_hu¡
 [
 ôî
@@ -2229,7 +2287,7 @@ cuºít_hu¡
 c
 ;
 
-512 
+518 
 rc
  = 
 	`memcmp
@@ -2241,51 +2299,51 @@ cuºít_hu¡
 ôî
  + 1);
 
-513 i‡(
+519 i‡(
 rc
  == 0) {
 
-514 
+520 
 ôî
 ++;
 
-515 i‡(
+521 i‡(
 ôî
  =
 LONG_DELIMITER_LEN
 ){
 
-516 
+522 
 ôî
  = 0;
 
-517 
+523 
 	`mem£t
 (
 cuºít_hu¡
 , 0, (current_hunt));
 
-518  
+524  
 LONG_DELIMITER_FOUND
 ;
 
-520  
+526  
 PARTIAL_DELIMETER_SCANNING
 ;
 
-523 
+529 
 ôî
  = 0;
 
-526  
+532  
 NO_DELIMITER
 ;
 
-527 
+533 
 	}
 }
 
-547 
+553 
 uöt8_t
  * 
 	$©_∑r£r_°rögî_¥iv©e
@@ -2297,51 +2355,45 @@ mode
 size
 ){
 
-548 
+554 
 ôî_Àad
 ;
 
-549 
+555 
 ôî_œg
 ;
 
-550 
+556 
 Àn
 ;
 
-551 
+557 
 boﬁ
  
 found_löe
 ;
 
-552 
+558 
 √w_löe_size
  = 0;
 
-553 
+559 
 	`mem£t
 (
 löe_found
 , 0 , (line_found));
 
-556 if(
+562 if(
 ôî_Àad
  =
 Àn
 ){
 
-558 
-	`vTaskDñay
-(250/
-p‹tTICK_PERIOD_MS
-);
-
-559 
+563 
 √w_Àn
  = 0;
 
-560 
+564 
 uöt8_t
  * 
 √w_buff
@@ -2351,57 +2403,57 @@ uöt8_t
 √w_Àn
 );
 
-561 if(
+565 if(
 √w_buff
  =
 NULL
 ){
 
-562  
+566  
 NULL
 ;
 
-565 i‡(
+569 i‡(
 found_löe
 ){
 
-566 
+570 
 Àn
  =Üí - 
 ôî_Àad
 ;
 
-567 
+571 
 found_löe
  = 
 Ál£
 ;
 
-570 i‡(
+574 i‡(
 Àn
  < 0){
 
-571 
+575 
 	`ESP_LOGE
 (
 TAG
 , "NegativeÜen!!");
 
-572 
+576 
 	`ASSERT
 (0);
 
-575 if(
+579 if(
 Àn
  == 0){
 
-576 
+580 
 	`mem£t
 (
 buf„r
 , 0, (buffer));
 
-577 
+581 
 	`mem˝y
 (
 buf„r
@@ -2411,21 +2463,21 @@ buf„r
 √w_Àn
 );
 
-578 
+582 
 Àn
  = 
 √w_Àn
 ;
 
-579 
+583 
 ôî_Àad
  = 0;
 
-580 
+584 
 ôî_œg
  = 0;
 
-582 i‡–
+586 i‡–
 Àn
  + 
 √w_Àn
@@ -2433,21 +2485,21 @@ buf„r
 BUFF_SIZE
 ){
 
-583 
+587 
 	`ESP_LOGE
 (
 TAG
 , "Exceeded buffer size...Érror! Resetting!");
 
-584  
+588  
 NULL
 ;
 
-586 
+590 
 ôî_Àad
 ++;
 
-588 
+591 
 	`mem˝y
 (
 buf„r
@@ -2459,29 +2511,29 @@ buf„r
 √w_Àn
 );
 
-589 
+592 
 Àn
  =Üí + 
 √w_Àn
 ;
 
-594 i‡(
+597 i‡(
 ôî_Àad
  > 
 MAX_LINE_SIZE
 ){
 
-595 
+598 
 	`ESP_LOGE
 (
 TAG
 , "Exceeded buffer size...Érror! Resetting!");
 
-596 
+599 
 	`ASSERT
 (0);
 
-599 
+602 
 ∑r£_°©us
  = 
 	`©_∑r£r_dñimôî_hu¡î
@@ -2493,13 +2545,13 @@ buf„r
 mode
 );
 
-602 i‡–
+605 i‡–
 NEW_LINE_DELIMITER
  =
 ∑r£_°©us
  ){
 
-603 
+606 
 	`mem˝y
 (
 löe_found
@@ -2509,7 +2561,7 @@ buf„r
 ôî_Àad
  - 1);
 
-604 
+607 
 	`mem˝y
 (
 buf„r
@@ -2519,33 +2571,33 @@ buf„r
 Àn
  - iter_lead);
 
-605 
+608 
 Àn
  =Üí - 
 ôî_Àad
  - 1;
 
-606 *
+609 *
 size
  = 
 ôî_Àad
  - 1;
 
-607 
+610 
 ôî_Àad
  = 0;
 
-608 
+611 
 ôî_œg
  = 0;
 
-609 
+612 
 found_löe
  = 
 åue
 ;
 
-610 
+613 
 	`©_¥öt_löes
 (
 löe_found
@@ -2555,17 +2607,17 @@ size
 buf„r
 );
 
-611  
+614  
 löe_found
 ;
 
-612 } i‡(
+615 } i‡(
 LONG_DELIMITER_FOUND
  =
 ∑r£_°©us
 ){
 
-613 
+616 
 	`mem˝y
 (
 löe_found
@@ -2575,7 +2627,7 @@ buf„r
 ôî_œg
 );
 
-614 
+617 
 	`mem˝y
 (
 buf„r
@@ -2585,71 +2637,71 @@ buf„r
 Àn
  - iter_lead);
 
-615 
+618 
 Àn
  =Üí - 
 ôî_Àad
  - 1;
 
-616 *
+619 *
 size
  = 
 ôî_œg
 ;
 
-617 
+620 
 ôî_Àad
  = 0;
 
-618 
+621 
 ôî_œg
  = 0;
 
-619 
+622 
 found_löe
  = 
 åue
 ;
 
-620  
+623  
 löe_found
 ;
 
-621 }i‡–
+624 }i‡–
 PARTIAL_DELIMETER_SCANNING
  =
 ∑r£_°©us
  ) {
 
-622 i‡(
+625 i‡(
 ôî_Àad
  =
 Àn
 ){
 
-625 
+628 
 ôî_Àad
 ++;
 
-627 i‡(
+630 i‡(
 ôî_Àad
  =
 Àn
 ){
 
-631 
+634 
 ôî_œg
 ++;
 
-632 
+635 
 ôî_Àad
 ++;
 
-635 
+638 
 	}
 }
 
-637 
+641 
 uöt8_t
  * 
 	$©_∑r£r_°rögî
@@ -2661,35 +2713,35 @@ mode
 Àn
 ){
 
-638 i‡(!
+642 i‡(!
 Àn
 ){
 
-639 
+643 
 	`ESP_LOGE
 (
 TAG
 , "len ==Çull");
 
-640 
+644 
 	`ASSERT
 (0);
 
-642 *
+646 *
 Àn
  = 0;
 
-643 
+647 
 cou¡
  =0;
 
-644 
+648 
 uöt8_t
  * 
 ªt
 ;
 
-647 
+651 
 ªt
  = 
 	`©_∑r£r_°rögî_¥iv©e
@@ -2699,51 +2751,51 @@ mode
 Àn
 );
 
-648 i‡(
+652 i‡(
 ªt
  =
 NULL
 ){
 
-649  
+653  
 NULL
 ;
 
-652 i‡(*
+656 i‡(*
 Àn
  == 0){
 
-653 i‡–
+657 i‡–
 cou¡
  != 2){
 
-654 
+658 
 cou¡
 ++;
 
-657 
+661 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅoÑeadÇon zeroÜine!");
 
-658  
+662  
 NULL
 ;
 
-661  
+665  
 ªt
 ;
 
-664 
+668 
 	}
 }
 
-667 
+671 
 	$¥öt_∑r£d
 (){
 
-668 
+672 
 	`¥ötf
 ("ty≥ =(%dË\n", 
 ∑r£d
@@ -2751,7 +2803,7 @@ NULL
 ty≥
 );
 
-669 
+673 
 	`¥ötf
 ("f‹m =(%dË\n", 
 ∑r£d
@@ -2759,7 +2811,7 @@ ty≥
 f‹m
 );
 
-670 
+674 
 	`¥ötf
 ("ª•⁄£ =(%dË\n", 
 ∑r£d
@@ -2767,7 +2819,7 @@ f‹m
 ª•⁄£
 );
 
-671 
+675 
 	`¥ötf
 ("tokí =(%dË\n", 
 ∑r£d
@@ -2775,13 +2827,13 @@ f‹m
 tokí
 );
 
-673 
+677 
 j
  = 0; j < 
 MAX_LINES_AT
  ; j++){
 
-674 
+678 
 	`ESP_LOGI
 (
 TAG
@@ -2789,13 +2841,13 @@ TAG
 j
 );
 
-675 
+679 
 i
  = 0; i < 
 MAX_DELIMITERS
 ; i ++){
 
-676 
+680 
 	`¥ötf
 ("%†%d %d \n", 
 ∑r£d
@@ -2813,11 +2865,11 @@ is_numbî
 vÆ
 );
 
-680 
+684 
 	}
 }
 
-682 
+686 
 	$¥öt_∑r£d_urc
 (
 ©_urc_∑r£d_s
@@ -2825,7 +2877,7 @@ vÆ
 urc
 ){
 
-683 
+687 
 	`ESP_LOGI
 (
 TAG
@@ -2835,13 +2887,13 @@ urc
 ty≥
 );
 
-685 
+689 
 i
  = 0 ; i < 
 MAX_DELIMITERS
 ; i++){
 
-686 
+690 
 	`ESP_LOGI
 (
 TAG
@@ -2859,27 +2911,27 @@ is_numbî
 vÆ
 );
 
-688 
+692 
 	}
 }
 
-690 
+694 
 	$∑r£r_ã°
 (){
 
-692 
+696 
 	`puts
 ("startingÅest");
 
-694 
+698 
 cme
 ;
 
-695 
+699 
 t1
 [] = "OK";
 
-696 
+700 
 ©_modem_ª•⁄d_e
  
 ªt
@@ -2893,21 +2945,21 @@ t1
 cme
 );
 
-697 if(
+701 if(
 ªt
  !
 LINE_TERMINATION_INDICATION_OK
 ){
 
-698 
+702 
 	`ASSERT
 (0);
 
-701 
+705 
 t2
 [] = "ERROR";
 
-702 
+706 
 ªt
  = 
 	`is_°©us_löe
@@ -2919,21 +2971,21 @@ t2
 cme
 );
 
-703 if(
+707 if(
 ªt
  !
 LINE_TERMINATION_INDICATION_ERROR
 ){
 
-704 
+708 
 	`ASSERT
 (0);
 
-707 
+711 
 t3
 [] = "+CME ERROR: 500";
 
-708 
+712 
 ªt
  = 
 	`is_°©us_löe
@@ -2945,35 +2997,35 @@ t3
 cme
 );
 
-709 if(
+713 if(
 ªt
  !
 LINE_TERMINATION_INDICATION_CME_ERROR
 ){
 
-710 
+714 
 	`ASSERT
 (0);
 
-713 
+717 
 	`¥ötf
 ("CME = %d\n", 
 cme
 );
 
-714 if(
+718 if(
 cme
  != 500){
 
-715 
+719 
 	`ASSERT
 (0);
 
-718 
+722 
 fú°_1
 [] = "AT+CFUN=1,2";
 
-719 
+723 
 	`©_löe_ex∂ode
  (
 fú°_1
@@ -2981,11 +3033,11 @@ fú°_1
 	`°æí
 (first_1), 0);
 
-720 
+724 
 	`¥öt_∑r£d
 ();
 
-721 if(
+725 if(
 ∑r£d
 .
 f‹m
@@ -2993,11 +3045,11 @@ f‹m
 WRITE_CMD
 ){
 
-722 
+726 
 	`ASSERT
 (0);
 
-724 if(
+728 if(
 ∑r£d
 .
 ty≥
@@ -3005,11 +3057,11 @@ ty≥
 CFUN
 ){
 
-725 
+729 
 	`ASSERT
 (0);
 
-727 if(
+731 if(
 ∑r£d
 .
 ∑øm_¨r
@@ -3017,15 +3069,15 @@ CFUN
 vÆ
  != 1){
 
-728 
+732 
 	`ASSERT
 (0);
 
-732 
+736 
 ã°
 [] = "AT+CFUN=1,2";
 
-733 
+737 
 	`©_löe_ex∂ode
  (
 ã°
@@ -3033,11 +3085,11 @@ vÆ
 	`°æí
 (test), 0);
 
-734 
+738 
 ã°2
 [] = "+CFUN: 4,5";
 
-735 
+739 
 	`©_löe_ex∂ode
  (
 ã°2
@@ -3045,11 +3097,11 @@ vÆ
 	`°æí
 (test2), 1);
 
-736 
+740 
 ã°3
 [] = "+CFUN: 6,7";
 
-737 
+741 
 	`©_löe_ex∂ode
  (
 ã°3
@@ -3057,11 +3109,11 @@ vÆ
 	`°æí
 (test3), 2);
 
-738 
+742 
 	`¥öt_∑r£d
 ();
 
-740 if(
+744 if(
 ∑r£d
 .
 f‹m
@@ -3069,11 +3121,11 @@ f‹m
 WRITE_CMD
 ){
 
-741 
+745 
 	`ASSERT
 (0);
 
-743 if(
+747 if(
 ∑r£d
 .
 ty≥
@@ -3081,11 +3133,11 @@ ty≥
 CFUN
 ){
 
-744 
+748 
 	`ASSERT
 (0);
 
-746 if(
+750 if(
 ∑r£d
 .
 ∑øm_¨r
@@ -3093,11 +3145,11 @@ CFUN
 vÆ
  != 4){
 
-747 
+751 
 	`ASSERT
 (0);
 
-749 if(
+753 if(
 ∑r£d
 .
 ∑øm_¨r
@@ -3105,11 +3157,11 @@ vÆ
 vÆ
  != 7){
 
-750 
+754 
 	`ASSERT
 (0);
 
-753 
+757 
 	`mem£t
 (&
 ∑r£d
@@ -3117,37 +3169,37 @@ vÆ
 ©_∑r£d_s
 ));
 
-754 
+758 
 	`ESP_LOGI
 (
 TAG
 , "testing AT+CESQ");
 
-755 
+759 
 CESQ_START
 [] = "AT+CESQ";
 
-756 
+760 
 CESQ_RSP
 [] = "+CESQ: 99,99,255,255,03,72";
 
-757 
+761 
 	`©_löe_ex∂ode
 (
 CESQ_START
 , (CESQ_START), 0);
 
-758 
+762 
 	`©_löe_ex∂ode
 (
 CESQ_RSP
 , (CESQ_RSP), 1);
 
-759 
+763 
 	`¥öt_∑r£d
 ();
 
-761 if(
+765 if(
 ∑r£d
 .
 f‹m
@@ -3155,39 +3207,17 @@ f‹m
 EXEC_CMD
 ){
 
-762 
+766 
 	`ASSERT
 (0);
 
-764 if(
+768 if(
 ∑r£d
 .
 ty≥
  !
 CESQ
 ){
-
-765 
-	`ASSERT
-(0);
-
-767 if(
-∑r£d
-.
-∑øm_¨r
-[1][0].
-vÆ
- != 99){
-
-768 
-	`¥ötf
-("%d vÆ \n", 
-∑r£d
-.
-∑øm_¨r
-[0][0].
-vÆ
-);
 
 769 
 	`ASSERT
@@ -3197,83 +3227,11 @@ vÆ
 ∑r£d
 .
 ∑øm_¨r
-[1][5].
-vÆ
- != 72){
-
-772 
-	`ASSERT
-(0);
-
-775 
-	`mem£t
-(&
-∑r£d
-, 0, (
-©_∑r£d_s
-));
-
-776 
-	`puts
-("testing AT+CFUN?");
-
-777 
-CFUN_READ
-[] = "AT+CFUN?";
-
-778 
-CFUN_READ_RSP
-[] = "+CFUN: 1";
-
-780 
-	`©_löe_ex∂ode
-(
-CFUN_READ
-, (CFUN_READ), 0);
-
-781 
-	`©_löe_ex∂ode
-(
-CFUN_READ_RSP
-, (CFUN_READ_RSP), 1);
-
-782 
-	`¥öt_∑r£d
-();
-
-784 if(
-∑r£d
-.
-f‹m
- !
-READ_CMD
-){
-
-785 
-	`ASSERT
-(0);
-
-787 if(
-∑r£d
-.
-ty≥
- !
-CFUN
-){
-
-788 
-	`ASSERT
-(0);
-
-790 if(
-∑r£d
-.
-∑øm_¨r
 [1][0].
 vÆ
- != 1){
+ != 99){
 
-791 
+772 
 	`¥ötf
 ("%d vÆ \n", 
 ∑r£d
@@ -3283,29 +3241,129 @@ vÆ
 vÆ
 );
 
+773 
+	`ASSERT
+(0);
+
+775 if(
+∑r£d
+.
+∑øm_¨r
+[1][5].
+vÆ
+ != 72){
+
+776 
+	`ASSERT
+(0);
+
+779 
+	`mem£t
+(&
+∑r£d
+, 0, (
+©_∑r£d_s
+));
+
+780 
+	`puts
+("testing AT+CFUN?");
+
+781 
+CFUN_READ
+[] = "AT+CFUN?";
+
+782 
+CFUN_READ_RSP
+[] = "+CFUN: 1";
+
+784 
+	`©_löe_ex∂ode
+(
+CFUN_READ
+, (CFUN_READ), 0);
+
+785 
+	`©_löe_ex∂ode
+(
+CFUN_READ_RSP
+, (CFUN_READ_RSP), 1);
+
+786 
+	`¥öt_∑r£d
+();
+
+788 if(
+∑r£d
+.
+f‹m
+ !
+READ_CMD
+){
+
+789 
+	`ASSERT
+(0);
+
+791 if(
+∑r£d
+.
+ty≥
+ !
+CFUN
+){
+
 792 
 	`ASSERT
 (0);
 
+794 if(
+∑r£d
+.
+∑øm_¨r
+[1][0].
+vÆ
+ != 1){
+
 795 
+	`¥ötf
+("%d vÆ \n", 
+∑r£d
+.
+∑øm_¨r
+[0][0].
+vÆ
+);
+
+796 
+	`ASSERT
+(0);
+
+799 
 	`puts
 ("");
 
-796 
+800 
 	`puts
 ("TESTING URC ");
 
-797 
+801 
+ã°_urc_°rög
+[] = "+KUDP_NOTIF: 9,2,3,4";
+
+802 
 boﬁ
  
 urc_ã°
  = 
 	`vîify_urc_™d_∑r£
-("+CEREG: 1", 
+(
+ã°_urc_°rög
+, 
 	`°æí
-("+CREG: 1"));
+(test_urc_string));
 
-798 
+803 
 	`¥ötf
 ("%d =ty≥ \n", 
 urc_∑r£d
@@ -3313,13 +3371,13 @@ urc_∑r£d
 ty≥
 );
 
-799 
+804 
 i
  = 0; i < 
 MAX_DELIMITERS
 ; i ++){
 
-800 
+805 
 	`¥ötf
 ("%†%d %d \n", 
 urc_∑r£d
@@ -3335,19 +3393,93 @@ is_numbî
 vÆ
 );
 
-803 i‡(
+808 i‡(
 urc_∑r£d
 .
 ∑øm_¨r
 [0].
 vÆ
- != 1){
+ != 9){
 
-804 
+809 
 	`ASSERT
 (0);
 
-806 if(
+811 if(
+urc_∑r£d
+.
+ty≥
+ !
+KUDP_NOTIF
+){
+
+812 
+	`ASSERT
+(0);
+
+815 
+	`mem£t
+(&
+urc_∑r£d
+, 0, (urc_parsed));
+
+816 
+ã°_urc_°rög_2
+[] = "+CEREG: 1234567";
+
+817 
+urc_ã°
+ = 
+	`vîify_urc_™d_∑r£
+(
+ã°_urc_°rög_2
+, 
+	`°æí
+(test_urc_string_2));
+
+818 
+	`¥ötf
+("%d =ty≥ \n", 
+urc_∑r£d
+.
+ty≥
+);
+
+819 
+i
+ = 0; i < 
+MAX_DELIMITERS
+; i ++){
+
+820 
+	`¥ötf
+("%†%d %d \n", 
+urc_∑r£d
+.
+∑øm_¨r
+[
+i
+].
+°r
+, urc_∑r£d.∑øm_¨r[i].
+is_numbî
+, urc_∑r£d.∑øm_¨r[i].
+vÆ
+);
+
+823 i‡(
+urc_∑r£d
+.
+∑øm_¨r
+[0].
+vÆ
+ != 1234567){
+
+824 
+	`ASSERT
+(0);
+
+826 if(
 urc_∑r£d
 .
 ty≥
@@ -3355,11 +3487,11 @@ ty≥
 CEREG
 ){
 
-807 
+827 
 	`ASSERT
 (0);
 
-809 
+829 
 	}
 }
 
@@ -3389,9 +3521,7 @@ CEREG
 
 12 
 	#MAX_LINES_AT
- (10)
-
-	)
+ (17)
 
 13 
 	#MAX_DELIMITERS
@@ -3407,7 +3537,7 @@ CEREG
 
 15 
 	#MAX_LEN_PARAM
- (35)
+ (50)
 
 	)
 
@@ -3511,145 +3641,165 @@ CEREG
 
 47 
 	mAT_PROCESSED_TIMEOUT
+,
+
+48 
+	mAT_PROCESSED_DERAIL
 
 
-48 } 
+49 } 
 	t©_¥o˚s£d_°©us_e
 ;
 
-51 
-	mKUDP_RCV
- = 1,
-
 52 
+	mKUDP_RCV
+ = 0,
+
+53 
 	mKUDP_NOTIF
 ,
 
-53 
+54 
 	mCFUN
 ,
 
-54 
+55 
 	mCEREG
 ,
 
-55 
+56 
 	mCGREG
 ,
 
-56 
+57 
 	mKUDPCFG
 ,
 
-57 
+58 
 	mKALTCFG
 ,
 
-58 
+59 
 	mKBNDCFG
 ,
 
-59 
+60 
 	mATI
 ,
 
-60 
+61 
 	mCESQ
 ,
 
-61 
+62 
 	mKCNXCFG
 ,
 
-62 
+63 
 	mKUDPSND
-
-
-63 } 
-	tcomm™d_e
-;
-
-66 
-	mREAD_CMD
 ,
 
-67 
-	mWRITE_CMD
+64 
+	mKUDPRCV
+,
+
+65 
+	mKUDP_DATA
+,
+
+66 
+	mCGACT
 ,
 
 68 
+	mLEN_KNOWN_COMMANDS
+
+
+69 } 
+	tcomm™d_e
+;
+
+72 
+	mREAD_CMD
+,
+
+73 
+	mWRITE_CMD
+,
+
+74 
 	mEXEC_CMD
 ,
 
-69 
+75 
 	mTEST_CMD
 
 
-70 } 
+76 } 
 	tdiscovîed_f‹m
 ;
 
-74 
+80 
 	m°r
 [
 MAX_LEN_RAW
 ];
 
-75 
+81 
 size_t
  
 	mÀn
 ;
 
-76 }
+82 }
 	t©_ª•⁄£_s
 ;
 
-91 
+97 
 boﬁ
  
 	mis_numbî
 ;
 
-92 
+98 
 	mvÆ
 ;
 
-93 
+99 
 	m°r
 [
 MAX_LEN_PARAM
 ];
 
-94 }
+100 }
 	t©_∑øm_s
 ;
 
-100 
+106 
 ©_ty≥_t
  
 	mty≥
 ;
 
-105 
+111 
 ©_¥o˚s£d_°©us_e
  
 	m°©us
 ;
 
-108 
+114 
 discovîed_f‹m
  
 	mf‹m
 ;
 
-113 
+119 
 size_t
  
 	mnum_löes
 ;
 
-118 
+124 
 ©_∑øm_s
  
 	m∑øm_¨r
@@ -3659,27 +3809,41 @@ MAX_LINES_AT
 MAX_DELIMITERS
 ];
 
-124 
+130 
 	mtokí
 ;
 
-128 
+134 
 ©_modem_ª•⁄d_e
  
 	mª•⁄£
 ;
 
-130 }
+136 }
 	t©_∑r£d_s
 ;
 
-138 
+140 (*
+	m˛b
+) ();
+
+141 
+comm™d_e
+ 
+	murc
+;
+
+142 }
+	turc_ªgi°î_s
+;
+
+149 
 ©_ty≥_t
  
 	mty≥
 ;
 
-143 
+154 
 ©_∑øm_s
  
 	m∑øm_¨r
@@ -3687,17 +3851,23 @@ MAX_DELIMITERS
 MAX_DELIMITERS
 ];
 
-144 }
+159 
+urc_ªgi°î_s
+ * 
+	mcblk_ªg
+;
+
+160 }
 	t©_urc_∑r£d_s
 ;
 
-148 
+164 
 uöt16_t
  
 	mÀn
 ;
 
-149 
+165 
 uöt8_t
  
 	mbuf
@@ -3705,43 +3875,43 @@ uöt8_t
 MAX_LINE_SIZE
 ];
 
-150 } 
+166 } 
 	t√w_löe_t
 ;
 
-153 
+169 
 	mPARSER_FULL_MODE
 ,
 
-154 
+170 
 	mPARSER_CMD_MODE
 ,
 
-155 
+171 
 	mPARSER_QRY_MODE
 ,
 
-156 
+172 
 	mPARSER_URC_MODE
 
 
-157 } 
+173 } 
 	t∑r£r_mode_e
 ;
 
-160 
+176 
 	mPARSER_CMD_DEL
 ,
 
-161 
+177 
 	mPARSER_DATA_DEL
 ,
 
-162 } 
+178 } 
 	t∑r£r_dñ_e
 ;
 
-167 
+183 
 uöt8_t
  *
 ©_∑r£r_°rögî
@@ -3753,7 +3923,7 @@ mode
 Àn
 );
 
-168 
+184 
 ∑r£_©_°rög
 (* 
 °r
@@ -3767,7 +3937,7 @@ mode
 löe
 );
 
-169 
+185 
 boﬁ
  
 check_f‹_ty≥
@@ -3781,7 +3951,7 @@ check_f‹_ty≥
 mode
 );
 
-170 
+186 
 ©_ty≥_t
  
 gë_ty≥
@@ -3789,7 +3959,7 @@ gë_ty≥
 s
 );
 
-171 
+187 
 boﬁ
  
 vîify_urc_™d_∑r£
@@ -3799,11 +3969,11 @@ vîify_urc_™d_∑r£
 Àn
 );
 
-172 
+188 
 ¥öt_∑r£d
 ();
 
-173 
+189 
 ¥öt_∑r£d_urc
 (
 ©_urc_∑r£d_s
@@ -3811,19 +3981,19 @@ vîify_urc_™d_∑r£
 urc
 );
 
-174 
+190 
 ©_∑r£d_s
  *
 gë_∑r£d_°ru˘
 ();
 
-175 
+191 
 ©_urc_∑r£d_s
  *
 gë_urc_∑r£d_°ru˘
 ();
 
-176 
+192 
 ©_modem_ª•⁄d_e
  
 is_°©us_löe
@@ -3837,7 +4007,7 @@ size_t
 cme_îr‹
 );
 
-177 
+193 
 ©_löe_ex∂ode
  (* 
 °r
@@ -3847,9 +4017,21 @@ cme_îr‹
 löe
 );
 
-178 
+194 
 ˛ór_©_∑r£d_°ru˘
 ();
+
+195 
+boﬁ
+ 
+is_c⁄√˘_löe
+(* 
+löe
+, 
+size_t
+ 
+Àn
+);
 
 	@cellular_state.c
 
@@ -6331,49 +6513,27 @@ __˝lu•lus
 
 	)
 
-18 #ifde‡
-POSIX_FREERTOS_SIM
+15 
+	#FAKE_INPUT_STREAM_MODE
 
-
-19 
-	#ASSERT
-(
-x
-) \
-
-21 i‡(!(
-x
-)) { \
-
-22 
-	`ESP_LOGE
-(
-TAG
-, "ASSERT!Éº‹ %†%u\n", 
-__FILE__
-, 
-__LINE__
-); \
-
-23 
-	`ab‹t
-(); \
-
-25 } 0)
 
 	)
 
-27 
+21 #ifde‡
+POSIX_FREERTOS_SIM
+
+
+22 
 	#ASSERT
 (
 x
 ) \
 
-29 i‡(!(
+24 i‡(!(
 x
 )) { \
 
-30 
+25 
 	`ESP_LOGE
 (
 TAG
@@ -6383,7 +6543,35 @@ __FILE__
 __LINE__
 ); \
 
-32 } 0Ë
+26 
+	`ab‹t
+(); \
+
+28 } 0)
+
+	)
+
+30 
+	#ASSERT
+(
+x
+) \
+
+32 i‡(!(
+x
+)) { \
+
+33 
+	`ESP_LOGE
+(
+TAG
+, "ASSERT!Éº‹ %†%u\n", 
+__FILE__
+, 
+__LINE__
+); \
+
+35 } 0Ë
 îr‹
  
 lﬁ
@@ -6395,23 +6583,23 @@ fix
 
 	)
 
-35 
+38 
 	#TRUE
  (1)
 
 	)
 
-36 
+39 
 	#FALSE
  (0)
 
 	)
 
-38 #ifde‡
+41 #ifde‡
 POSIX_FREERTOS_SIM
 
 
-39 
+42 
 	#ESP_LOGE
 –
 èg
@@ -6419,13 +6607,13 @@ POSIX_FREERTOS_SIM
 f‹m©
 , ... ) dÿ{
 	`¥ötf
-(f‹m©, ##
+("%s:",èg);Örötf(f‹m©, ##
 __VA_ARGS__
 );Örötf("\n");} 0)
 
 	)
 
-40 
+43 
 	#ESP_LOGI
 –
 èg
@@ -6433,13 +6621,13 @@ __VA_ARGS__
 f‹m©
 , ... ) dÿ{
 	`¥ötf
-(f‹m©, ##
+("%s:",èg);Örötf(f‹m©, ##
 __VA_ARGS__
 );Örötf("\n");} 0)
 
 	)
 
-41 
+44 
 	#ESP_LOGW
 –
 èg
@@ -6447,7 +6635,7 @@ __VA_ARGS__
 f‹m©
 , ... ) dÿ{
 	`¥ötf
-(f‹m©, ##
+("%s:",èg);Örötf(f‹m©, ##
 __VA_ARGS__
 );Örötf("\n");} 0)
 
@@ -6548,10 +6736,16 @@ MAILBOX_WAIT_PROCESSED
 36 
 waô_bôs
  !
+MAILBOX_WAIT_URC
+ &&
+
+37 
+waô_bôs
+ !
 MAILBOX_WAIT_CONSUME
  ) {
 
-38 
+39 
 	`ESP_LOGE
 (
 TAG
@@ -6559,31 +6753,31 @@ TAG
 waô_bôs
 );
 
-39 
+40 
 	`ASSERT
 (0);
 
-41 
+42 
 to_s
 [] = "TIMEOUT!";
 
-42 
+43 
 £t_s
 [] = "SET!";
 
-44 
+45 
 waô_bôs
 ){
 
-45 (
+46 (
 MAILBOX_WAIT_READY
 ):
 
-46 if(
+47 if(
 £t
 )
 
-47 
+48 
 	`ESP_LOGI
 (
 TAG
@@ -6591,7 +6785,7 @@ TAG
 £t_s
 );
 
-49 
+50 
 	`ESP_LOGI
 (
 TAG
@@ -6599,15 +6793,15 @@ TAG
 to_s
 );
 
-51 (
+52 (
 MAILBOX_WAIT_CONNECT
 ):
 
-52 i‡(
+53 i‡(
 £t
 )
 
-53 
+54 
 	`ESP_LOGI
 (
 TAG
@@ -6615,7 +6809,7 @@ TAG
 £t_s
 );
 
-55 
+56 
 	`ESP_LOGI
 (
 TAG
@@ -6623,15 +6817,15 @@ TAG
 to_s
 );
 
-57 (
+58 (
 MAILBOX_WAIT_WRITE
 ):
 
-58 i‡(
+59 i‡(
 £t
 )
 
-59 
+60 
 	`ESP_LOGI
 (
 TAG
@@ -6639,7 +6833,7 @@ TAG
 £t_s
 );
 
-61 
+62 
 	`ESP_LOGI
 (
 TAG
@@ -6647,15 +6841,15 @@ TAG
 to_s
 );
 
-63 (
+64 (
 MAILBOX_WAIT_PROCESSED
 ):
 
-64 if(
+65 if(
 £t
 )
 
-65 
+66 
 	`ESP_LOGI
 (
 TAG
@@ -6663,7 +6857,7 @@ TAG
 £t_s
 );
 
-67 
+68 
 	`ESP_LOGI
 (
 TAG
@@ -6671,15 +6865,15 @@ TAG
 to_s
 );
 
-69 (
+70 (
 MAILBOX_WAIT_CONSUME
 ):
 
-70 i‡(
+71 i‡(
 £t
 )
 
-71 
+72 
 	`ESP_LOGI
 (
 TAG
@@ -6687,7 +6881,7 @@ TAG
 £t_s
 );
 
-73 
+74 
 	`ESP_LOGI
 (
 TAG
@@ -6695,47 +6889,77 @@ TAG
 to_s
 );
 
-76 
+76 (
+MAILBOX_WAIT_URC
+):
+
+77 i‡(
+£t
+)
+
+78 
+	`ESP_LOGI
+(
+TAG
+, "%s: MAILBOX_WAIT_URC", 
+£t_s
+);
+
+80 
+	`ESP_LOGI
+(
+TAG
+, "%s: MAILBOX_WAIT_URC", 
+to_s
+);
+
+83 
 	}
 }
 
-78 
+85 
 	$debug_¥öt_po°
 (
 waô_bôs
 ){
 
-79 i‡(
+86 i‡(
 waô_bôs
  !
 MAILBOX_POST_READY
  &&
 
-80 
+87 
 waô_bôs
  !
 MAILBOX_POST_CONNECT
  &&
 
-81 
+88 
 waô_bôs
  !
 MAILBOX_POST_WRITE
  &&
 
-82 
+89 
 waô_bôs
  !
 MAILBOX_POST_PROCESSED
  &&
 
-83 
+90 
+waô_bôs
+ !
+MAILBOX_POST_URC
+ &&
+
+91 
 waô_bôs
  !
 MAILBOX_POST_CONSUME
  ) {
 
-85 
+93 
 	`ESP_LOGE
 (
 TAG
@@ -6743,101 +6967,111 @@ TAG
 waô_bôs
 );
 
-86 
+94 
 	`ASSERT
 (0);
 
-89 
+97 
 waô_bôs
 ){
 
-90 (
+98 (
 MAILBOX_POST_READY
 ):
 
-91 
+99 
 	`ESP_LOGI
 (
 TAG
 , "POSTING MAILBOX_POST_READY");
 
-93 (
+101 (
 MAILBOX_POST_CONNECT
 ):
 
-94 
+102 
 	`ESP_LOGI
 (
 TAG
 , "POSTING MAILBOX_POST_CONNECT");
 
-96 (
+104 (
 MAILBOX_POST_WRITE
 ):
 
-97 
+105 
 	`ESP_LOGI
 (
 TAG
 , "POSTING MAILBOX_POST_WRITE");
 
-99 (
-MAILBOX_WAIT_PROCESSED
+107 (
+MAILBOX_POST_PROCESSED
 ):
 
-100 
+108 
 	`ESP_LOGI
 (
 TAG
 , "POSTING MAILBOX_POST_PROCESSED ");
 
-102 (
-MAILBOX_WAIT_CONSUME
+110 (
+MAILBOX_POST_CONSUME
 ):
 
-103 
+111 
 	`ESP_LOGI
 (
 TAG
 , "POSTING MAILBOX_POST_CONSUME");
 
-106 
+113 (
+MAILBOX_POST_URC
+):
+
+114 
+	`ESP_LOGI
+(
+TAG
+, "POSTING MAILBOX_POST_URC");
+
+117 
 	}
 }
 
-108 
+119 
 	$¸óã_maûbox_‰ìπos_obje˘s
 (){
 
-109 
+120 
 evít_group
  = 
 	`xEvítGroupCª©e
 ();
 
-110 
+121 
 maûbox_£m
  = 
 	`xSem≠h‹eCª©eMuãx
 ();
 
-112 
+123 
 	`ASSERT
 (
 evít_group
 );
 
-113 
+124 
 	`ASSERT
 (
 maûbox_£m
 );
 
-114 
+125 
 	}
 }
 
-116 
+127 
 boﬁ
  
 	$maûbox_waô
@@ -6845,39 +7079,49 @@ boﬁ
 EvítBôs_t
  
 waô_bôs
+, 
+TickTy≥_t
+ 
+waô_≥riod
 ) {
 
-117 i‡(
+128 i‡(
 waô_bôs
  !
 MAILBOX_WAIT_READY
  &&
 
-118 
+129 
 waô_bôs
  !
 MAILBOX_WAIT_CONNECT
  &&
 
-119 
+130 
 waô_bôs
  !
 MAILBOX_WAIT_WRITE
  &&
 
-120 
+131 
 waô_bôs
  !
 MAILBOX_WAIT_PROCESSED
  &&
 
-121 
+132 
+waô_bôs
+ !
+MAILBOX_WAIT_URC
+ &&
+
+133 
 waô_bôs
  !
 MAILBOX_WAIT_CONSUME
  ) {
 
-123 
+135 
 	`ESP_LOGE
 (
 TAG
@@ -6885,11 +7129,11 @@ TAG
 waô_bôs
 );
 
-124 
+136 
 	`ASSERT
 (0);
 
-127 
+139 
 EvítBôs_t
  
 uxBôs
@@ -6899,29 +7143,29 @@ uxBôs
 evít_group
 ,
 
-128 
+140 
 waô_bôs
 ,
 
-129 
+141 
 pdTRUE
 ,
 
-130 
+142 
 pdFALSE
 ,
 
-131 
-EVENT_WAIT_PERIOD
+143 
+waô_≥riod
 
 
-134 i‡(
+146 i‡(
 uxBôs
  =
 waô_bôs
 ){
 
-135 
+147 
 	`debug_¥öt_waô
 (
 åue
@@ -6929,11 +7173,11 @@ waô_bôs
 waô_bôs
 );
 
-136  
+148  
 åue
 ;
 
-138 
+150 
 	`debug_¥öt_waô
 (
 Ál£
@@ -6941,15 +7185,15 @@ waô_bôs
 waô_bôs
 );
 
-139  
+151  
 Ál£
 ;
 
-141 
+153 
 	}
 }
 
-143 
+155 
 boﬁ
  
 	$maûbox_po°
@@ -6959,53 +7203,59 @@ EvítBôs_t
 po°_bôs
 ){
 
-144 i‡(
+156 i‡(
 po°_bôs
  !
 MAILBOX_POST_READY
  &&
 
-145 
+157 
 po°_bôs
  !
 MAILBOX_POST_CONNECT
  &&
 
-146 
+158 
 po°_bôs
  !
 MAILBOX_POST_WRITE
  &&
 
-147 
+159 
 po°_bôs
  !
 MAILBOX_POST_PROCESSED
  &&
 
-148 
+160 
+po°_bôs
+ !
+MAILBOX_POST_URC
+ &&
+
+161 
 po°_bôs
  !
 MAILBOX_POST_CONSUME
  ) {
 
-150 
+163 
 	`ESP_LOGE
 (
 TAG
 , "Unknown bitsÖosted!");
 
-151 
+164 
 	`ASSERT
 (0);
 
-154 
+167 
 	`debug_¥öt_po°
 (
 po°_bôs
 );
 
-155 
+168 
 	`xEvítGroupSëBôs
 (
 evít_group
@@ -7013,19 +7263,19 @@ evít_group
 po°_bôs
 );
 
-156  
+169  
 åue
 ;
 
-157 
+170 
 	}
 }
 
-159 
+172 
 	$gë_maûbox_£m
 (){
 
-160 i‡(
+173 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -7035,127 +7285,31 @@ maûbox_£m
 MUTEX_TIMEOUT_PERIOD
 )) {
 
-161 
+174 
 	`ESP_LOGE
 (
 TAG
 , "FAILED TO TAKE mailbox_sem!");
 
-162 
+175 
 	`ASSERT
 (0);
 
-164 
+177 
 	}
 }
 
-166 
+179 
 	$put_maûbox_£m
 (){
 
-167 
+180 
 	`xSem≠h‹eGive
 (
 maûbox_£m
 );
 
-168 
-	}
-}
-
-171 
-	$a
-(* 
-¨g
-){
-
-172 
-	`maûbox_waô
-(
-MAILBOX_WAIT_CONSUME
-);
-
-173 
-	`maûbox_waô
-(
-MAILBOX_WAIT_READY
-);
-
-174 
-	`puts
-("done!");
-
-175 
-	`vTaskDñay
-(1000000);
-
-176 
-	}
-}
-
-178 
-	$b
-(* 
-¨g
-){
-
-179 
-	`vTaskDñay
-(100);
-
-180 
-	`maûbox_po°
-(
-MAILBOX_POST_CONSUME
-);
-
 181 
-	`maûbox_po°
-(
-MAILBOX_WAIT_READY
-);
-
-183 
-	`puts
-("oisted");
-
-184 
-	`vTaskDñay
-(1000000);
-
-185 
-	}
-}
-
-189 
-	$maûbox_ã°
-(){
-
-190 
-	`puts
-("Starting mailbo");
-
-191 
-	`¸óã_maûbox_‰ìπos_obje˘s
-();
-
-193 
-	`xTaskCª©e
-(
-a
-, "", 1024, "", 5, 
-NULL
-);
-
-194 
-	`xTaskCª©e
-(
-b
-, "", 1024, "", 5, 
-NULL
-);
-
-195 
 	}
 }
 
@@ -7182,14 +7336,14 @@ NULL
 "
 
 11 
-	#EVENT_WAIT_PERIOD
+	#MAILBOX_WAIT_TIME_NOMINAL
  (2500/
 p‹tTICK_PERIOD_MS
 )
 
 	)
 
-12 
+13 
 	#MUTEX_TIMEOUT_PERIOD
  (3000/
 p‹tTICK_PERIOD_MS
@@ -7197,99 +7351,91 @@ p‹tTICK_PERIOD_MS
 
 	)
 
-14 
+15 
 	#MAILBOX_WAIT_READY
  (1 << 0)
 
 	)
 
-15 
+16 
 	#MAILBOX_POST_READY
  (1 << 0)
 
 	)
 
-17 
+18 
 	#MAILBOX_WAIT_CONNECT
  (1 << 1)
 
 	)
 
-18 
+19 
 	#MAILBOX_POST_CONNECT
  (1 << 1)
 
 	)
 
-20 
+21 
 	#MAILBOX_WAIT_WRITE
  (1 << 2)
 
 	)
 
-21 
+22 
 	#MAILBOX_POST_WRITE
  (1 << 2)
 
 	)
 
-23 
+24 
 	#MAILBOX_WAIT_PROCESSED
  (1 << 3)
 
 	)
 
-24 
+25 
 	#MAILBOX_POST_PROCESSED
  (1 << 3)
 
 	)
 
-26 
+27 
 	#MAILBOX_WAIT_CONSUME
  (1 << 4)
 
 	)
 
-27 
+28 
 	#MAILBOX_POST_CONSUME
  (1 << 4)
 
 	)
 
-36 
+30 
+	#MAILBOX_WAIT_URC
+ (1 << 5)
+
+	)
+
+31 
+	#MAILBOX_POST_URC
+ (1 << 5)
+
+	)
+
+40 
 ¸óã_maûbox_‰ìπos_obje˘s
 ();
 
-37 
-boﬁ
- 
-maûbox_waô
-(
-EvítBôs_t
- 
-waô_bôs
-);
-
-38 
-boﬁ
- 
-maûbox_po°
-(
-EvítBôs_t
- 
-po°_bôs
-);
-
-40 
+42 
 gë_maûbox_£m
 ();
 
-41 
+43 
 put_maûbox_£m
 ();
 
-42 
+44 
 boﬁ
  
 maûbox_po°
@@ -7299,7 +7445,7 @@ EvítBôs_t
 po°_bôs
 );
 
-43 
+45 
 boﬁ
  
 maûbox_waô
@@ -7307,6 +7453,10 @@ maûbox_waô
 EvítBôs_t
  
 waô_bôs
+, 
+TickTy≥_t
+ 
+waô_≥riod
 );
 
 	@main.c
@@ -7559,47 +7709,43 @@ size_t
 Àn
 );
 
-152 
-	`¸óã_maûbox_‰ìπos_obje˘s
+151 
+	`√t_ad≠t‹_•aw√r
 ();
 
-153 
-	`•awn_u¨t_thªad
+152 
+uöt8_t
+ * 
+	`gë_°ªam
 ();
 
 154 
-	`°©e_c‹e_•aw√r
+	`¸óã_maûbox_‰ìπos_obje˘s
 ();
 
 155 
-	`∑r£r_°©e_•aw√r
+	`•awn_u¨t_thªad
 ();
 
 156 
+	`°©e_c‹e_•aw√r
+();
+
+157 
+	`∑r£r_°©e_•aw√r
+();
+
+158 
+	`√t_ad≠t‹_•aw√r
+();
+
+159 
 	`√tw‹k_drivî
 ();
 
-158 
-buff
-[200];
-
-159 
-	`mem£t
-(
-buff
-, 0 , 200);
-
-160 
-	`¸óã_kudp£nd_cmd
-(
-buff
-, 200, "192.168.0.188", 33, 100);
-
 161 
-	`¥ötf
-("%†\n", 
-buff
-);
+	`sim_°ªam_ã°
+();
 
 163 
 	`vTaskSèπScheduÀr
@@ -8725,6 +8871,346 @@ NULL
 	}
 }
 
+	@net_adaptor.c
+
+1 
+	~<°dio.h
+>
+
+2 
+	~<°dlib.h
+>
+
+3 
+	~<°rög.h
+>
+
+5 
+	~"FªeRTOS.h
+"
+
+6 
+	~"£mphr.h
+"
+
+7 
+	~"èsk.h
+"
+
+8 
+	~"evít_groups.h
+"
+
+9 
+	~<î∫o.h
+>
+
+11 
+	~"globÆ_deföes.h
+"
+
+12 
+	~"√t_ad≠t‹.h
+"
+
+13 
+	~"√tw‹k_°©e.h
+"
+
+18 
+QueueSëH™dÀ_t
+ 
+	göcomög_udp_q
+;
+
+19 
+QueueSëH™dÀ_t
+ 
+	goutgoög_udp_q
+;
+
+28 
+udp_∑ckë_s
+ 
+	gudp_∑ckë
+;
+
+29 c⁄° 
+	gTAG
+[] = "NET_CORE";
+
+35 
+	$¥o˚ss_ªads
+(* 
+¨g
+){
+
+37 
+	`mem£t
+(&
+udp_∑ckë
+, 0 , (
+udp_∑ckë_s
+));
+
+38 
+	`xQueueRe˚ive
+(
+öcomög_udp_q
+ , &
+udp_∑ckë
+, 
+p‹tMAX_DELAY
+);
+
+40 
+i
+ = 0; i < 16; i++)
+
+41 
+	`¥ötf
+ (" %¯", 
+udp_∑ckë
+.
+d©a
+[
+i
+] );
+
+42 
+	`puts
+("");
+
+43 
+i
+ = 16; i < 32; i++)
+
+44 
+	`¥ötf
+ (" %¯", 
+udp_∑ckë
+.
+d©a
+[
+i
+] );
+
+45 
+	`puts
+("");
+
+47 
+	}
+}
+
+49 
+	$íqueue_udp_wrôe
+(
+udp_∑ckë_s
+ * 
+udp
+){
+
+50 
+Ba£Ty≥_t
+ 
+xSètus
+ = 
+	`xQueueSídToBack
+(
+outgoög_udp_q
+, 
+udp
+, 
+RTOS_DONT_WAIT
+);
+
+51 i‡(
+xSètus
+ !
+pdTRUE
+) {
+
+52 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅo send on outgoing Q!");
+
+53 
+	`ASSERT
+(0);
+
+55 
+	`°©e_po°_evít
+(
+NETWORK_WRITE_REQUEST
+);
+
+56 
+	}
+}
+
+59 
+	$√t_ad≠t‹_öô_‰ìπos_obje˘s
+() {
+
+60 
+öcomög_udp_q
+ = 
+	`xQueueCª©e
+(
+MAX_UDP_Q_LEN
+, (
+udp_∑ckë_s
+));
+
+61 
+outgoög_udp_q
+ = 
+	`xQueueCª©e
+(
+MAX_UDP_Q_LEN
+, (
+udp_∑ckë_s
+));
+
+63 
+	`ASSERT
+(
+öcomög_udp_q
+);
+
+64 
+	`ASSERT
+(
+outgoög_udp_q
+);
+
+65 
+	}
+}
+
+67 
+	$√t_ad≠t‹_•aw√r
+() {
+
+68 
+Ba£Ty≥_t
+ 
+rc
+;
+
+70 
+	`√t_ad≠t‹_öô_‰ìπos_obje˘s
+();
+
+72 
+rc
+ = 
+	`xTaskCª©e
+(
+¥o˚ss_ªads
+,
+
+75 
+NULL
+,
+
+77 
+NULL
+);
+
+79 i‡(
+rc
+ !
+pdPASS
+) {
+
+80 
+	`ASSERT
+(0);
+
+82 
+	}
+}
+
+	@net_adaptor.h
+
+1 #¥agm®
+⁄˚
+
+
+3 
+	~"FªeRTOS.h
+"
+
+4 
+	~"queue.h
+"
+
+5 
+	~"°dboﬁ.h
+"
+
+6 
+	~"evít_groups.h
+"
+
+11 
+	#MAX_PACKET_LEN
+ (256)
+
+	)
+
+12 
+	#MAX_UDP_Q_LEN
+ (2)
+
+	)
+
+18 
+uöt16_t
+ 
+	mÀn
+;
+
+19 
+uöt8_t
+ 
+	md©a
+[
+MAX_PACKET_LEN
+];
+
+20 }
+	tudp_∑ckë_s
+;
+
+25 
+√t_ad≠t‹_•aw√r
+();
+
+26 
+íqueue_udp_wrôe
+(
+udp_∑ckë_s
+ * 
+udp
+);
+
+31 
+QueueSëH™dÀ_t
+ 
+öcomög_udp_q
+;
+
+32 
+QueueSëH™dÀ_t
+ 
+outgoög_udp_q
+;
+
 	@network_constants.c
 
 1 
@@ -8772,7 +9258,7 @@ NULL
 [] = "m2minternet.apn";
 
 30 
-	$¸óã_k˙xcfg_cmd
+	$¸óã_cga˘_cmd
 (* 
 °r
 , 
@@ -8805,30 +9291,18 @@ size
 	`•rötf
 (
 °r
-, "AT+KCNXCFG=1,\"GPRS\",\"%s\"\r\n", 
-NET_APN
-);
+, "AT+CGACT=1\r\n");
 
 38 
 	}
 }
 
 40 
-	$¸óã_kudp£nd_cmd
+	$¸óã_cfun_í_cmd
 (* 
 °r
 , 
 size
-, * 
-ù
-, 
-uöt16_t
- 
-p‹t
-, 
-size_t
- 
-Àn
 ){
 
 41 if(!
@@ -8857,7 +9331,99 @@ size
 	`•rötf
 (
 °r
-, "AT+KUDPSND=1,\"%s\",%d,%d\r\n", 
+, "AT+CFUN=1\r\n");
+
+48 
+	}
+}
+
+50 
+	$¸óã_k˙xcfg_cmd
+(* 
+°r
+, 
+size
+){
+
+51 if(!
+°r
+){
+
+52 
+	`ESP_LOGI
+(
+TAG
+, "NULL str!");
+
+53 
+	`ASSERT
+(0);
+
+56 
+	`mem£t
+(
+°r
+, 0, 
+size
+);
+
+57 
+	`•rötf
+(
+°r
+, "AT+KCNXCFG=1,\"GPRS\",\"%s\"\r\n", 
+NET_APN
+);
+
+58 
+	}
+}
+
+60 
+	$¸óã_kudp£nd_cmd
+(* 
+°r
+, 
+size
+, * 
+ù
+, 
+uöt16_t
+ 
+p‹t
+, 
+size_t
+ 
+Àn
+){
+
+61 if(!
+°r
+){
+
+62 
+	`ESP_LOGI
+(
+TAG
+, "NULL str!");
+
+63 
+	`ASSERT
+(0);
+
+66 
+	`mem£t
+(
+°r
+, 0, 
+size
+);
+
+67 
+	`•rötf
+(
+°r
+, "AT+KUDPSND=1,\"%s\",%d,%ld\r\n", 
 ù
 , 
 p‹t
@@ -8865,7 +9431,69 @@ p‹t
 Àn
 );
 
-48 
+68 
+	}
+}
+
+70 
+	$¸óã_kud¥cv_cmd
+(* 
+°r
+, 
+size
+, 
+size_t
+ 
+byãs
+){
+
+71 if(!
+°r
+){
+
+72 
+	`ESP_LOGI
+(
+TAG
+, "NULL str!");
+
+73 
+	`ASSERT
+(0);
+
+76 if(
+byãs
+ > 
+size
+){
+
+77 
+	`ESP_LOGE
+(
+TAG
+, "bytes > buffer size!");
+
+78 
+	`ASSERT
+(0);
+
+81 
+	`mem£t
+(
+°r
+, 0, 
+size
+);
+
+82 
+	`•rötf
+(
+°r
+, "AT+KUDPRCV=1,%lu\r\n", 
+byãs
+);
+
+83 
 	}
 }
 
@@ -8887,17 +9515,37 @@ p‹t
 	~<°döt.h
 >
 
-19 
-¸óã_k˙xcfg_cmd
-(* 
+11 
+	#CFUN_ENABLE_STR
+ "AT+CFUN=1\r\n"
+
+	)
+
+12 
+	#REMOTE_SERVER_IP
+ "54.70.210.97"
+
+	)
+
+22 
+¸óã_cga˘_cmd
+ ( * 
 °r
 , 
 size
-);
+ );
 
-20 
+23 
+¸óã_k˙xcfg_cmd
+ ( * 
+°r
+, 
+size
+ );
+
+24 
 ¸óã_kudp£nd_cmd
-(* 
+ ( * 
 °r
 , 
 size
@@ -8911,6 +9559,26 @@ p‹t
 size_t
  
 Àn
+);
+
+25 
+¸óã_kud¥cv_cmd
+ ( * 
+°r
+, 
+size
+, 
+size_t
+ 
+byãs
+);
+
+26 
+¸óã_cfun_í_cmd
+ ( * 
+°r
+, 
+size
 );
 
 	@network_state.c
@@ -8975,37 +9643,59 @@ size_t
 	~"thªegµ.h
 "
 
-22 
+18 
+	~"√tw‹k_c⁄°™ts.h
+"
+
+19 
+	~"√t_ad≠t‹.h
+"
+
+20 
+	~"√tw‹k_°©e.h
+"
+
+21 
+	~"√tw‹k_ã°.h
+"
+
+26 
 °©e_t
  
 °©e_aú∂aö_mode_func
 ();
 
-23 
+27 
 °©e_t
  
 °©e_dëached_func
 ();
 
-24 
+28 
 °©e_t
  
 °©e_©èched_func
 ();
 
-25 
+29 
 °©e_t
  
 °©e_idÀ_func
 ();
 
-26 
+30 
 °©e_t
  
 °©e_wrôe_func
 ();
 
-28 
+31 
+°©e_t
+ 
+°©e_ªad_func
+();
+
+33 
 £t_√t_°©e_cmd
 (
 comm™d_e
@@ -9013,11 +9703,11 @@ comm™d_e
 cmd
 );
 
-29 
+34 
 £t_√t_°©e_tokí
 ();
 
-30 
+35 
 √tw‹k_°©e_£t_°©us
 (
 √tw‹k_°©us_e
@@ -9025,153 +9715,129 @@ cmd
 °©us
 );
 
-31 
-boﬁ
- 
-£nd_cmd
-(
-uöt8_t
-* 
-cmd
-, 
-Àn
-, (*
-˛b
-)(), 
-comm™d_e
- 
-cmd_íum
-);
-
-33 
-	`vîify_k˙xfg
-();
-
-34 
-	`vîify_˚ªg
-();
-
-35 
-	`vîify_cfun
-();
-
-36 
-	`£t_cfun
-();
-
-37 
-	`vîify_kudpcfg
+37 
+h™dÀ_urc_kudp_nŸif
 ();
 
 41 c⁄° 
-TAG
+	gTAG
 [] = "NET_STATE";
 
 42 
 √tw‹k_°©e_s
  
-√t_c⁄ãxt
+	g√t_c⁄ãxt
 ;
 
 43 
 ©_urc_∑r£d_s
  
-urc_∑r£d
+	gurc_∑r£d
 ;
 
 44 
 Sem≠h‹eH™dÀ_t
  
-√tw‹k_°©e_muãx
+	g√tw‹k_°©e_muãx
 ;
 
 45 
-misc_buff
+	gmisc_buff
 [
 MISC_BUFF_SIZE
 ];
 
-48 
+46 
+w‹k_‹dî_s
+ 
+	gw‹k_‹dî
+;
+
+49 
 °©e_¨øy_s
  
-√tw‹k_å™¶©i⁄_èbÀ
+	g√tw‹k_å™¶©i⁄_èbÀ
 [
 √tw‹k_°©e_Àn
 ] = {
 
-49 { 
+50 { 
 °©e_aú∂aö_mode_func
  , 10000 },
 
-50 { 
+51 { 
 °©e_dëached_func
  , 10000 },
 
-51 { 
+52 { 
 °©e_©èched_func
  , 
 p‹tMAX_DELAY
  },
 
-52 { 
+53 { 
 °©e_idÀ_func
  , 
 p‹tMAX_DELAY
  },
 
-53 { 
+54 { 
 °©e_wrôe_func
  , 
 p‹tMAX_DELAY
  },
 
-54 
-	}
-};
+55 { 
+°©e_ªad_func
+ , 
+p‹tMAX_DELAY
+ },
 
-60 
+62 
 	$dummy_ˇŒback
 (){
 
-61 
+63 
 	`puts
 ("dumy callback");
 
-62 
+64 
 	`¥öt_∑r£d
 ();
 
-63 
+65 
 	}
 }
 
-65 
+67 
 °©e_t
  
 	$°©e_aú∂aö_mode_func
 () {
 
-66 
+68 
 	`ESP_LOGI
 (
 TAG
 , "Enteringáirplaine mode state!");
 
-80 
+70 
 	`ESP_LOGE
 (
 TAG
 , "Forcing CFUN=1");
 
-82 
+71 
 	`mem˝y
 (
 misc_buff
-, "AT+CFUN=1\r\n", 
+, 
+CFUN_ENABLE_STR
+ , 
 	`°æí
-("AT+CFUN=1\r\n"));
+(CFUN_ENABLE_STR));
 
-83 
+72 
 Àn
  = 
 	`°æí
@@ -9179,7 +9845,9 @@ misc_buff
 misc_buff
 );
 
-84 
+73 
+rc
+ = 
 	`£nd_cmd
 (
 misc_buff
@@ -9191,39 +9859,55 @@ misc_buff
 CFUN
 );
 
-86 
+74 i‡(
+rc
+ !
+pdTRUE
+){
+
+75 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅo CFUN=1! -Çot muchÅo do....Ñetry");
+
+76 
 	`vTaskDñay
-(1000/
+(60000/
 p‹tTICK_PERIOD_MS
 );
 
-88  
+77  
+√tw‹k_aú∂aöe_mode_°©e
+;
+
+80  
 √tw‹k_©èchög_°©e
 ;
 
-89 
+81 
 	}
 }
 
-91 
+83 
 °©e_t
  
 	$°©e_dëached_func
 () {
 
-92 
+84 
 	`ESP_LOGI
 (
 TAG
 , "\n*************Entering detached state!***********\n");
 
-96 i‡(
+88 i‡(
 	`xTaskGëTickCou¡
 (Ë> 5000/
 p‹tTICK_PERIOD_MS
 ){
 
-97 
+89 
 	`mem˝y
 (
 misc_buff
@@ -9231,7 +9915,7 @@ misc_buff
 	`°æí
 ("AT+CEREG?\r\n"));
 
-98 
+90 
 Àn
  = 
 	`°æí
@@ -9239,7 +9923,7 @@ misc_buff
 misc_buff
 );
 
-102 i‡(1 =
+94 i‡(1 =
 	`£nd_cmd
 (
 misc_buff
@@ -9253,27 +9937,27 @@ CEREG
 √tw‹k_©èched_°©e
 ;
 
-104  
+96  
 NULL_STATE
 ;
 
-105 
+97 
 	}
 }
 
-107 
+99 
 °©e_t
  
 	$°©e_©èched_func
 () {
 
-108 
+100 
 	`ESP_LOGI
 (
 TAG
 , "\n**********Enteringáttached state!***********\n");
 
-110 
+102 
 	`¸óã_k˙xcfg_cmd
 (
 misc_buff
@@ -9281,7 +9965,7 @@ misc_buff
 MISC_BUFF_SIZE
 );
 
-111 
+103 
 	`£nd_cmd
 (
 misc_buff
@@ -9293,7 +9977,7 @@ vîify_k˙xfg
 KCNXCFG
 );
 
-113 
+105 
 	`mem£t
 (
 misc_buff
@@ -9301,7 +9985,7 @@ misc_buff
 MISC_BUFF_SIZE
 );
 
-114 
+106 
 	`mem˝y
 (
 misc_buff
@@ -9309,7 +9993,7 @@ misc_buff
 	`°æí
 ("AT+KUDPCFG=1,0\r\n"));
 
-115 
+107 
 Àn
  = 
 	`°æí
@@ -9317,7 +10001,7 @@ misc_buff
 misc_buff
 );
 
-116 
+108 
 	`£nd_cmd
 (
 misc_buff
@@ -9329,56 +10013,58 @@ vîify_kudpcfg
 KUDPCFG
 );
 
-118  
+110  
 √tw‹k_idÀ_°©e
 ;
 
-119 
+111 
 	}
 }
 
-121 
+113 
 °©e_t
  
 	$°©e_idÀ_func
 () {
 
-122 
+114 
 	`ESP_LOGI
 (
 TAG
 , "\n(net)-------------->Entering idle state!\n");
 
-124  
+116  
 NULL_STATE
 ;
 
-125 
+117 
 	}
 }
 
-127 
+119 
 °©e_t
  
 	$°©e_wrôe_func
 () {
 
-128 
+120 
 	`ESP_LOGI
 (
 TAG
 , "\n(net)-------------->Entering write state!\n");
 
-130 
+122 
 	`¸óã_kudp£nd_cmd
 (
 misc_buff
 , 
 MISC_BUFF_SIZE
-, "192.168.0.188", 33, 100);
+, 
+REMOTE_SERVER_IP
+, 3333, 100);
 
-131 
-	`£nd_cmd
+123 
+	`£nd_wrôe
 (
 misc_buff
 , 
@@ -9389,15 +10075,59 @@ dummy_ˇŒback
 KUDPSND
 );
 
-133  
-NULL_STATE
+125  
+√tw‹k_idÀ_°©e
 ;
 
-134 
+126 
 	}
 }
 
-137 
+128 
+°©e_t
+ 
+	$°©e_ªad_func
+() {
+
+129 
+	`ESP_LOGI
+(
+TAG
+, "\n(net)-------------->EnteringÑead state!\n");
+
+131 
+	`¸óã_kud¥cv_cmd
+(
+misc_buff
+, 
+MISC_BUFF_SIZE
+, 
+w‹k_‹dî
+.
+ªad_d©a
+);
+
+132 
+	`£nd_ªad
+(
+misc_buff
+, 
+	`°æí
+(misc_buff), 
+dummy_ˇŒback
+, 
+KUDPRCV
+);
+
+134  
+√tw‹k_idÀ_°©e
+;
+
+135 
+	}
+}
+
+138 
 	$√xt_°©e_func
 (
 °©e_t
@@ -9409,77 +10139,71 @@ cuº_°©e
 evít
 ) {
 
-138 i‡(*
+139 i‡(*
 cuº_°©e
  =
 √tw‹k_©èchög_°©e
 ) {
 
-139 
+140 
 evít
 ){
 
-140 (
+141 (
 NETWORK_ATTACHED
 ):
 
-141 
+142 
 	`ESP_LOGI
 (
 TAG
 , "detached->attached");
 
-142 *
+143 *
 cuº_°©e
  = 
 √tw‹k_©èched_°©e
 ;
 
-147 i‡(*
+148 i‡(*
 cuº_°©e
  =
 √tw‹k_©èched_°©e
 ) {
 
-148 
+149 
 evít
 ){
 
-149 (
+150 (
 NETWORK_DETACHED
 ):
 
-150 
+151 
 	`ESP_LOGI
 (
 TAG
 , "attached->detached");
 
-151 *
+152 *
 cuº_°©e
  = 
 √tw‹k_©èchög_°©e
 ;
 
-156 i‡(*
+157 i‡(*
 cuº_°©e
  =
 √tw‹k_idÀ_°©e
 ) {
 
-157 
+158 
 evít
 ){
 
-158 (
+159 (
 NETWORK_WRITE_REQUEST
 ):
-
-159 
-	`ESP_LOGI
-(
-TAG
-, "writting!");
 
 160 *
 cuº_°©e
@@ -9487,11 +10211,41 @@ cuº_°©e
 √tw‹k_wrôe_°©e
 ;
 
-165 
+162 (
+NETWORK_READ_REQUEST
+):
+
+163 *
+cuº_°©e
+ = 
+√tw‹k_ªad_°©e
+;
+
+168 i‡(*
+cuº_°©e
+ =
+√tw‹k_wrôe_°©e
+) {
+
+169 
+evít
+){
+
+170 (
+NETWORK_READ_REQUEST
+):
+
+171 *
+cuº_°©e
+ = 
+√tw‹k_ªad_°©e
+;
+
+176 
 	}
 }
 
-167 * 
+178 * 
 	$evít_¥öt_func
 (
 °©e_evít_t
@@ -9499,15 +10253,15 @@ cuº_°©e
 evít
 ) {
 
-168  
+179  
 NULL
 ;
 
-169 
+180 
 	}
 }
 
-171 
+182 
 boﬁ
  
 	$evít_fûãr_func
@@ -9517,103 +10271,329 @@ boﬁ
 evít
 ) {
 
-172 
+183 
 evít
 ){
 
-173 (
+184 (
 NETWORK_ATTACHED
 ):  
 åue
 ;
 
-174 (
+185 (
 NETWORK_DETACHED
 ):  
 åue
 ;
 
-175 (
+186 (
 NETWORK_WRITE_REQUEST
 ):  
 åue
 ;
 
-177  
+187 (
+NETWORK_READ_REQUEST
+):  
+åue
+;
+
+189  
 Ál£
 ;
 
-178 
+190 
 	}
 }
 
-184 
+196 
 °©e_öô_s
 * 
 	$gë_√tw‹k_°©e_h™dÀ
 () {
 
-185 
+197 
 °©e_öô_s
  
 ∑r£r_°©e
  = {
 
-186 .
+198 .
 √xt_°©e
  = 
 √xt_°©e_func
 ,
 
-187 .
+199 .
 å™¶©i⁄_èbÀ
  = 
 √tw‹k_å™¶©i⁄_èbÀ
 ,
 
-188 .
+200 .
 evít_¥öt
  = 
 evít_¥öt_func
 ,
 
-189 .
+201 .
 °¨tög_°©e
  = 
 √tw‹k_aú∂aöe_mode_°©e
 ,
 
-190 .
+202 .
 °©e_«me_°rög
  = "network_state",
 
-191 .
+203 .
 fûãr_evít
  = 
 evít_fûãr_func
 ,
 
-192 .
+204 .
 tŸÆ_°©es
  = 
 √tw‹k_°©e_Àn
 ,
 
-194  &(
+206  &(
 ∑r£r_°©e
 );
 
-195 
+207 
 	}
 }
 
-198 
+209 
+	$£t_urc_h™dÀr
+(
+comm™d_e
+ 
+urc
+, (*
+h™dÀr
+) ()){
+
+210 
+	`ASSERT
+(
+h™dÀr
+);
+
+212 
+©_urc_∑r£d_s
+ 
+urc_h™dÀr
+;
+
+213 
+urc_ªgi°î_s
+ 
+urc_ªg
+;
+
+215 
+urc_h™dÀr
+.
+cblk_ªg
+ = &
+urc_ªg
+;
+
+216 
+urc_ªg
+.
+urc
+ = urc;
+
+217 
+urc_ªg
+.
+˛b
+ = 
+h™dÀr
+;
+
+219 
+	`xQueueSídToBack
+(
+outgoög_urc_queue
+, &
+urc_h™dÀr
+, 
+p‹tMAX_DELAY
+);
+
+220 
+	}
+}
+
+222 
+	$p›_urc_h™dÀr
+(
+comm™d_e
+ 
+urc
+){
+
+223 
+©_urc_∑r£d_s
+ 
+urc_h™dÀr
+;
+
+224 
+urc_ªgi°î_s
+ 
+urc_ªg
+;
+
+225 
+	`mem£t
+(&
+urc_ªg
+, 0 , (urc_reg));
+
+227 
+urc_h™dÀr
+.
+cblk_ªg
+ = &
+urc_ªg
+;
+
+228 
+urc_ªg
+.
+urc
+ = urc;
+
+230 
+	`xQueueSídToBack
+(
+outgoög_urc_queue
+, &
+urc_h™dÀr
+, 
+p‹tMAX_DELAY
+);
+
+231 
+	}
+}
+
+233 
+	$h™dÀ_˚ªg_urc
+(){
+
+234 i‡(
+urc_∑r£d
+.
+∑øm_¨r
+[0].
+vÆ
+ == 1){
+
+235 
+	`ESP_LOGI
+(
+TAG
+, "Registered! -Öosting!");
+
+236 
+	`°©e_po°_evít
+(
+NETWORK_ATTACHED
+);
+
+237 } i‡(
+urc_∑r£d
+.
+∑øm_¨r
+[0].
+vÆ
+ != 1){
+
+238 
+	`ESP_LOGI
+(
+TAG
+, "detached! -Öosting!");
+
+239 
+	`°©e_po°_evít
+(
+NETWORK_DETACHED
+);
+
+241 
+	}
+}
+
+243 
+	$h™dÀ_kudp_d©a
+(){
+
+244 
+w‹k_‹dî
+.
+ªad_d©a
+ = 
+urc_∑r£d
+.
+∑øm_¨r
+[1].
+vÆ
+;
+
+245 
+	`ESP_LOGI
+(
+TAG
+, "√w d©®(UDP),Üí = %d", 
+w‹k_‹dî
+.
+ªad_d©a
+);
+
+247 
+	`°©e_po°_evít
+(
+NETWORK_READ_REQUEST
+);
+
+248 
+	}
+}
+
+250 
 	$urc_h™ldî
 (* 
 ¨g
 ){
 
-200 
+251 (*
+ˇŒback_¨r
+[
+LEN_KNOWN_COMMANDS
+])();
+
+252 
+	`mem£t
+(
+ˇŒback_¨r
+, 0, (callback_arr));
+
+255 
+	`mem£t
+(&
+urc_∑r£d
+, 0 , (urc_parsed));
+
+256 
 	`xQueueRe˚ive
 (
 outgoög_urc_queue
@@ -9623,81 +10603,131 @@ urc_∑r£d
 p‹tMAX_DELAY
 );
 
-201 
+258 if(
+urc_∑r£d
+.
+cblk_ªg
+){
+
+259 
+	`ESP_LOGI
+(
+TAG
+, "Adding/removing URC callback");
+
+260 if(
+urc_∑r£d
+.
+cblk_ªg
+->
+˛b
+ =
+NULL
+){
+
+261 
+ˇŒback_¨r
+[
+urc_∑r£d
+.
+cblk_ªg
+->
+urc
+] = 
+NULL
+;
+
+263 
+ˇŒback_¨r
+[
+urc_∑r£d
+.
+cblk_ªg
+->
+urc
+] = urc_∑r£d.cblk_ªg->
+˛b
+;
+
+268 
 	`ESP_LOGI
 (
 TAG
 , "GotáÇew URC!");
 
-202 
+269 
 	`¥öt_∑r£d_urc
 (&
 urc_∑r£d
 );
 
-204 
+271 if(
+urc_∑r£d
+.
+ty≥
+ =
+UNKNOWN_TYPE
+){
+
+272 
+	`ESP_LOGE
+(
+TAG
+, "UnknownÅype!");
+
+276 if(
+ˇŒback_¨r
+[
+urc_∑r£d
+.
+ty≥
+]){
+
+277 
+	`ESP_LOGI
+(
+TAG
+, "URC handler installed, calling handler!");
+
+279 
+ˇŒback_¨r
+[
+urc_∑r£d
+.
+ty≥
+]();
+
+284 
 urc_∑r£d
 .
 ty≥
 ){
 
-205 (
+285 (
 CEREG
-):
+): 
+	`h™dÀ_˚ªg_urc
+();
 
-206 i‡(
-urc_∑r£d
-.
-∑øm_¨r
-[0].
-vÆ
- == 1){
+286 (
+KUDP_DATA
+): 
+	`h™dÀ_kudp_d©a
+();
 
-207 
-	`ESP_LOGI
-(
-TAG
-, "Registered! -Öosting!");
-
-208 
-	`°©e_po°_evít
-(
-NETWORK_ATTACHED
-);
-
-209 } i‡(
-urc_∑r£d
-.
-∑øm_¨r
-[0].
-vÆ
- != 1){
-
-210 
-	`ESP_LOGI
-(
-TAG
-, "detached! -Öosting!");
-
-211 
-	`°©e_po°_evít
-(
-NETWORK_DETACHED
-);
-
-215 
+289 
 	}
 }
 
-217 
-	$vîify_k˙xfg
+291 
+	$vîify_cga˘
 (){
 
-218 
+292 
 	`¥öt_∑r£d
 ();
 
-220 
+294 
 ©_∑r£d_s
  *
 ∑r£d
@@ -9705,93 +10735,29 @@ NETWORK_DETACHED
 	`gë_∑r£d_°ru˘
 ();
 
-221 if(
+295 if(
 ∑r£d
 ->
 ty≥
  !
-KCNXCFG
+CGACT
 ){
 
-222 
+296 
 	`ESP_LOGE
 (
 TAG
-, "CMDÅy≥ÇŸ k˙xfg -> (%d)", 
+, "CMDÅy≥ÇŸ CGACT -> (%d)", 
 ∑r£d
 ->
 ty≥
 );
 
-223 
+297 
 	`ASSERT
 (0);
 
-225 if(
-∑r£d
-->
-f‹m
- !
-WRITE_CMD
- ){
-
-226 
-	`ESP_LOGE
-(
-TAG
-, "f‹mÅy≥ÇŸ wrôê-> (%d)", 
-∑r£d
-->
-f‹m
-);
-
-227 
-	`ASSERT
-(0);
-
-229 
-	}
-}
-
-231 
-	$vîify_˚ªg
-(){
-
-232 
-	`¥öt_∑r£d
-();
-
-234 
-©_∑r£d_s
- *
-∑r£d
- = 
-	`gë_∑r£d_°ru˘
-();
-
-235 if(
-∑r£d
-->
-ty≥
- !
-CEREG
-){
-
-236 
-	`ESP_LOGE
-(
-TAG
-, "CMDÅy≥ÇŸ CEREG -> (%d)", 
-∑r£d
-->
-ty≥
-);
-
-237 
-	`ASSERT
-(0);
-
-239 if(
+300 if(
 ∑r£d
 ->
 f‹m
@@ -9799,7 +10765,7 @@ f‹m
 READ_CMD
  ){
 
-240 
+301 
 	`ESP_LOGE
 (
 TAG
@@ -9809,11 +10775,75 @@ TAG
 f‹m
 );
 
-241 
+302 
 	`ASSERT
 (0);
 
-244 i‡(
+304 
+	}
+}
+
+306 
+	$vîify_k˙xfg
+(){
+
+307 
+	`¥öt_∑r£d
+();
+
+309 
+©_∑r£d_s
+ *
+∑r£d
+ = 
+	`gë_∑r£d_°ru˘
+();
+
+310 if(
+∑r£d
+->
+ty≥
+ !
+KCNXCFG
+){
+
+311 
+	`ESP_LOGE
+(
+TAG
+, "CMDÅy≥ÇŸ k˙xfg -> (%d)", 
+∑r£d
+->
+ty≥
+);
+
+312 
+	`ASSERT
+(0);
+
+314 if(
+∑r£d
+->
+f‹m
+ !
+WRITE_CMD
+ ){
+
+315 
+	`ESP_LOGE
+(
+TAG
+, "f‹mÅy≥ÇŸ wrôê-> (%d)", 
+∑r£d
+->
+f‹m
+);
+
+316 
+	`ASSERT
+(0);
+
+319 i‡(
 ∑r£d
 ->
 ∑øm_¨r
@@ -9827,31 +10857,33 @@ vÆ
 CEREG_CONNECTED
 ){
 
-245 
+320 
 	`ESP_LOGI
 (
 TAG
 , "Registered! -Öosting!");
 
-246 
-	`°©e_po°_evít
-(
-NETWORK_ATTACHED
-);
+321  
+pdTRUE
+;
 
-249 
+324  
+pdFALSE
+;
+
+325 
 	}
 }
 
-252 
-	$vîify_cfun
+327 
+	$vîify_˚ªg
 (){
 
-253 
+328 
 	`¥öt_∑r£d
 ();
 
-255 
+330 
 ©_∑r£d_s
  *
 ∑r£d
@@ -9859,29 +10891,29 @@ NETWORK_ATTACHED
 	`gë_∑r£d_°ru˘
 ();
 
-256 if(
+331 if(
 ∑r£d
 ->
 ty≥
  !
-CFUN
+CEREG
 ){
 
-257 
+332 
 	`ESP_LOGE
 (
 TAG
-, "CMDÅy≥ÇŸ CFUN -> (%d)", 
+, "CMDÅy≥ÇŸ CEREG -> (%d)", 
 ∑r£d
 ->
 ty≥
 );
 
-258 
+333 
 	`ASSERT
 (0);
 
-261 if(
+335 if(
 ∑r£d
 ->
 f‹m
@@ -9889,7 +10921,7 @@ f‹m
 READ_CMD
  ){
 
-262 
+336 
 	`ESP_LOGE
 (
 TAG
@@ -9899,11 +10931,101 @@ TAG
 f‹m
 );
 
-263 
+337 
 	`ASSERT
 (0);
 
-266 if(
+340 i‡(
+∑r£d
+->
+∑øm_¨r
+[
+CEREG_STATUS_LINE
+][
+CEREG_STATUS_INDEX
+].
+vÆ
+ =
+CEREG_CONNECTED
+){
+
+341 
+	`ESP_LOGI
+(
+TAG
+, "Registered! -Öosting!");
+
+342 
+	`°©e_po°_evít
+(
+NETWORK_ATTACHED
+);
+
+345 
+	}
+}
+
+348 
+	$vîify_cfun
+(){
+
+349 
+	`¥öt_∑r£d
+();
+
+351 
+©_∑r£d_s
+ *
+∑r£d
+ = 
+	`gë_∑r£d_°ru˘
+();
+
+352 if(
+∑r£d
+->
+ty≥
+ !
+CFUN
+){
+
+353 
+	`ESP_LOGE
+(
+TAG
+, "CMDÅy≥ÇŸ CFUN -> (%d)", 
+∑r£d
+->
+ty≥
+);
+
+354 
+	`ASSERT
+(0);
+
+357 if(
+∑r£d
+->
+f‹m
+ !
+READ_CMD
+ ){
+
+358 
+	`ESP_LOGE
+(
+TAG
+, "f‹mÅy≥ÇŸÑód -> (%d)", 
+∑r£d
+->
+f‹m
+);
+
+359 
+	`ASSERT
+(0);
+
+362 if(
 ∑r£d
 ->
 ª•⁄£
@@ -9911,7 +11033,7 @@ f‹m
 LINE_TERMINATION_INDICATION_OK
 ){
 
-267 
+363 
 	`ESP_LOGE
 (
 TAG
@@ -9921,7 +11043,7 @@ TAG
 ª•⁄£
 );
 
-271 i‡(
+367 i‡(
 ∑r£d
 ->
 ∑øm_¨r
@@ -9935,25 +11057,25 @@ vÆ
 CFUN_RADIO_ON
 ){
 
-272 
+368 
 	`ESP_LOGI
 (
 TAG
 , "Radio on!!");
 
-275 
+371 
 	}
 }
 
-277 
+373 
 	$£t_cfun
 (){
 
-278 
+374 
 	`¥öt_∑r£d
 ();
 
-280 
+376 
 ©_∑r£d_s
  *
 ∑r£d
@@ -9961,7 +11083,7 @@ TAG
 	`gë_∑r£d_°ru˘
 ();
 
-281 if(
+377 if(
 ∑r£d
 ->
 ty≥
@@ -9969,7 +11091,7 @@ ty≥
 CFUN
 ){
 
-282 
+378 
 	`ESP_LOGE
 (
 TAG
@@ -9979,11 +11101,11 @@ TAG
 ty≥
 );
 
-283 
+379 
 	`ASSERT
 (0);
 
-286 if(
+382 if(
 ∑r£d
 ->
 f‹m
@@ -9991,7 +11113,7 @@ f‹m
 WRITE_CMD
  ){
 
-287 
+383 
 	`ESP_LOGE
 (
 TAG
@@ -10001,11 +11123,11 @@ TAG
 f‹m
 );
 
-288 
+384 
 	`ASSERT
 (0);
 
-291 if(
+387 if(
 ∑r£d
 ->
 ª•⁄£
@@ -10013,7 +11135,7 @@ f‹m
 LINE_TERMINATION_INDICATION_OK
 ){
 
-292 
+388 
 	`ESP_LOGE
 (
 TAG
@@ -10023,7 +11145,11 @@ TAG
 ª•⁄£
 );
 
-296 i‡(
+389  
+pdFALSE
+;
+
+392 i‡(
 ∑r£d
 ->
 ∑øm_¨r
@@ -10037,25 +11163,33 @@ vÆ
 CFUN_RADIO_ON
 ){
 
-297 
+393 
 	`ESP_LOGI
 (
 TAG
 , "Radio on!!");
 
-300 
+394  
+pdTRUE
+;
+
+398  
+pdFALSE
+;
+
+399 
 	}
 }
 
-302 
+401 
 	$vîify_kudpcfg
 (){
 
-303 
+402 
 	`¥öt_∑r£d
 ();
 
-305 
+404 
 ©_∑r£d_s
  *
 ∑r£d
@@ -10063,7 +11197,7 @@ TAG
 	`gë_∑r£d_°ru˘
 ();
 
-306 if(
+405 if(
 ∑r£d
 ->
 ty≥
@@ -10071,7 +11205,7 @@ ty≥
 KUDPCFG
 ){
 
-307 
+406 
 	`ESP_LOGE
 (
 TAG
@@ -10081,11 +11215,11 @@ TAG
 ty≥
 );
 
-308 
+407 
 	`ASSERT
 (0);
 
-311 if(
+410 if(
 ∑r£d
 ->
 f‹m
@@ -10093,7 +11227,7 @@ f‹m
 WRITE_CMD
  ){
 
-312 
+411 
 	`ESP_LOGE
 (
 TAG
@@ -10103,11 +11237,11 @@ TAG
 f‹m
 );
 
-313 
+412 
 	`ASSERT
 (0);
 
-316 if(
+415 if(
 ∑r£d
 ->
 ª•⁄£
@@ -10115,7 +11249,7 @@ f‹m
 LINE_TERMINATION_INDICATION_OK
 ){
 
-317 
+416 
 	`ESP_LOGE
 (
 TAG
@@ -10125,11 +11259,11 @@ TAG
 ª•⁄£
 );
 
-326 
+425 
 	}
 }
 
-329 
+427 
 boﬁ
  
 	$£nd_cmd
@@ -10147,17 +11281,17 @@ comm™d_e
 cmd_íum
 ){
 
-330 
+428 
 	`ASSERT
 (
 cmd
 );
 
-331 
+429 
 ªt
 ;
 
-332 
+430 
 ©_∑r£d_s
  * 
 ∑r£d_p
@@ -10165,47 +11299,49 @@ cmd
 	`gë_∑r£d_°ru˘
 ();
 
-334 
+432 
 	`gë_maûbox_£m
 ();
 
-336 
+434 
 	`ESP_LOGI
 (
 TAG
 , "Posting issue cmd!");
 
-337 
+435 
 	`°©e_po°_evít
 (
 EVENT_ISSUE_CMD
 );
 
-339 
+437 
 	`ESP_LOGI
 (
 TAG
-, "waiting forÑeady from PARSER_STARTE!");
+, "waiting forÑeady fromÖarser state");
 
-340 i‡(!
+438 i‡(!
 	`maûbox_waô
 (
 MAILBOX_WAIT_READY
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 )Ë
 Áû
 ;
 
-341 
+439 
 	`£t_√t_°©e_cmd
 (
 cmd_íum
 );
 
-342 
+440 
 	`£t_√t_°©e_tokí
 ();
 
-344 
+442 
 	`ESP_LOGI
 (
 TAG
@@ -10213,7 +11349,7 @@ TAG
 cmd
 );
 
-345 if(
+443 if(
 	`©_comm™d_issue_hÆ
 (
 cmd
@@ -10223,21 +11359,29 @@ cmd
 Áû
 ;
 
-347 
+445 
 	`ESP_LOGI
 (
 TAG
 , "waiting forÖrocessed CMD from PARSER_STATE");
 
-348 if(!
+446 if(!
 	`maûbox_waô
 (
 MAILBOX_WAIT_PROCESSED
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 )Ë
 Áû
 ;
 
-351 i‡(
+449 
+	`ESP_LOGI
+(
+TAG
+, "VeryingÅoken");
+
+450 i‡(
 	`gë_√t_°©e_tokí
 (Ë!
 ∑r£d_p
@@ -10245,17 +11389,17 @@ MAILBOX_WAIT_PROCESSED
 tokí
 ){
 
-352 
+451 
 	`ESP_LOGE
 (
 TAG
 , "TOKEN NOT CORRECT!");
 
-353 
+452 
 	`ASSERT
 (0);
 
-357 i‡(
+456 i‡(
 ∑r£d_p
 ->
 °©us
@@ -10263,13 +11407,13 @@ TAG
 AT_PROCESSED_GOOD
 ){
 
-359 
+458 
 	`maûbox_po°
 (
 MAILBOX_POST_CONSUME
 );
 
-361 
+460 
 	`ESP_LOGE
 (
 TAG
@@ -10279,23 +11423,23 @@ TAG
 °©us
 );
 
-363 
+462 
 Áû
 ;
 
-366 
+465 
 	`ESP_LOGI
 (
 TAG
 , "Calling CALLBACK for send_cmd!");
 
-367 
+466 
 ªt
  = 
 	`˛b
 ();
 
-369 if(!
+468 if(!
 	`maûbox_po°
 (
 MAILBOX_POST_CONSUME
@@ -10303,33 +11447,33 @@ MAILBOX_POST_CONSUME
 Áû
 ;
 
-371 
+470 
 	`put_maûbox_£m
 ();
 
-372  
+471  
 ªt
 ;
 
-374 
+473 
 Áû
 :
 
-375 
+474 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo issue cmd!");
 
-376 
+475 
 	`put_maûbox_£m
 ();
 
-378 
+477 
 	}
 }
 
-380 
+479 
 boﬁ
  
 	$£nd_wrôe
@@ -10347,17 +11491,17 @@ comm™d_e
 cmd_íum
 ){
 
-381 
+480 
 	`ASSERT
 (
 cmd
 );
 
-382 
+481 
 ªt
 ;
 
-383 
+482 
 ©_∑r£d_s
  * 
 ∑r£d_p
@@ -10365,47 +11509,57 @@ cmd
 	`gë_∑r£d_°ru˘
 ();
 
-385 
+484 
+	`£t_urc_h™dÀr
+(
+KUDP_NOTIF
+, 
+h™dÀ_urc_kudp_nŸif
+);
+
+486 
 	`gë_maûbox_£m
 ();
 
-387 
+488 
 	`ESP_LOGI
 (
 TAG
 , "Posting issue write! ");
 
-388 
+489 
 	`°©e_po°_evít
 (
 EVENT_ISSUE_WRITE
 );
 
-390 
+491 
 	`ESP_LOGI
 (
 TAG
 , "waiting forÑeady from PARSER_STARTE!");
 
-391 i‡(!
+492 i‡(!
 	`maûbox_waô
 (
 MAILBOX_WAIT_READY
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 )Ë
 Áû
 ;
 
-392 
+493 
 	`£t_√t_°©e_cmd
 (
 cmd_íum
 );
 
-393 
+494 
 	`£t_√t_°©e_tokí
 ();
 
-395 
+496 
 	`ESP_LOGI
 (
 TAG
@@ -10413,7 +11567,7 @@ TAG
 cmd
 );
 
-396 if(
+497 if(
 	`©_comm™d_issue_hÆ
 (
 cmd
@@ -10423,53 +11577,89 @@ cmd
 Áû
 ;
 
-399 if(!
+500 if(!
 	`maûbox_waô
 (
-MAILBOX_WAIT_WRITE
+MAILBOX_WAIT_CONNECT
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 )Ë
 Áû
 ;
 
-400 
-	`©_comm™d_issue_hÆ
-("bœh bœh --EOF--P©ã∫--\r\n", 
-	`°æí
-("blah blah --EOF--Pattern--\r\n"));
+502 
+Ba£Ty≥_t
+ 
+xSètus
+ = 
+	`xQueueRe˚ive
+(
+outgoög_udp_q
+, 
+misc_buff
+, 
+RTOS_DONT_WAIT
+);
 
-402 
+503 i‡(
+xSètus
+ !
+pdTRUE
+){
+
+504 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅo RX onÉvent send data!");
+
+505 
+	`ASSERT
+(0);
+
+509 
+udp_∑ckë_s
+ * 
+pudp
+ = (udp_∑ckë_s*)
+misc_buff
+;
+
+510 
+	`©_comm™d_issue_hÆ
+(
+pudp
+->
+d©a
+,Öudp->
+Àn
+);
+
+512 if(!
+	`maûbox_po°
+(
+MAILBOX_POST_WRITE
+)Ë
+Áû
+;
+
+514 
 	`ESP_LOGI
 (
 TAG
 , "waiting forÖrocessed CMD from PARSER_STATE");
 
-403 if(!
+515 if(!
 	`maûbox_waô
 (
 MAILBOX_WAIT_PROCESSED
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 )Ë
 Áû
 ;
 
-406 i‡(
-	`gë_√t_°©e_tokí
-(Ë!
-∑r£d_p
-->
-tokí
-){
-
-407 
-	`ESP_LOGE
-(
-TAG
-, "TOKEN NOT CORRECT!");
-
-408 
-	`ASSERT
-(0);
-
-412 i‡(
+518 i‡(
 ∑r£d_p
 ->
 °©us
@@ -10477,13 +11667,13 @@ TAG
 AT_PROCESSED_GOOD
 ){
 
-414 
+520 
 	`maûbox_po°
 (
 MAILBOX_POST_CONSUME
 );
 
-416 
+522 
 	`ESP_LOGE
 (
 TAG
@@ -10493,87 +11683,309 @@ TAG
 °©us
 );
 
-418 
+524 
 Áû
 ;
 
-421 
+527 
 	`ESP_LOGI
 (
 TAG
 , "Calling CALLBACK for send_cmd!");
 
-422 
+528 
 ªt
  = 
 	`˛b
 ();
 
-424 
+530 if(
+	`maûbox_waô
+(
+MAILBOX_WAIT_URC
+, 
+MAILBOX_WAIT_TIME_URC
+))
+
+533 
+	`puts
+("got urc!");
+
+534 
+	`maûbox_po°
+(
+MAILBOX_POST_CONSUME
+);
+
+537 
+	`p›_urc_h™dÀr
+(
+KUDP_NOTIF
+);
+
+538 
 	`put_maûbox_£m
 ();
 
-425  
+539  
 ªt
 ;
 
-427 
+541 
 Áû
 :
 
-428 
+542 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo issue cmd!");
 
-429 
+543 
 	`put_maûbox_£m
 ();
 
-431 
+545 
 	}
 }
 
-433 
+547 
+boﬁ
+ 
+	$£nd_ªad
+(
+uöt8_t
+* 
+cmd
+, 
+Àn
+, (*
+˛b
+)(), 
+comm™d_e
+ 
+cmd_íum
+){
+
+548 
+	`ASSERT
+(
+cmd
+);
+
+549 
+ªt
+;
+
+550 
+©_∑r£d_s
+ * 
+∑r£d_p
+ = 
+	`gë_∑r£d_°ru˘
+();
+
+552 
+	`gë_maûbox_£m
+();
+
+554 
+	`ESP_LOGI
+(
+TAG
+, "Posting issueÑead! ");
+
+555 
+	`°©e_po°_evít
+(
+EVENT_ISSUE_READ
+);
+
+557 
+	`ESP_LOGI
+(
+TAG
+, "waiting forÑeady from PARSER_STARTE!");
+
+558 i‡(!
+	`maûbox_waô
+(
+MAILBOX_WAIT_READY
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+)Ë
+Áû
+;
+
+559 
+	`£t_√t_°©e_cmd
+(
+cmd_íum
+);
+
+560 
+	`£t_√t_°©e_tokí
+();
+
+562 
+	`ESP_LOGI
+(
+TAG
+, "ISSUE CMD-> %s", 
+cmd
+);
+
+563 if(
+	`©_comm™d_issue_hÆ
+(
+cmd
+, 
+Àn
+Ë=-1Ë
+Áû
+;
+
+565 if(!
+	`maûbox_waô
+(
+MAILBOX_WAIT_CONNECT
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+)Ë
+Áû
+;
+
+567 if(!
+	`maûbox_waô
+(
+MAILBOX_WAIT_PROCESSED
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+)Ë
+Áû
+;
+
+570 i‡(
+∑r£d_p
+->
+°©us
+ !
+AT_PROCESSED_GOOD
+){
+
+572 
+	`maûbox_po°
+(
+MAILBOX_POST_CONSUME
+);
+
+574 
+	`ESP_LOGE
+(
+TAG
+, "Eº‹! sètu†%d", 
+∑r£d_p
+->
+°©us
+);
+
+576 
+Áû
+;
+
+579 
+	`maûbox_po°
+(
+MAILBOX_POST_CONSUME
+);
+
+581 
+	`put_maûbox_£m
+();
+
+582  
+ªt
+;
+
+584 
+Áû
+:
+
+585 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅo issue cmd!");
+
+586 
+	`put_maûbox_£m
+();
+
+588 
+	}
+}
+
+591 
+	$h™dÀ_urc_kudp_nŸif
+()
+
+593 
+	`maûbox_po°
+(
+MAILBOX_POST_URC
+);
+
+594 
+	`puts
+("callback called!");
+
+595 
+	`maûbox_waô
+(
+MAILBOX_POST_CONSUME
+, 
+MAILBOX_WAIT_TIME_URC
+);
+
+596 
+	}
+}
+
+599 
 	$√tw‹k_°©e_öô_‰ìπos_obje˘s
 () {
 
-434 
+600 
 √tw‹k_°©e_muãx
  = 
 	`xSem≠h‹eCª©eMuãx
 ();
 
-437 
+603 
 	`ASSERT
 (
 √tw‹k_°©e_muãx
 );
 
-438 
+604 
 	}
 }
 
-440 
+606 
 	$√tw‹k_°©e_öô
 (){
 
-441 
-	`√tw‹k_°©e_öô_‰ìπos_obje˘s
-();
-
-444 
+609 
 	`°¨t_√w_°©e_machöe
 (
 	`gë_√tw‹k_°©e_h™dÀ
 ());
 
-445 
+610 
 	}
 }
 
-447 
+612 
 	$£t_√t_°©e_cmd
 (
 comm™d_e
@@ -10581,7 +11993,7 @@ comm™d_e
 cmd
 ){
 
-448 i‡(
+613 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -10591,17 +12003,17 @@ pdTRUE
 NET_MUTEX_WAIT
 )) {
 
-449 
+614 
 	`ESP_LOGE
 (
 TAG
 , "FAILED TO TAKEÇet mutext!");
 
-450 
+615 
 	`ASSERT
 (0);
 
-452 
+617 
 √t_c⁄ãxt
 .
 cuº_cmd
@@ -10609,29 +12021,29 @@ cuº_cmd
 cmd
 ;
 
-453 
+618 
 	`xSem≠h‹eGive
 (
 √tw‹k_°©e_muãx
 );
 
-454 
+619 
 	}
 }
 
-456 
+621 
 comm™d_e
  
 	$gë_√t_°©e_cmd
 (){
 
-457 
+622 
 comm™d_e
  
 ªt
 ;
 
-458 i‡(
+623 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -10641,17 +12053,17 @@ pdTRUE
 NET_MUTEX_WAIT
 )) {
 
-459 
+624 
 	`ESP_LOGE
 (
 TAG
 , "FAILED TO TAKEÇet mutext!");
 
-460 
+625 
 	`ASSERT
 (0);
 
-462 
+627 
 ªt
  = 
 √t_c⁄ãxt
@@ -10659,29 +12071,29 @@ TAG
 cuº_cmd
 ;
 
-463 
+628 
 	`xSem≠h‹eGive
 (
 √tw‹k_°©e_muãx
 );
 
-465  
+630  
 ªt
 ;
 
-466 
+631 
 	}
 }
 
-468 
+633 
 	$£t_√t_°©e_tokí
 (){
 
-469 
+634 
 tokí
 ;
 
-470 i‡(
+635 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -10691,41 +12103,41 @@ pdTRUE
 NET_MUTEX_WAIT
 )) {
 
-471 
+636 
 	`ESP_LOGE
 (
 TAG
 , "FAILED TO TAKEÇet mutext!");
 
-472 
+637 
 	`ASSERT
 (0);
 
-474 
+639 
 √t_c⁄ãxt
 .
 tokí
  =Åoken;
 
-475 
+640 
 	`xSem≠h‹eGive
 (
 √tw‹k_°©e_muãx
 );
 
-476 
+641 
 	}
 }
 
-478 
+643 
 	$gë_√t_°©e_tokí
 (){
 
-479 
+644 
 ªt
 ;
 
-480 i‡(
+645 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -10735,17 +12147,17 @@ pdTRUE
 NET_MUTEX_WAIT
 )) {
 
-481 
+646 
 	`ESP_LOGE
 (
 TAG
 , "FAILED TO TAKEÇet mutext!");
 
-482 
+647 
 	`ASSERT
 (0);
 
-484 
+649 
 ªt
  = 
 √t_c⁄ãxt
@@ -10753,21 +12165,21 @@ TAG
 tokí
 ;
 
-485 
+650 
 	`xSem≠h‹eGive
 (
 √tw‹k_°©e_muãx
 );
 
-487  
+652  
 ªt
 ;
 
-488 
+653 
 	}
 }
 
-490 
+655 
 	$√tw‹k_°©e_£t_°©us
 (
 √tw‹k_°©us_e
@@ -10775,7 +12187,7 @@ tokí
 °©us
 ){
 
-491 i‡(
+656 i‡(
 pdTRUE
  !
 	`xSem≠h‹eTake
@@ -10785,17 +12197,17 @@ pdTRUE
 NET_MUTEX_WAIT
 )) {
 
-492 
+657 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅoÅakeÇet state mutext!");
 
-493 
+658 
 	`ASSERT
 (0);
 
-495 
+660 
 √t_c⁄ãxt
 .
 √t_°©e
@@ -10803,73 +12215,161 @@ TAG
 °©us
 ;
 
-497 
+662 
 	`xSem≠h‹eGive
 (
 √tw‹k_°©e_muãx
 );
 
-498 
+663 
 	}
 }
 
-502 
+665 
+	$√tw‹k_°©e_£t_timeout
+(
+uöt32_t
+ 
+timeout_ticks
+){
+
+666 i‡(
+pdTRUE
+ !
+	`xSem≠h‹eTake
+(
+√tw‹k_°©e_muãx
+, 
+NET_MUTEX_WAIT
+)) {
+
+667 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅoÅakeÇet state mutext!");
+
+668 
+	`ASSERT
+(0);
+
+670 
+√t_c⁄ãxt
+.
+timeout_ö_£c⁄ds
+ = 
+timeout_ticks
+;
+
+672 
+	`xSem≠h‹eGive
+(
+√tw‹k_°©e_muãx
+);
+
+673 
+	}
+}
+
+676 
 	$drivî_b
 (* 
 ¨g
 ){
 
-503 
-	`√tw‹k_°©e_öô
-();
-
-505 
+678 
 	`puts
 ("Test");
 
-506 
+679 
 Àn
 ;
 
-507 
+680 
 °r
 [300];
 
-508 
+681 
 	`mem£t
 (
 °r
 , 0, 100);
 
-509 
+682 
 r
  = 0;
 
-511 
+684 
 	`vTaskDñay
 (40000/
 p‹tTICK_PERIOD_MS
 );
 
-513 
+686 
 	`puts
 ("hi sam!");
 
-515 
-	`°©e_po°_evít
+688 
+udp_∑ckë_s
+ 
+ã°
+;
+
+689 
+	`mem£t
+(&
+ã°
+, 0, (
+udp_∑ckë_s
+));
+
+690 
+a
+:
+
+691 
+	`•rötf
 (
-NETWORK_WRITE_REQUEST
+ã°
+.
+d©a
+, "wtfÜol??\n--EOF--Pattern--");
+
+692 
+ã°
+.
+Àn
+ = 
+	`°æí
+—e°.
+d©a
 );
 
-517 
+693 
+	`íqueue_udp_wrôe
+(&
+ã°
+);
+
+695 
+	`vTaskDñay
+(5000/
+p‹tTICK_PERIOD_MS
+);
+
+696 
+a
+;
+
+698 
 	`vTaskDñay
 (1000000);
 
-519 i‡(
+700 i‡(
 r
  & 1 == 1){
 
-520 
+701 
 	`mem˝y
 (
 °r
@@ -10877,7 +12377,7 @@ r
 	`°æí
 ("AT+CFUN=0\r\n"));
 
-521 
+702 
 Àn
  = 
 	`°æí
@@ -10885,7 +12385,7 @@ r
 °r
 );
 
-524 
+705 
 	`mem˝y
 (
 °r
@@ -10893,7 +12393,7 @@ r
 	`°æí
 ("AT+CFUN=1\r\n"));
 
-525 
+706 
 Àn
  = 
 	`°æí
@@ -10901,35 +12401,73 @@ r
 °r
 );
 
-527 
+708 
 r
 ++;
 
-529 
+710 
 	`vTaskDñay
 (10000/
 p‹tTICK_PERIOD_MS
 );
 
-545 
+726 
 	`vTaskDñay
 (10000/
 p‹tTICK_PERIOD_MS
 );
 
-547 
+728 
 	`vTaskDñay
 (1000000);
 
-548 
+729 
 	}
 }
 
-550 
+731 
+	$√tw‹k_ã°_thªad
+(* 
+¨g
+){
+
+733 
+	`√tw‹k_ã°
+();
+
+734 
+	`vTaskDñay
+(10000000);
+
+736 
+	}
+}
+
+738 
 	$√tw‹k_drivî
 (){
 
-557 
+739 
+	`√tw‹k_°©e_öô_‰ìπos_obje˘s
+();
+
+740 #ifde‡
+FAKE_INPUT_STREAM_MODE
+
+
+741 
+	`xTaskCª©e
+(
+√tw‹k_ã°_thªad
+, "", 1024, "", 5, 
+NULL
+);
+
+743 
+	`√tw‹k_°©e_öô
+();
+
+744 
 	`xTaskCª©e
 (
 urc_h™ldî
@@ -10937,7 +12475,7 @@ urc_h™ldî
 NULL
 );
 
-558 
+745 
 	`xTaskCª©e
 (
 drivî_b
@@ -10945,7 +12483,7 @@ drivî_b
 NULL
 );
 
-560 
+747 
 	}
 }
 
@@ -10973,135 +12511,235 @@ gë_√t_°©e_cmd
 gë_√t_°©e_tokí
 ();
 
-17 
+12 
+boﬁ
+ 
+£nd_cmd
+(
+uöt8_t
+* 
+cmd
+, 
+Àn
+, (*
+˛b
+)(), 
+comm™d_e
+ 
+cmd_íum
+);
+
+13 
+boﬁ
+ 
+	`£nd_wrôe
+(
+uöt8_t
+* 
+cmd
+, 
+Àn
+, (*
+˛b
+)(), 
+comm™d_e
+ 
+cmd_íum
+);
+
+14 
+boﬁ
+ 
+	`£nd_ªad
+(
+uöt8_t
+* 
+cmd
+, 
+Àn
+, (*
+˛b
+)(), 
+comm™d_e
+ 
+cmd_íum
+);
+
+16 
+	`vîify_cga˘
+();
+
+17 
+	`vîify_k˙xfg
+();
+
+18 
+	`vîify_˚ªg
+();
+
+19 
+	`vîify_cfun
+();
+
+20 
+	`£t_cfun
+();
+
+21 
+	`vîify_kudpcfg
+();
+
+29 
 	t√t_mode_t
 ;
 
-21 
-	mdisc⁄√˘ed
+32 
+ªad_d©a
+;
+
+33 }
+	tw‹k_‹dî_s
+;
+
+37 
+disc⁄√˘ed
 ,
 
-22 
-	mc⁄√˘ed
+38 
+c⁄√˘ed
 ,
 
-23 
-	mÁûed_to_c⁄√˘
+39 
+Áûed_to_c⁄√˘
 ,
 
-24 
-	m˛o£d
+40 
+˛o£d
 ,
 
-25 
-	mc⁄√˘ög
+41 
+c⁄√˘ög
 ,
 
-26 } 
+42 } 
 	tpdp_√tw‹k_°©us
 ;
 
-29 
-	m√tw‹k_°©e_c⁄√˘ed
+45 
+√tw‹k_°©e_c⁄√˘ed
 
 
-30 } 
+46 } 
 	t√tw‹k_°©us_e
 ;
 
-33 
+49 
 √t_mode_t
  
-	mmode
+mode
 ;
 
-34 
+50 
 comm™d_e
  
-	mcuº_cmd
+cuº_cmd
 ;
 
-35 
+51 
+uöt32_t
+ 
+timeout_ö_£c⁄ds
+;
+
+52 
 √tw‹k_°©us_e
  
-	m√t_°©e
+√t_°©e
 ;
 
-36 
+53 
 pdp_√tw‹k_°©us
  
-	mpdp_°©us
+pdp_°©us
 ;
 
-37 
-	mpdp_£ssi⁄
+54 
+pdp_£ssi⁄
 ;
 
-38 
+55 
 boﬁ
  
-	mudp_°©us
+udp_°©us
 ;
 
-39 
-	mtokí
+56 
+tokí
 ;
 
-40 }
+57 }
 	t√tw‹k_°©e_s
 ;
 
-43 
-	m√tw‹k_aú∂aöe_mode_°©e
+60 
+√tw‹k_aú∂aöe_mode_°©e
  = 0,
 
-44 
-	m√tw‹k_©èchög_°©e
+61 
+√tw‹k_©èchög_°©e
 ,
 
-45 
-	m√tw‹k_©èched_°©e
+62 
+√tw‹k_©èched_°©e
 ,
 
-46 
-	m√tw‹k_idÀ_°©e
+63 
+√tw‹k_idÀ_°©e
 ,
 
-47 
-	m√tw‹k_wrôe_°©e
+64 
+√tw‹k_wrôe_°©e
 ,
 
-49 
-	m√tw‹k_°©e_Àn
+65 
+√tw‹k_ªad_°©e
+,
+
+67 
+√tw‹k_°©e_Àn
 
 
-50 } 
+68 } 
 	t√tw‹k_°©e_e
 ;
 
-54 
-	mNETWORK_ATTACHED
+72 
+NETWORK_ATTACHED
  = 
 NETWORK_EVENT_START
 ,
 
-55 
-	mNETWORK_DETACHED
+73 
+NETWORK_DETACHED
 ,
 
-56 
-	mNETWORK_WRITE_REQUEST
+74 
+NETWORK_WRITE_REQUEST
 ,
 
-58 
-	m√tw‹k_evít_Àn
+75 
+NETWORK_READ_REQUEST
+,
+
+77 
+√tw‹k_evít_Àn
 
 
-59 } 
+78 } 
 	t√tw‹k_evít_e
 ;
 
-69 
+88 
 	#NET_MUTEX_WAIT
  (2500 / 
 p‹tTICK_PERIOD_MS
@@ -11109,17 +12747,161 @@ p‹tTICK_PERIOD_MS
 
 	)
 
-70 
+89 
 	#PDP_INVALID
  (-1)
 
 	)
 
-71 
+90 
 	#MISC_BUFF_SIZE
- (100)
+ (270)
+
+91 
 
 	)
+
+93 
+	#MAILBOX_WAIT_TIME_URC
+ (250/
+p‹tTICK_PERIOD_MS
+)
+
+	)
+
+	@network_test.c
+
+1 
+	~<°dio.h
+>
+
+2 
+	~<°dlib.h
+>
+
+3 
+	~<°rög.h
+>
+
+5 
+	~"FªeRTOS.h
+"
+
+6 
+	~"£mphr.h
+"
+
+7 
+	~"èsk.h
+"
+
+8 
+	~"evít_groups.h
+"
+
+9 
+	~<î∫o.h
+>
+
+11 
+	~"maûbox.h
+"
+
+12 
+	~"globÆ_deföes.h
+"
+
+13 
+	~"√tw‹k_°©e.h
+"
+
+14 
+	~"©_∑r£r.h
+"
+
+27 c⁄° 
+	gTAG
+[] = "NETWORK TEST";
+
+28 
+	gmisc_buff
+[150];
+
+33 
+	$vîify_cfun_ã°
+(){
+
+34  
+pdTRUE
+;
+
+35 
+	}
+}
+
+37 
+	$√tw‹k_ã°
+(){
+
+38 
+	`£t_cuºít_cmd
+(
+CFUN
+);
+
+39 
+	`¸óã_cfun_í_cmd
+(
+misc_buff
+, 150);
+
+40 
+	`¥ötf
+("%†\n", 
+misc_buff
+);
+
+41 
+	`£nd_cmd
+(
+misc_buff
+, 
+	`°æí
+(misc_buff), 
+vîify_cfun_ã°
+, 
+CFUN
+);
+
+42 
+	}
+}
+
+	@network_test.h
+
+1 #¥agm®
+⁄˚
+
+
+3 
+	~"FªeRTOS.h
+"
+
+4 
+	~"queue.h
+"
+
+5 
+	~"°dboﬁ.h
+"
+
+6 
+	~"evít_groups.h
+"
+
+19 
+√tw‹k_ã°
+();
 
 	@parser_state.c
 
@@ -11171,31 +12953,41 @@ p‹tTICK_PERIOD_MS
 	~"maûbox.h
 "
 
-19 
+15 
+	~"√t_ad≠t‹.h
+"
+
+20 
 QueueSëH™dÀ_t
  
 	goutgoög_urc_queue
 ;
 
-24 
+25 
 °©e_t
  
 °©e_idÀ_func
 ();
 
-25 
+26 
 °©e_t
  
 °©e_h™dÀ_cmd_func
 ();
 
-26 
+27 
 °©e_t
  
 °©e_h™dÀ_wrôe_func
 ();
 
-28 
+28 
+°©e_t
+ 
+°©e_h™dÀ_ªad_func
+();
+
+30 
 po°_urc_to_√tw‹k_œyî
 (
 ©_urc_∑r£d_s
@@ -11203,17 +12995,27 @@ po°_urc_to_√tw‹k_œyî
 ±r
 );
 
-33 c⁄° 
+31 
+uöt32_t
+ 
+gë_cmd_timeout
+(
+comm™d_e
+ 
+cmd
+);
+
+36 c⁄° 
 	gTAG
 [] = "PARSER_STATE";
 
-34 
+37 
 Sem≠h‹eH™dÀ_t
  
 	g∑r£r_°©e_muãx
 ;
 
-37 
+40 
 °©e_¨øy_s
  
 	g∑r£r_å™¶©i⁄_èbÀ
@@ -11221,37 +13023,47 @@ Sem≠h‹eH™dÀ_t
 ∑r£r_°©e_Àn
 ] = {
 
-38 { 
+41 { 
 °©e_idÀ_func
  , 300 },
 
-39 { 
+42 { 
 °©e_h™dÀ_cmd_func
  , 
 p‹tMAX_DELAY
  },
 
-40 { 
+43 { 
 °©e_h™dÀ_wrôe_func
  , 
 p‹tMAX_DELAY
  },
 
-47 
+44 { 
+°©e_h™dÀ_ªad_func
+ , 
+p‹tMAX_DELAY
+ },
+
+50 
 °©e_t
  
 	$°©e_idÀ_func
 () {
 
-48 
+51 
 cme_îr
 ;
 
-49 
+52 
 Àn
 ;
 
-52 
+54 #i‚de‡
+FAKE_INPUT_STREAM_MODE
+
+
+56 
 uöt8_t
 * 
 buff
@@ -11263,17 +13075,17 @@ PARSER_CMD_DEL
 Àn
 );
 
-53 if(
+57 if(
 buff
  =
 NULL
 ){
 
-54  
+58  
 NULL_STATE
 ;
 
-57 if(
+61 if(
 	`is_°©us_löe
 (
 buff
@@ -11283,17 +13095,17 @@ buff
 cme_îr
 )){
 
-58 
+62 
 	`ESP_LOGI
 (
 TAG
 , "Error - unexpected statusÜine!");
 
-59  
+63  
 ∑r£r_idÀ_°©e
 ;
 
-63 if(
+67 if(
 	`vîify_urc_™d_∑r£
 (
 buff
@@ -11301,101 +13113,81 @@ buff
 Àn
 )){
 
-64 
+68 
 	`ESP_LOGI
 (
 TAG
 , "Found URC, handling");
 
-65 
+69 
 	`po°_urc_to_√tw‹k_œyî
 (
 	`gë_urc_∑r£d_°ru˘
 ());
 
-66  
+70  
 NULL_STATE
 ;
 
-69 
+73 
 	`ESP_LOGE
 (
 TAG
 , "unknown sequence followed!");
 
-70 
+74 
 	`ASSERT
 (0);
 
-73  
+78  
 NULL_STATE
 ;
 
-74 
+79 
 	}
 }
 
-76 
+81 
 °©e_t
  
 	$°©e_h™dÀ_cmd_func
  () {
 
-77 
-	`ESP_LOGI
-(
-TAG
-, "entering handle_cmd!");
-
-78 
-	`maûbox_po°
-(
-MAILBOX_POST_READY
-);
-
-80 
+82 
 ©_modem_ª•⁄d_e
  
 ãrm
 ;
 
-81 
+83 
 cme_îr
  =0;
 
-82 
+84 
 Àn
  = 0;
 
-83 
+85 
 löe
  = 0;
 
-84 
+86 
 TickTy≥_t
  
-°¨t
+echo_to
  = 
 	`xTaskGëTickCou¡
-();
-
-85 
-TickTy≥_t
- 
-íd
- = 
-°¨t
- + 
-PARSER_WAIT_FOR_UART
+(Ë+ 
+PARSER_WAIT_FOR_ECHO
 ;
 
-86 
+87 
 comm™d_e
  
 cmd
 ;
 
-87 
+88 
 ©_∑r£d_s
  * 
 ∑r£d_p
@@ -11403,11 +13195,23 @@ cmd
 	`gë_∑r£d_°ru˘
 ();
 
-88 
+89 
 	`˛ór_©_∑r£d_°ru˘
 ();
 
+91 
+	`ESP_LOGI
+(
+TAG
+, "entering handle_cmd!");
+
 92 
+	`maûbox_po°
+(
+MAILBOX_POST_READY
+);
+
+96 
 uöt8_t
 * 
 buff
@@ -11419,23 +13223,23 @@ PARSER_CMD_DEL
 Àn
 );
 
-93 if(!
+97 if(!
 buff
 ){
 
-94 i‡(
+98 i‡(
 	`xTaskGëTickCou¡
 (Ë> 
-íd
+echo_to
 ){
 
-95 
+99 
 	`ESP_LOGE
 (
 TAG
-, "FailedÅo ATÑesponse!");
+, "FailedÅo get ATÉcho!");
 
-96 
+100 
 ∑r£d_p
 ->
 °©us
@@ -11443,45 +13247,21 @@ TAG
 AT_PROCESSED_TIMEOUT
 ;
 
-98 
-	`maûbox_po°
-(
-MAILBOX_POST_PROCESSED
-);
-
-99 
-	`ESP_LOGI
-(
-TAG
-, "watiing for done!");
-
-101 
-	`maûbox_waô
-(
-MAILBOX_WAIT_CONSUME
-);
-
-102 
-	`ESP_LOGI
-(
-TAG
-, "done comsuing ");
-
-103  
-∑r£r_idÀ_°©e
+101 
+îr‹
 ;
+
+103 
+	`vTaskDñay
+(50/
+p‹tTICK_PERIOD_MS
+);
 
 106 if(
 buff
 )
 
-108 
-	`¥ötf
-("%d ECHOÜí \n", 
-Àn
-);
-
-109 if(
+108 if(
 	`is_°©us_löe
 (
 buff
@@ -11491,17 +13271,25 @@ buff
 cme_îr
 )){
 
-110 
+109 
 	`ESP_LOGI
 (
 TAG
 , "Error - unexpected statusÜine!");
 
-111  
-∑r£r_idÀ_°©e
+110 
+∑r£d_p
+->
+°©us
+ = 
+AT_PROCESSED_DERAIL
 ;
 
-115 if(
+111 
+îr‹
+;
+
+114 if(
 	`vîify_urc_™d_∑r£
 (
 buff
@@ -11509,15 +13297,15 @@ buff
 Àn
 )){
 
-119 if–!
+118 if–
 	`©_löe_ex∂ode
 (
 buff
 ,
 Àn
-, 0)){
+, 0) == 0 ){
 
-121 i‡(
+120 i‡(
 	`gë_√t_°©e_cmd
 (Ë=
 ∑r£d_p
@@ -11525,7 +13313,7 @@ buff
 ty≥
 ){
 
-124 
+123 
 	`ESP_LOGE
 (
 TAG
@@ -11535,9 +13323,17 @@ TAG
 ty≥
 );
 
-125 
-	`ASSERT
-(0);
+124 
+∑r£d_p
+->
+°©us
+ = 
+AT_PROCESSED_DERAIL
+;
+
+125 
+îr‹
+;
 
 128 
 	`ESP_LOGE
@@ -11545,13 +13341,25 @@ ty≥
 TAG
 , "State machine out of sync!");
 
-135 
+129 
+∑r£d_p
+->
+°©us
+ = 
+AT_PROCESSED_DERAIL
+;
+
+130 
+îr‹
+;
+
+136 
 löe
- =1;Üöê< 
+ = 1;Üöê< 
 MAX_LINES_AT
 ;Üine++)
 
-137 
+138 
 uöt8_t
 * 
 buff
@@ -11563,21 +13371,21 @@ PARSER_CMD_DEL
 Àn
 );
 
-138 i‡(
+139 i‡(
 buff
 ){
 
-139 i‡(
+140 i‡(
 Àn
  == 0){
 
-140 
+141 
 	`ESP_LOGE
 (
 TAG
-, "FailedÅoÖars!");
+, "FailedÅoÖarse!");
 
-144 
+145 
 ãrm
  = 
 	`is_°©us_löe
@@ -11589,11 +13397,11 @@ buff
 cme_îr
 );
 
-145 if(
+146 if(
 ãrm
 ){
 
-146 
+147 
 ∑r£d_p
 ->
 tokí
@@ -11601,7 +13409,7 @@ tokí
 	`gë_√t_°©e_tokí
 ();
 
-147 
+148 
 ∑r£d_p
 ->
 °©us
@@ -11609,7 +13417,7 @@ tokí
 AT_PROCESSED_GOOD
 ;
 
-148 
+149 
 ∑r£d_p
 ->
 ª•⁄£
@@ -11617,7 +13425,7 @@ AT_PROCESSED_GOOD
 ãrm
 ;
 
-150 
+151 
 	`ESP_LOGI
 (
 TAG
@@ -11625,105 +13433,143 @@ TAG
 Àn
 );
 
-151 
+152 
 	`ESP_LOGI
 (
 TAG
 , "readyÅo consume");
 
-153 
+154 
 	`maûbox_po°
 (
 MAILBOX_POST_PROCESSED
 );
 
-154 
+155 
 	`ESP_LOGI
 (
 TAG
 , "watiing for done!");
 
-156 
+157 
 	`maûbox_waô
 (
 MAILBOX_WAIT_CONSUME
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 );
 
-157 
+158 
 	`ESP_LOGI
 (
 TAG
-, "done comsuing ");
+, "done consuming");
 
-158  
+159  
 ∑r£r_idÀ_°©e
 ;
 
-161 if(
+162 if(
 	`©_löe_ex∂ode
 (
 buff
 ,
 Àn
-, 1)){
+, 
+löe
+)){
 
-162 
+163 
 	`ESP_LOGE
 (
 TAG
-, "FailedÅoÖars!");
+, "FailedÅoÖarseÜine!");
 
-167  
-NULL_STATE
-;
+167 
+	`puts
+("here");
 
-168 
-	}
-}
-
-170 
-°©e_t
- 
-	$°©e_h™dÀ_wrôe_func
-() {
+170 
+îr‹
+:
 
 171 
+	`maûbox_po°
+(
+MAILBOX_POST_PROCESSED
+);
+
+172 
 	`ESP_LOGI
 (
 TAG
-, "entering handle_write!");
+, " Posting Processed!");
 
-172 
+174 
+	`maûbox_waô
+(
+MAILBOX_WAIT_CONSUME
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+);
+
+175 
+	`ESP_LOGI
+(
+TAG
+, "finished consuming!");
+
+176  
+NULL_STATE
+;
+
+177 
+	}
+}
+
+179 
+°©e_t
+ 
+	$°©e_h™dÀ_ªad_func
+() {
+
+180 
+	`ESP_LOGI
+(
+TAG
+, "entering handleÑead!!");
+
+181 
 	`maûbox_po°
 (
 MAILBOX_POST_READY
 );
 
-174 
+183 
 ©_modem_ª•⁄d_e
  
 ãrm
 ;
 
-175 
+184 
 cme_îr
  =0;
 
-176 
+185 
 Àn
  = 0;
 
-177 
+186 
 löe
  = 0;
 
-178 
+187 
 comm™d_e
  
 cmd
 ;
 
-179 
+188 
 ©_∑r£d_s
  * 
 ∑r£d_p
@@ -11731,11 +13577,11 @@ cmd
 	`gë_∑r£d_°ru˘
 ();
 
-180 
+189 
 	`˛ór_©_∑r£d_°ru˘
 ();
 
-182 
+191 
 TickTy≥_t
  
 °¨t
@@ -11743,7 +13589,7 @@ TickTy≥_t
 	`xTaskGëTickCou¡
 ();
 
-183 
+192 
 TickTy≥_t
  
 íd
@@ -11753,7 +13599,21 @@ TickTy≥_t
 PARSER_WAIT_FOR_UART
 ;
 
-188 
+194 
+udp_∑ckë_s
+ 
+udp
+;
+
+195 
+	`mem£t
+(&
+udp
+, 0, (
+udp_∑ckë_s
+));
+
+199 
 uöt8_t
 * 
 buff
@@ -11765,23 +13625,23 @@ PARSER_CMD_DEL
 Àn
 );
 
-189 if(!
+200 if(!
 buff
 ){
 
-190 i‡(
+201 i‡(
 	`xTaskGëTickCou¡
 (Ë> 
 íd
 ){
 
-191 
+202 
 	`ESP_LOGE
 (
 TAG
-, "FailedÅo ATÑesponse!");
+, "FailedÅo ATÑesponse! (timeout)");
 
-192 
+203 
 ∑r£d_p
 ->
 °©us
@@ -11789,45 +13649,41 @@ TAG
 AT_PROCESSED_TIMEOUT
 ;
 
-194 
+205 
 	`maûbox_po°
 (
 MAILBOX_POST_PROCESSED
 );
 
-195 
+206 
 	`ESP_LOGI
 (
 TAG
-, "watiing for done!");
+, "Waiting for done! (timeout)");
 
-197 
+208 
 	`maûbox_waô
 (
 MAILBOX_WAIT_CONSUME
+, 
+MAILBOX_WAIT_TIME_NOMINAL
 );
 
-198 
+209 
 	`ESP_LOGI
 (
 TAG
-, "done consuming (timeout) ");
+, "Done consuming (timeout) ");
 
-199  
+210  
 ∑r£r_idÀ_°©e
 ;
 
-202 if(
+213 if(
 buff
 )
 
-204 
-	`¥ötf
-("%d ECHOÜí \n", 
-Àn
-);
-
-205 if(
+215 if(
 	`is_°©us_löe
 (
 buff
@@ -11837,17 +13693,17 @@ buff
 cme_îr
 )){
 
-206 
+216 
 	`ESP_LOGI
 (
 TAG
 , "Error - unexpected statusÜine!");
 
-207  
+217  
 ∑r£r_idÀ_°©e
 ;
 
-211 if(
+221 if(
 	`vîify_urc_™d_∑r£
 (
 buff
@@ -11855,7 +13711,7 @@ buff
 Àn
 )){
 
-215 if–!
+225 if–!
 	`©_löe_ex∂ode
 (
 buff
@@ -11863,7 +13719,7 @@ buff
 Àn
 , 0)){
 
-217 i‡(
+227 i‡(
 	`gë_√t_°©e_cmd
 (Ë=
 ∑r£d_p
@@ -11871,7 +13727,7 @@ buff
 ty≥
 ){
 
-220 
+230 
 	`ESP_LOGE
 (
 TAG
@@ -11881,21 +13737,21 @@ TAG
 ty≥
 );
 
-221 
+231 
 	`ASSERT
 (0);
 
-224 
+234 
 	`ESP_LOGE
 (
 TAG
 , "State machine out of sync!");
 
-225 
+235 
 	`ASSERT
 (0);
 
-231 
+243 
 uöt8_t
 * 
 buff
@@ -11907,55 +13763,53 @@ PARSER_CMD_DEL
 Àn
 );
 
-232 i‡(!
+244 i‡(!
 buff
 ){
 
-233 
+245 
 	`ASSERT
 (0);
 
-236 i‡(
+248 i‡(
 	`is_c⁄√˘_löe
 (
 buff
+, 
+Àn
 Ë=
 åue
 ){
 
-237 
+249 
 	`maûbox_po°
 (
 MAILBOX_POST_CONNECT
 );
 
-239 
+251 
 	`ESP_LOGE
 (
 TAG
 , "didÇot find connect string!");
 
-240 
+252 
 	`ASSERT
 (0);
 
-243 
-	`maûbox_po°
-(
-MAILBOX_POST_WRITE
-);
+256 
+°¨t
+ = 
+	`xTaskGëTickCou¡
+();
 
-244 
-	`puts
-(" got write inÖarser!");
+257 
+íd
+ = 
+°¨t
+ + 1000;
 
-246 
-	`vTaskDñay
-(1000/
-p‹tTICK_PERIOD_MS
-);
-
-249 
+259 
 buff
  = 
 	`©_∑r£r_°rögî
@@ -11965,15 +13819,75 @@ PARSER_DATA_DEL
 Àn
 );
 
-250 i‡(!
+260 if(!
 buff
 ){
 
-251 
+261 
+	`vTaskDñay
+(100/
+p‹tMAX_DELAY
+);
+
+262 i‡(
+	`xTaskGëTickCou¡
+(Ë> 
+íd
+){
+
+263 
+	`ESP_LOGE
+(
+TAG
+, "Timeout!");
+
+264 
 	`ASSERT
 (0);
 
-255 
+272 
+udp
+.
+Àn
+ =Üen;
+
+273 
+	`mem˝y
+(
+udp
+.
+d©a
+, 
+buff
+, 
+Àn
+);
+
+274 
+	`xQueueSídToBack
+(
+öcomög_udp_q
+, &
+udp
+, 
+RTOS_DONT_WAIT
+);
+
+277 
+∑r£d_p
+->
+°©us
+ = 
+AT_PROCESSED_GOOD
+;
+
+279 
+	`vTaskDñay
+(100/
+p‹tMAX_DELAY
+);
+
+281 
 buff
  = 
 	`©_∑r£r_°rögî
@@ -11983,15 +13897,7 @@ PARSER_CMD_DEL
 Àn
 );
 
-256 if(!
-buff
-){
-
-257 
-	`ASSERT
-(0);
-
-260 
+282 
 	`¥ötf
  ("°©u†%d \n", 
 	`is_°©us_löe
@@ -12003,21 +13909,375 @@ buff
 cme_îr
 ) );
 
-261 
+284 
 	`maûbox_po°
 (
 MAILBOX_POST_PROCESSED
 );
 
-263  
-NULL_STATE
+286 
+	`maûbox_waô
+(
+MAILBOX_WAIT_CONSUME
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+);
+
+287 
+	`put_maûbox_£m
+();
+
+289  
+∑r£r_idÀ_°©e
 ;
 
-264 
+290 
 	}
 }
 
-267 
+292 
+°©e_t
+ 
+	$°©e_h™dÀ_wrôe_func
+() {
+
+293 
+	`ESP_LOGI
+(
+TAG
+, "entering handle_write!");
+
+294 
+	`maûbox_po°
+(
+MAILBOX_POST_READY
+);
+
+296 
+©_modem_ª•⁄d_e
+ 
+ãrm
+;
+
+297 
+cme_îr
+ =0;
+
+298 
+Àn
+ = 0;
+
+299 
+löe
+ = 0;
+
+300 
+comm™d_e
+ 
+cmd
+;
+
+301 
+©_∑r£d_s
+ * 
+∑r£d_p
+ = 
+	`gë_∑r£d_°ru˘
+();
+
+302 
+	`˛ór_©_∑r£d_°ru˘
+();
+
+304 
+TickTy≥_t
+ 
+°¨t
+ = 
+	`xTaskGëTickCou¡
+();
+
+305 
+TickTy≥_t
+ 
+íd
+ = 
+°¨t
+ + 
+PARSER_WAIT_FOR_UART
+;
+
+309 
+uöt8_t
+* 
+buff
+ = 
+	`©_∑r£r_°rögî
+(
+PARSER_CMD_DEL
+, &
+Àn
+);
+
+310 if(!
+buff
+){
+
+311 i‡(
+	`xTaskGëTickCou¡
+(Ë> 
+íd
+){
+
+312 
+	`ESP_LOGE
+(
+TAG
+, "FailedÅo ATÑesponse!");
+
+313 
+∑r£d_p
+->
+°©us
+ = 
+AT_PROCESSED_TIMEOUT
+;
+
+315 
+	`maûbox_po°
+(
+MAILBOX_POST_PROCESSED
+);
+
+316 
+	`ESP_LOGI
+(
+TAG
+, "watiing for done!");
+
+318 
+	`maûbox_waô
+(
+MAILBOX_WAIT_CONSUME
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+);
+
+319 
+	`ESP_LOGI
+(
+TAG
+, "done consuming (timeout) ");
+
+320  
+∑r£r_idÀ_°©e
+;
+
+323 if(
+buff
+)
+
+325 if(
+	`is_°©us_löe
+(
+buff
+, 
+Àn
+, &
+cme_îr
+)){
+
+326 
+	`ESP_LOGI
+(
+TAG
+, "Error - unexpected statusÜine!");
+
+327  
+∑r£r_idÀ_°©e
+;
+
+331 if(
+	`vîify_urc_™d_∑r£
+(
+buff
+, 
+Àn
+)){
+
+335 if–!
+	`©_löe_ex∂ode
+(
+buff
+,
+Àn
+, 0)){
+
+337 i‡(
+	`gë_√t_°©e_cmd
+(Ë=
+∑r£d_p
+->
+ty≥
+){
+
+340 
+	`ESP_LOGE
+(
+TAG
+, "Sèã machöêouào‡syn¯- u√x≥˘ed comm™d! (%d)", 
+∑r£d_p
+->
+ty≥
+);
+
+341 
+	`ASSERT
+(0);
+
+344 
+	`ESP_LOGE
+(
+TAG
+, "State machine out of sync!");
+
+345 
+	`ASSERT
+(0);
+
+351 
+uöt8_t
+* 
+buff
+ = 
+	`©_∑r£r_°rögî
+(
+PARSER_CMD_DEL
+, &
+Àn
+);
+
+352 i‡(!
+buff
+){
+
+353 
+	`ASSERT
+(0);
+
+356 i‡(
+	`is_c⁄√˘_löe
+(
+buff
+, 
+Àn
+Ë=
+åue
+){
+
+357 
+	`maûbox_po°
+(
+MAILBOX_POST_CONNECT
+);
+
+359 
+	`ESP_LOGE
+(
+TAG
+, "didÇot find connect string!");
+
+360 
+	`ASSERT
+(0);
+
+363 
+	`maûbox_waô
+(
+MAILBOX_WAIT_WRITE
+, 
+MAILBOX_WAIT_TIME_NOMINAL
+);
+
+364 
+	`puts
+(" got write inÖarser!");
+
+367 
+°¨t
+ = 
+	`xTaskGëTickCou¡
+();
+
+368 
+íd
+ = 
+°¨t
+ + 1000;
+
+370 
+buff
+ = 
+	`©_∑r£r_°rögî
+(
+PARSER_CMD_DEL
+, &
+Àn
+);
+
+371 if(!
+buff
+){
+
+372 
+	`vTaskDñay
+(100/
+p‹tMAX_DELAY
+);
+
+373 i‡(
+	`xTaskGëTickCou¡
+(Ë> 
+íd
+){
+
+374 
+	`ESP_LOGE
+(
+TAG
+, "Timeout!");
+
+375 
+	`ASSERT
+(0);
+
+383 
+	`¥ötf
+ ("°©u†%d \n", 
+	`is_°©us_löe
+(
+buff
+, 
+Àn
+, 
+cme_îr
+) );
+
+384 
+	`maûbox_po°
+(
+MAILBOX_POST_PROCESSED
+);
+
+386  
+∑r£r_idÀ_°©e
+;
+
+387 
+	}
+}
+
+390 
 	$√xt_°©e_func
 (
 °©e_t
@@ -12029,59 +14289,77 @@ cuº_°©e
 evít
 ) {
 
-268 i‡(*
+391 i‡(*
 cuº_°©e
  =
 ∑r£r_idÀ_°©e
 ) {
 
-269 i‡(
+392 i‡(
 evít
  =
 EVENT_ISSUE_CMD
 ) {
 
-270 
+393 
 	`ESP_LOGI
 (
 TAG
 , "Old State:Öarser_idle_state, Next:Öarser_handle_cmd_start_state");
 
-271 *
+394 *
 cuº_°©e
  = 
 ∑r£r_h™dÀ_cmd_°©e
 ;
 
-276 i‡(*
+399 i‡(*
 cuº_°©e
  =
 ∑r£r_idÀ_°©e
 ) {
 
-277 i‡(
+400 i‡(
 evít
  =
 EVENT_ISSUE_WRITE
 ) {
 
-278 
+401 
 	`ESP_LOGI
 (
 TAG
 , "Old State:Öarser_idle_state, Next:Öarser_handle_write");
 
-279 *
+402 *
 cuº_°©e
  = 
 ∑r£r_h™dÀ_wrôe_°©e
 ;
 
-284 
+405 i‡(
+evít
+ =
+EVENT_ISSUE_READ
+) {
+
+406 
+	`ESP_LOGI
+(
+TAG
+, "Old State:Öarser_idle_state, Next:Öarser_handle_read");
+
+407 *
+cuº_°©e
+ = 
+∑r£r_h™dÀ_ªad_°©e
+;
+
+412 
 	}
 }
 
-286 * 
+414 * 
 	$evít_¥öt_func
 (
 °©e_evít_t
@@ -12089,15 +14367,43 @@ cuº_°©e
 evít
 ) {
 
-287  
+415  
 NULL
 ;
 
-288 
+416 
 	}
 }
 
-293 
+421 
+uöt32_t
+ 
+	$gë_cmd_timeout
+(
+comm™d_e
+ 
+cmd
+){
+
+422 
+cmd
+){
+
+423 
+CFUN
+:  
+CFUN_CMD_TIMEOUT
+;
+
+424 : 
+	`ASSERT
+(0);
+
+426 
+	}
+}
+
+428 
 	$po°_urc_to_√tw‹k_œyî
 (
 ©_urc_∑r£d_s
@@ -12105,21 +14411,21 @@ NULL
 ±r
 ){
 
-294 if(!
+429 if(!
 ±r
 ){
 
-295 
+430 
 	`ESP_LOGE
 (
 TAG
 , "NULL ARG!");
 
-296 
+431 
 	`ASSERT
 (0);
 
-299 
+434 
 Ba£Ty≥_t
  
 xSètus
@@ -12133,37 +14439,45 @@ outgoög_urc_queue
 RTOS_DONT_WAIT
 );
 
-300 if(
+435 if(
 xSètus
  =
 pdFALSE
 ){
 
-301 
+436 
 	`ESP_LOGE
 (
 TAG
 , "ran out of space in queue");
 
-302 
+437 
 	`ASSERT
 (0);
 
-305 
+441 
+	`mem£t
+(
+±r
+, 0, (
+©_urc_∑r£d_s
+));
+
+442 
 	}
 }
 
-307 
+444 
 	$∑r£r_°©e_öô_‰ìπos_obje˘s
 () {
 
-308 
+445 
 ∑r£r_°©e_muãx
  = 
 	`xSem≠h‹eCª©eMuãx
 ();
 
-309 
+446 
 outgoög_urc_queue
  = 
 	`xQueueCª©e
@@ -12173,23 +14487,23 @@ MAX_URC_OUTSTANDING
 ©_urc_∑r£d_s
 ));
 
-312 
+449 
 	`ASSERT
 (
 ∑r£r_°©e_muãx
 );
 
-313 
+450 
 	`ASSERT
 (
 outgoög_urc_queue
 );
 
-314 
+451 
 	}
 }
 
-316 
+453 
 boﬁ
  
 	$evít_fûãr_func
@@ -12199,119 +14513,125 @@ boﬁ
 evít
 ) {
 
-317 
+454 
 evít
 ){
 
-318 (
+455 (
 EVENT_URC_F
 Ë:  
 åue
 ;
 
-319 (
+456 (
 EVENT_DONE_URC_F
 Ë:  
 åue
 ;
 
-320 (
+457 (
 EVENT_ISSUE_CMD
 Ë:  
 åue
 ;
 
-321 (
+458 (
 EVENT_ISSUE_WRITE
 Ë:  
 åue
 ;
 
-322 
+459 (
+EVENT_ISSUE_READ
+Ë:  
+åue
+;
+
+460 
 deÁut
  :  
 Ál£
 ;
 
-324 
+462 
 	}
 }
 
-326 
+464 
 °©e_öô_s
 * 
 	$gë_∑r£r_°©e_h™dÀ
 () {
 
-327 
+465 
 °©e_öô_s
  
 ∑r£r_°©e
  = {
 
-328 .
+466 .
 √xt_°©e
  = 
 √xt_°©e_func
 ,
 
-329 .
+467 .
 å™¶©i⁄_èbÀ
  = 
 ∑r£r_å™¶©i⁄_èbÀ
 ,
 
-330 .
+468 .
 evít_¥öt
  = 
 evít_¥öt_func
 ,
 
-331 .
+469 .
 °¨tög_°©e
  = 
 ∑r£r_idÀ_°©e
 ,
 
-332 .
+470 .
 °©e_«me_°rög
  = "parser_state",
 
-333 .
+471 .
 fûãr_evít
  = 
 evít_fûãr_func
 ,
 
-334 .
+472 .
 tŸÆ_°©es
  = 
 ∑r£r_°©e_Àn
 ,
 
-336  &(
+474  &(
 ∑r£r_°©e
 );
 
-337 
+475 
 	}
 }
 
-339 
+477 
 	$∑r£r_°©e_•aw√r
 () {
 
-340 
+478 
 	`∑r£r_°©e_öô_‰ìπos_obje˘s
 ();
 
-343 
+481 
 	`°¨t_√w_°©e_machöe
 (
 	`gë_∑r£r_°©e_h™dÀ
 ());
 
-344 
+482 
 	}
 }
 
@@ -12383,55 +14703,63 @@ outgoög_urc_queue
 	m∑r£r_h™dÀ_wrôe_°©e
 ,
 
-30 
+29 
+	m∑r£r_h™dÀ_ªad_°©e
+,
+
+31 
 	m∑r£r_°©e_Àn
 
 
-31 } 
+32 } 
 	t∑r£r_°©e_e
 ;
 
-35 
+36 
 	mEVENT_URC_F
  = 
 PARSER_CORE_EVENT_START
 ,
 
-36 
+37 
 	mEVENT_DONE_URC_F
 ,
 
-37 
+38 
 	mEVENT_ISSUE_CMD
 ,
 
-38 
+39 
 	mEVENT_HANDLE_CMD_F
 ,
 
-39 
+40 
 	mEVENT_ISSUE_WRITE
 ,
 
 41 
+	mEVENT_ISSUE_READ
+,
+
+43 
 	m∑r£r_evít_Àn
 
 
-42 } 
+44 } 
 	t∑r£r_evít_e
 ;
 
-47 
+49 
 	#MAX_URC_OUTSTANDING
  (5)
 
-48 
+50 
 	#INVALID_EVENT
  (0xFFFFFFFF)
 
 	)
 
-49 
+51 
 	#NET_SATE_MUTEX_WAIT
  (2500 / 
 p‹tTICK_PERIOD_MS
@@ -12439,7 +14767,7 @@ p‹tTICK_PERIOD_MS
 
 	)
 
-50 
+52 
 	#NET_SATE_QUEUE_TO
  (2500 / 
 p‹tTICK_PERIOD_MS
@@ -12447,9 +14775,25 @@ p‹tTICK_PERIOD_MS
 
 	)
 
-51 
+53 
 	#PARSER_WAIT_FOR_UART
  (2500 / 
+p‹tTICK_PERIOD_MS
+)
+
+	)
+
+54 
+	#PARSER_WAIT_FOR_ECHO
+ (2500 / 
+p‹tTICK_PERIOD_MS
+)
+
+	)
+
+56 
+	#CFUN_CMD_TIMEOUT
+ (50000 / 
 p‹tTICK_PERIOD_MS
 )
 
@@ -12532,6 +14876,408 @@ ulSèπTimeNs
 66 
 	}
 }
+
+	@sim_stream.c
+
+1 
+	~<°dio.h
+>
+
+2 
+	~<°dlib.h
+>
+
+3 
+	~<°rög.h
+>
+
+5 
+	~"FªeRTOS.h
+"
+
+6 
+	~"£mphr.h
+"
+
+7 
+	~"èsk.h
+"
+
+8 
+	~"evít_groups.h
+"
+
+9 
+	~<î∫o.h
+>
+
+11 
+	~"sim_°ªam.h
+"
+
+12 
+	~"globÆ_deföes.h
+"
+
+13 
+	~"©_∑r£r.h
+"
+
+26 c⁄° 
+	gTAG
+[] = "SIM_STREAM";
+
+33 
+	g©_cfun_0
+[] = "AT+CFUN?\r\n";
+
+34 
+	g©_cfun_1
+[] = "+CFUN: 1\r\n";
+
+35 
+	g©_cfun_2
+[] = "+CFUN: 2\r\n";
+
+36 
+	g©_cfun_3
+[] = "\r\n";
+
+37 
+	g©_cfun_4
+[] = "OK\r\n";
+
+39 
+dñay_comm™d_s
+ 
+	g©_cfun
+ = {
+
+40 .
+unôs
+[0] = {10, 
+©_cfun_0
+},
+
+41 .
+	gunôs
+[1] = {20, 
+©_cfun_1
+},
+
+42 .
+	gunôs
+[2] = {30, 
+©_cfun_2
+},
+
+43 .
+	gunôs
+[3] = {1000, 
+©_cfun_3
+},
+
+44 .
+	gunôs
+[4] = {1003, 
+©_cfun_4
+},
+
+47 
+dñay_comm™d_s
+ * 
+	gcuº_cmd
+;
+
+48 
+	gcuº_unô
+;
+
+49 
+	g°¨t_time
+;
+
+52 
+	$£t_cuºít_cmd
+(
+comm™d_e
+ 
+cmd
+){
+
+53 
+cuº_unô
+ = 0;
+
+54 
+°¨t_time
+ = 
+	`xTaskGëTickCou¡
+();
+
+56 
+cmd
+){
+
+57 (
+CFUN
+):
+
+58 
+cuº_cmd
+ = &
+©_cfun
+;
+
+61 
+	}
+}
+
+63 #ifde‡
+FAKE_INPUT_STREAM_MODE
+
+
+66 
+uöt8_t
+* 
+	$©_öcommög_gë_°ªam
+(*
+Àn
+){
+
+67 
+cuº_time
+ = 
+	`xTaskGëTickCou¡
+(Ë- 
+°¨t_time
+;
+
+68 
+cuº_time
+ = cuº_timê/ 
+p‹tTICK_PERIOD_MS
+;
+
+70 
+dñay_comm™d_s
+ * 
+tmp
+ = 
+cuº_cmd
+;
+
+71 
+dñay_unô_s
+ 
+unô
+ = 
+cuº_cmd
+->
+unôs
+[
+cuº_unô
+];
+
+73 if(
+cuº_time
+ < 
+unô
+.
+dñay
+){
+
+74  
+NULL
+;
+
+77 
+cuº_unô
+++;
+
+78 *
+Àn
+ = 
+	`°æí
+(
+unô
+.
+öfo
+);
+
+79  (
+unô
+.
+öfo
+);
+
+80 
+	}
+}
+
+83 
+	$©_comm™d_issue_hÆ
+(*
+cmd
+, 
+Àn
+){
+
+84 
+	}
+}
+
+88 * 
+	$ã°_thªad
+ (* 
+¨g
+){
+
+89 
+Àn
+;
+
+90 
+	`£t_cuºít_cmd
+(
+CFUN
+);
+
+91 
+	`vTaskDñay
+(1000/
+p‹tTICK_PERIOD_MS
+);
+
+92 
+	`¥ötf
+("%†\n", 
+	`©_öcommög_gë_°ªam
+(&
+Àn
+));
+
+93 
+	}
+}
+
+95 
+	$sim_°ªam_ã°
+(){
+
+96 
+Ba£Ty≥_t
+ 
+rc
+ = 
+	`xTaskCª©e
+(
+ã°_thªad
+,
+
+99 
+NULL
+,
+
+101 
+NULL
+);
+
+104 
+	}
+}
+
+	@sim_stream.h
+
+1 #¥agm®
+⁄˚
+
+
+3 
+	~"FªeRTOS.h
+"
+
+4 
+	~"queue.h
+"
+
+5 
+	~"°dboﬁ.h
+"
+
+6 
+	~"evít_groups.h
+"
+
+7 
+	~"©_∑r£r.h
+"
+
+12 
+	#MAX_DELAY_UNITS
+ (50)
+
+	)
+
+13 
+	#DELAY_UNIT
+ (10)
+
+	)
+
+19 
+uöt32_t
+ 
+	mdñay
+;
+
+20 * 
+	möfo
+;
+
+21 }
+	tdñay_unô_s
+;
+
+24 
+dñay_unô_s
+ 
+	munôs
+[
+MAX_DELAY_UNITS
+];
+
+25 }
+	tdñay_comm™d_s
+;
+
+32 
+uöt8_t
+ * 
+©_öcommög_gë_°ªam
+(*
+Àn
+);
+
+33 
+©_comm™d_issue_hÆ
+(*
+cmd
+, 
+Àn
+);
+
+35 
+£t_cuºít_cmd
+(
+comm™d_e
+ 
+cmd
+);
+
+36 
+sim_§óm_ã°
+();
 
 	@state_core.c
 
@@ -13370,6 +16116,20 @@ INVALID_EVENT
 ){
 
 210 
+	`ESP_LOGI
+(
+TAG
+, "(%sËI¿°©ê%d, gŸÉvíà%d", 
+°©e_öô_±r
+->
+°©e_«me_°rög
+, 
+°©e
+, 
+√w_evít
+ );
+
+211 
 °©e_öô_±r
 ->
 	`√xt_°©e
@@ -13379,31 +16139,31 @@ INVALID_EVENT
 √w_evít
 );
 
-218 i‡(
+219 i‡(
 cuº_°©e
  !
 °©e
 ){
 
-223 
+224 
 	}
 }
 
-225 
+226 
 	$°©e_c‹e_•aw√r
 () {
 
-226 
+227 
 Ba£Ty≥_t
  
 rc
 ;
 
-228 
+229 
 	`°©e_c‹e_öô_‰ìπos_obje˘s
 ();
 
-229 
+230 
 rc
  = 
 	`xTaskCª©e
@@ -13411,29 +16171,29 @@ rc
 evít_mu…ùÀxî
 ,
 
-232 
+233 
 NULL
 ,
 
-234 
+235 
 NULL
 );
 
-236 i‡(
+237 i‡(
 rc
  !
 pdPASS
 ) {
 
-237 
+238 
 	`ASSERT
 (0);
 
-239 
+240 
 	}
 }
 
-241 
+242 
 	$°¨t_√w_°©e_machöe
 (
 °©e_öô_s
@@ -13441,21 +16201,21 @@ pdPASS
 °©e_±r
 ) {
 
-242 i‡(!
+243 i‡(!
 °©e_±r
 ) {
 
-243 
+244 
 	`ESP_LOGE
 (
 TAG
 , "ARG==NULL!");
 
-244 
+245 
 	`ASSERT
 (0);
 
-248 i‡(
+249 i‡(
 °©e_±r
 ->
 evít_¥öt
@@ -13465,17 +16225,17 @@ NULL
 √xt_°©e
  == NULL) {
 
-249 
+250 
 	`ESP_LOGE
 (
 TAG
 , "ERROR!Évent_print /Çext_state func was NULL!");
 
-250 
+251 
 	`ASSERT
 (0);
 
-254 i‡(
+255 i‡(
 °©e_±r
 ->
 å™¶©i⁄_èbÀ
@@ -13485,49 +16245,49 @@ NULL
 °©e_«me_°rög
  == NULL) {
 
-255 
+256 
 	`ESP_LOGE
 (
 TAG
 , "ERROR!Åranslation_table / state_name_string was NULL!");
 
-256 
+257 
 	`ASSERT
 (0);
 
-260 if(
+261 if(
 °©e_±r
 ->
 °©e_queue_öput_h™dÀ_¥iv©e
 ){
 
-261 
+262 
 	`ESP_LOGE
 (
 TAG
 , "User shouldÇot set state_queue_input_handle_private!");
 
-262 
+263 
 	`ASSERT
 (0);
 
-265 if(
+266 if(
 °©e_±r
 ->
 tŸÆ_°©es
  == 0){
 
-266 
+267 
 	`ESP_LOGE
 (
 TAG
 , "Total statesÜen == 0!");
 
-267 
+268 
 	`ASSERT
 (0);
 
-270 
+271 
 °©e_±r
 ->
 °©e_queue_öput_h™dÀ_¥iv©e
@@ -13539,7 +16299,7 @@ EVENT_QUEUE_MAX_DEPTH
 °©e_evít_t
 ));
 
-273 
+274 
 	`ASSERT
 (
 °©e_±r
@@ -13547,13 +16307,13 @@ EVENT_QUEUE_MAX_DEPTH
 °©e_queue_öput_h™dÀ_¥iv©e
 );
 
-276 
+277 
 	`add_evít_c⁄sumî
 (
 °©e_±r
 );
 
-278 
+279 
 	`ESP_LOGI
 (
 TAG
@@ -13563,7 +16323,7 @@ TAG
 °©e_«me_°rög
 );
 
-279 
+280 
 Ba£Ty≥_t
  
 rc
@@ -13573,31 +16333,31 @@ rc
 °©e_machöe
 ,
 
-280 
+281 
 °©e_±r
 ->
 °©e_«me_°rög
 ,
 
-282 (*)
+283 (*)
 °©e_±r
 ,
 
-284 
+285 
 NULL
 );
 
-286 i‡(
+287 i‡(
 rc
  !
 pdPASS
 ) {
 
-287 
+288 
 	`ASSERT
 (0);
 
-289 
+290 
 	}
 }
 
@@ -13810,6 +16570,24 @@ p‹tTICK_PERIOD_MS
 14 
 	#CFUN_RADIO_ON
  (1)
+
+	)
+
+16 
+	#CGACT_STATUS_LINE
+ (1)
+
+	)
+
+17 
+	#CFUN_STATUS_INDEX
+ (0)
+
+	)
+
+18 
+	#CFUN_STATUS_INDEX
+ (0)
 
 	)
 
@@ -14239,45 +17017,39 @@ POSIX_FREERTOS_SIM
 
 35 c⁄° 
 	gAT_PORT
-[] = "/dev/ttyUSB2";
+[] = "/dev/ttyUSB0";
 
 36 
 	g©fd
 ;
 
-37 
-QueueSëH™dÀ_t
- 
-	gcomm™d_issue_q
-;
-
-38 
+37 
 QueueSëH™dÀ_t
  
 löe_„ed_q
 ;
 
-39 
+38 
 uöt8_t
  
 	gbuff_s
 [512];
 
-46 
+45 
 boﬁ
  
 	$©_öcommög_≥ek
 (){
 
-47 #ifde‡
+46 #ifde‡
 POSIX_FREERTOS_SIM
 
 
-50 
+49 
 cou¡
  = 0;
 
-51 i‡–
+50 i‡–
 	`io˘l
 (
 ©fd
@@ -14287,27 +17059,31 @@ FIONREAD
 cou¡
 ) < 0 ) {
 
-52 
+51 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo issue ioctl!");
 
-55 if(
+54 if(
 cou¡
  > 0Ë 
 åue
 ;
 
-57  
+56  
 Ál£
 ;
 
-60 
+59 
 	}
 }
 
-64 
+61 #i‚de‡
+FAKE_INPUT_STREAM_MODE
+
+
+65 
 uöt8_t
 * 
 	$©_öcommög_gë_°ªam
@@ -14315,21 +17091,21 @@ uöt8_t
 Àn
 ){
 
-65 i‡(!
+66 i‡(!
 Àn
 ){
 
-66 
+67 
 	`ESP_LOGE
 (
 TAG
 , "NullÖarameter!");
 
-67 
+68 
 	`ASSERT
 (0);
 
-70 
+71 
 rc
  = 
 	`ªad
@@ -14339,27 +17115,31 @@ rc
 buff_s
 , (buff_s));
 
-71 i‡–
+72 i‡–
 rc
  > 0 ){
 
-72 *
+73 *
 Àn
  = 
 rc
 ;
 
-75 
-ã°
-[200];
+74 #ifde‡
+POSIX_FREERTOS_SIM
 
-76 
+
+76 
+ã°
+[2000];
+
+77 
 	`mem£t
 (
 ã°
 , 0 , 200);
 
-77 
+78 
 	`mem˝y
 (
 ã°
@@ -14369,7 +17149,7 @@ buff_s
 rc
 );
 
-78 
+79 
 	`¥ötf
 ("ECHO (%d):> %†\n", 
 rc
@@ -14377,19 +17157,33 @@ rc
 ã°
 );
 
-80  
+81 
+i
+ = 0; i < 
+rc
+; i++){
+
+82 
+	`¥ötf
+("%¯(%d), \n", 
+ã°
+[
+i
+],Åest[i]);
+
+86  
 buff_s
 ;
 
-83  
+88  
 NULL
 ;
 
-84 
+89 
 	}
 }
 
-86 
+91 
 	$©_comm™d_issue_hÆ
 (*
 cmd
@@ -14397,21 +17191,21 @@ cmd
 Àn
 ){
 
-87 if(!
+92 if(!
 cmd
 ){
 
-88 
+93 
 	`ESP_LOGE
 (
 TAG
 , "CMD ==Çull!");
 
-89 
+94 
 	`ASSERT
 (0);
 
-91 
+96 
 	`ESP_LOGI
 (
 TAG
@@ -14419,11 +17213,11 @@ TAG
 cmd
 );
 
-93 #ifde‡
+98 #ifde‡
 POSIX_FREERTOS_SIM
 
 
-94 
+99 
 rc
  = 
 	`wrôe
@@ -14435,55 +17229,37 @@ cmd
 Àn
 );
 
-95 i‡(
+100 i‡(
 rc
  == -1){
 
-96 
+101 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo writeÅo UART HAL!");
 
-97  
+102  
 UART_HAL_WRITE_ERROR
 ;
 
-100  
+105  
 UART_HAL_WRITE_OK
 ;
 
-103 
-	}
-}
-
-105 
-	$öô_˚Œuœr_‰ìπos_obje˘s
- (){
-
-106 
-comm™d_issue_q
- = 
-	`xQueueCª©e
-(2, 
-MAX_WRITE_COMMAND_LEN
-);
-
 108 
-	`ASSERT
-(
-comm™d_issue_q
-);
-
-109 
 	}
 }
 
-112 
+113 
 	$•awn_u¨t_thªad
 (){
 
-113 
+114 #i‚de‡
+FAKE_INPUT_STREAM_MODE
+
+
+115 
 ©fd
  = 
 	`›í
@@ -14493,21 +17269,21 @@ AT_PORT
 O_RDWR
 );
 
-114 i‡(
+116 i‡(
 ©fd
  == -1){
 
-115 
+117 
 	`ESP_LOGE
 (
 TAG
 , "FailedÅo open UART PORT!");
 
-116 
+118 
 	`ASSERT
 (0);
 
-120 
+122 
 Êags
  = 
 	`f˙é
@@ -14517,7 +17293,7 @@ TAG
 F_GETFL
 , 0);
 
-121 
+123 
 	`f˙é
 (
 ©fd
@@ -14529,7 +17305,7 @@ F_SETFL
 O_NONBLOCK
 );
 
-131 
+125 
 	}
 }
 
@@ -63534,8 +66310,8 @@ _IOC_SIZESHIFT
 .
 1
 /usr/include
-142
-3812
+148
+3896
 FreeRTOSConfig.h
 at_parser.c
 at_parser.h
@@ -63551,13 +66327,19 @@ mailbox.h
 main.c
 main_blinky.c
 main_full.c
+net_adaptor.c
+net_adaptor.h
 network_constants.c
 network_constants.h
 network_state.c
 network_state.h
+network_test.c
+network_test.h
 parser_state.c
 parser_state.h
 run-time-stats-utils.c
+sim_stream.c
+sim_stream.h
 state_core.c
 state_core.h
 threegpp.h

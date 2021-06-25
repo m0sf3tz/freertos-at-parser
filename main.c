@@ -158,7 +158,7 @@ int main( void )
     net_adaptor_spawner();
     network_driver();
 #else
-    get_stream();
+    sim_stream_test();
 #endif 
     vTaskStartScheduler();
     return 0;

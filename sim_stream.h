@@ -33,7 +33,7 @@ uint8_t * at_incomming_get_stream(int *len);
 int       at_command_issue_hal(char *cmd, int len);
 
 void      set_current_cmd(command_e cmd);
-
+void      sim_sream_test();
 /*********************************************************
 *                                                GLOBALS *   
 *********************************************************/
