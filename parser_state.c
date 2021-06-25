@@ -114,6 +114,7 @@ static state_t state_handle_cmd_func () {
       }
 
       if(verify_urc_and_parse(buff, len)){
+        ESP_LOGI(TAG, "Waiting for cmd echo - got URC instead");
         continue;
       }
 

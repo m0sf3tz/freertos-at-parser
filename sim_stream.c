@@ -30,7 +30,8 @@ static const char         TAG[] = "SIM_STREAM";
 **********************************************************/
 
 
-static char at_cfun_0[] = "AT+CFUN?\r\n";
+//static char at_cfun_0[] = "AT+CFUN?\r\n";
+static char at_cfun_0[] = "+CFUN: 0\r\n";
 static char at_cfun_1[] = "+CFUN: 1\r\n";
 static char at_cfun_2[] = "+CFUN: 2\r\n";
 static char at_cfun_3[] = "\r\n";
