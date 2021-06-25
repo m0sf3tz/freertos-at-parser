@@ -41,7 +41,7 @@ static delay_command_s at_cfun = {
   .units[1] = {20, at_cfun_1},
   .units[2] = {30, at_cfun_2},
   .units[3] = {40, at_cfun_3},
-  .units[4] = {3000, at_cfun_4},
+  .units[4] = {6645, at_cfun_4},
 };
 
 static delay_command_s * curr_cmd;

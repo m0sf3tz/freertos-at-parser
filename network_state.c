@@ -430,20 +430,29 @@ bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
   at_parsed_s * parsed_p = get_parsed_struct();
   
   get_mailbox_sem();
+  set_net_state_cmd(cmd_enum);
 
   ESP_LOGI(TAG, "Posting issue cmd!");
   state_post_event(EVENT_ISSUE_CMD);
 
   ESP_LOGI(TAG, "waiting for ready from parser state");
-  if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
-  set_net_state_cmd(cmd_enum);
+  if (!mailbox_wait(MAILBOX_WAIT_READY, MAILBOX_WAIT_TIME_NOMINAL)){
+    ESP_LOGE(TAG, "Parser sate not ready!");
+    goto fail;
+  }
   set_net_state_token();
 
   ESP_LOGI(TAG, "ISSUE CMD-> %s", cmd);
-  if(at_command_issue_hal(cmd, len) == -1) goto fail;
+  if(at_command_issue_hal(cmd, len) == -1){
+    ESP_LOGE(TAG, "Failed to write command to uart!");
+    goto fail;
+  }
   
   ESP_LOGI(TAG, "waiting for processed CMD from PARSER_STATE");
-  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)) goto fail;
+  if(!mailbox_wait(MAILBOX_WAIT_PROCESSED, MAILBOX_WAIT_TIME_NOMINAL)){
+    ESP_LOGE(TAG, "Failed to get processed command!");
+    goto fail;
+  }
 
   // verify token
   ESP_LOGI(TAG, "Verying token");

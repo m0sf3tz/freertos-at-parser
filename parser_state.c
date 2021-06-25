@@ -27,8 +27,8 @@ static state_t state_handle_cmd_func();
 static state_t state_handle_write_func();
 static state_t state_handle_read_func();
 
-static void     post_urc_to_network_layer(at_urc_parsed_s * ptr);
-static uint32_t get_cmd_timeout(command_e cmd);
+static void       post_urc_to_network_layer(at_urc_parsed_s * ptr);
+static TickType_t get_cmd_timeout(command_e cmd);
 
 /*********************************************************
 *                                       STATIC VARIABLES *
@@ -79,13 +79,15 @@ static state_t state_idle_func() {
 }
 
 static state_t state_handle_cmd_func () {
-  at_modem_respond_e term; 
-  int cme_err =0;
-  int len = 0;
-  int line = 0;
-  TickType_t echo_to = xTaskGetTickCount() + PARSER_WAIT_FOR_ECHO;
-  command_e cmd;
+  int cme_err            = 0;
+  int len                = 0;
+  int line               = 0;
+  TickType_t echo_to     = xTaskGetTickCount() + PARSER_WAIT_FOR_ECHO;
+  TickType_t cmd_to      = xTaskGetTickCount() + get_cmd_timeout( get_net_state_cmd() );
   at_parsed_s * parsed_p = get_parsed_struct();
+  at_modem_respond_e term; 
+  command_e cmd;
+  
   clear_at_parsed_struct();
   
   ESP_LOGI(TAG, "entering handle_cmd!");
@@ -133,13 +135,13 @@ static state_t state_handle_cmd_func () {
   }
 
   // parse the lines of a command (not including first)
-  for(line = 1; line < MAX_LINES_AT; line++)
+  for(line = 1; line < MAX_LINES_AT;)
   {
     uint8_t* buff = at_parser_stringer(PARSER_CMD_DEL, &len);
     if (buff){
       if (len == 0){
-         ESP_LOGE(TAG, "Failed to parse!");
-        // TODO: handle...
+         ESP_LOGE(TAG, "Read zero lenght!");
+         ASSERT(0);
       }
       
       term = is_status_line(buff, len, &cme_err); 
@@ -152,28 +154,38 @@ static state_t state_handle_cmd_func () {
         ESP_LOGI(TAG, "ready to consume"); 
         
         mailbox_post(MAILBOX_POST_PROCESSED);
-        ESP_LOGI(TAG, "watiing for done!");
+        ESP_LOGI(TAG, "wating for done processing ACK!");
         
         mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
-        ESP_LOGI(TAG, "done consuming"); 
+        ESP_LOGI(TAG, "network state finished consuming"); 
         return parser_idle_state;  
       }
 
       if(at_line_explode(buff,len, line)){
+        parsed_p->status = AT_PROCESSED_DERAIL;
         ESP_LOGE(TAG, "Failed to parse line!");
-        // TODO: handle...
-      } 
+        goto error;
+      }
+
+      line++; 
     } else{
-      puts("here");
-    }
+      if (xTaskGetTickCount() > cmd_to){
+        parsed_p->status = AT_PROCESSED_TIMEOUT;
+        ESP_LOGE(TAG, "Timeout on cmd!");
+        goto error;
+      }
+      vTaskDelay(25/portTICK_PERIOD_MS);
+    } 
   }
 error:
+
   mailbox_post(MAILBOX_POST_PROCESSED);
-  ESP_LOGI(TAG, " Posting Processed!");
+  ESP_LOGI(TAG, "(fail) Posting Processed!");
         
   mailbox_wait(MAILBOX_WAIT_CONSUME, MAILBOX_WAIT_TIME_NOMINAL);
-  ESP_LOGI(TAG, "finished consuming!"); 
-  return NULL_STATE;
+  ESP_LOGI(TAG, "(fail) finished consuming!"); 
+
+  return parser_idle_state;
 }
 
 static state_t state_handle_read_func() {
@@ -418,7 +430,7 @@ static char* event_print_func(state_event_t event) {
 /*********************************************************
                                     NON-STATE  FUNCTIONS *
 *********************************************************/
-static uint32_t get_cmd_timeout(command_e cmd){
+static TickType_t get_cmd_timeout(command_e cmd){
  switch(cmd){
   case CFUN: return CFUN_CMD_TIMEOUT;
   default: ASSERT(0);

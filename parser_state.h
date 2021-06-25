@@ -53,4 +53,4 @@ typedef enum {
 #define PARSER_WAIT_FOR_UART (2500 / portTICK_PERIOD_MS)
 #define PARSER_WAIT_FOR_ECHO (2500 / portTICK_PERIOD_MS)
 
-#define CFUN_CMD_TIMEOUT     (50000 / portTICK_PERIOD_MS)
+#define CFUN_CMD_TIMEOUT     (5000 / portTICK_PERIOD_MS)

@@ -8,8 +8,7 @@
 /*********************************************************
 *                                                DEFINES *
 *********************************************************/
-#define MAILBOX_WAIT_TIME_NOMINAL (2500/portTICK_PERIOD_MS)
-//#define EVENT_WAIT_PERIOD    (2500/portTICK_PERIOD_MS)
+#define MAILBOX_WAIT_TIME_NOMINAL (120000/portTICK_PERIOD_MS) //very long, parser state should timeout first
 #define MUTEX_TIMEOUT_PERIOD (3000/portTICK_PERIOD_MS)
 
 #define MAILBOX_WAIT_READY     (1 << 0)

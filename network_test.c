@@ -39,4 +39,10 @@ void network_test(){
   create_cfun_en_cmd(misc_buff, 150);
   printf("%s \n", misc_buff);
   send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);
+
+  vTaskDelay(1000);
+  set_current_cmd(CFUN);
+  puts("sending second cmd1");
+  send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);
+
 }
