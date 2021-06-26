@@ -22,4 +22,4 @@ build/network_test.o: network_test.c \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/timers.h \
  mailbox.h \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/queue.h \
- global_defines.h network_state.h state_core.h at_parser.h
+ global_defines.h network_state.h state_core.h at_parser.h network_test.h

@@ -424,6 +424,10 @@ at_parsed_s * get_parsed_struct(){
   return &parsed;
 }
 
+void clear_parsed_struct(){
+  memset(&parsed, 0, sizeof(parsed));
+}
+
 at_urc_parsed_s * get_urc_parsed_struct(){
   return &urc_parsed;
 }

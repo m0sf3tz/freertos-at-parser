@@ -8,6 +8,7 @@
 #include "event_groups.h"
 #include <errno.h>
 
+#include "network_test.h"
 #include "sim_stream.h"
 #include "global_defines.h"
 #include "at_parser.h"
@@ -23,41 +24,68 @@
 /**********************************************************
 *                                        STATIC VARIABLES *
 **********************************************************/
-static const char         TAG[] = "SIM_STREAM";
+static const char      TAG[] = "SIM_STREAM";
+
+static char at_cfun_good_0[] = "AT+CFUN?\r\n";
+static char at_cfun_good_1[] = "+CFUN: 1\r\n";
+static char at_cfun_good_2[] = "+CFUN: 2\r\n";
+static char at_cfun_good_3[] = "\r\n";
+static char at_cfun_good_4[] = "OK\r\n";
+
+static char at_cfun_error_0[] = "AT+CFUN=0\r\n";
+static char at_cfun_error_1[] = "ERROR\r\n";
+
+static char at_cfun_cme_0[] = "AT+CFUN=0\r\n";
+static char at_cfun_cme_1[] = "+CME ERROR: 16\r\n";
+
+static delay_command_s at_cfun_good = {
+  .units[0] = {10, at_cfun_good_0},
+  .units[1] = {20, at_cfun_good_1},
+  .units[2] = {30, at_cfun_good_2},
+  .units[3] = {40, at_cfun_good_3},
+  .units[4] = {50, at_cfun_good_4},
+};
+
+static delay_command_s at_cfun_timeout = {
+  .units[0] = {10, at_cfun_good_0},
+  .units[1] = {20, at_cfun_good_1},
+  .units[2] = {30, at_cfun_good_2},
+  .units[3] = {6000, at_cfun_good_3},
+  .units[4] = {50, at_cfun_good_4},
+};
+
+static delay_command_s at_cfun_error = {
+  .units[0] = {10, at_cfun_error_0},
+  .units[1] = {20, at_cfun_error_1},
+};
+
+static delay_command_s at_cfun_cme = {
+  .units[0] = {10, at_cfun_cme_0},
+  .units[1] = {20, at_cfun_cme_1},
+};
 
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
 
 
-//static char at_cfun_0[] = "AT+CFUN?\r\n";
-static char at_cfun_0[] = "+CFUN: 0\r\n";
-static char at_cfun_1[] = "+CFUN: 1\r\n";
-static char at_cfun_2[] = "+CFUN: 2\r\n";
-static char at_cfun_3[] = "\r\n";
-static char at_cfun_4[] = "OK\r\n";
-
-static delay_command_s at_cfun = {
-  .units[0] = {10, at_cfun_0},
-  .units[1] = {20, at_cfun_1},
-  .units[2] = {30, at_cfun_2},
-  .units[3] = {40, at_cfun_3},
-  .units[4] = {6645, at_cfun_4},
-};
-
 static delay_command_s * curr_cmd;
 static int curr_unit;
 static int start_time;
-
 
 void set_current_cmd(command_e cmd){
   curr_unit = 0;
   start_time = xTaskGetTickCount();
 
   switch(cmd){
-    case(CFUN):
-      curr_cmd = &at_cfun;
-      return;
+    case(CFUN_GOOD):
+      curr_cmd = &at_cfun_good; return;
+    case(CFUN_TIMEOUT): 
+      curr_cmd = &at_cfun_timeout; return;
+    case(CFUN_ERROR): 
+      curr_cmd = &at_cfun_error; return;
+    case(CFUN_CME): 
+      curr_cmd = &at_cfun_cme; return;
   }
 }
 

@@ -147,9 +147,11 @@ static state_t state_handle_cmd_func () {
       
       term = is_status_line(buff, len, &cme_err); 
       if(term){
-        parsed_p->token  = get_net_state_token();
-        parsed_p->status = AT_PROCESSED_GOOD;
-        parsed_p->response = term;
+        parsed_p->token     = get_net_state_token();
+        parsed_p->status    = AT_PROCESSED_GOOD;
+        parsed_p->response  = term;
+        parsed_p->cme       = cme_err;
+        parsed_p->num_lines = line - 1;
 
         ESP_LOGI(TAG, "Done parsing! (len == %d)", len);
         ESP_LOGI(TAG, "ready to consume"); 

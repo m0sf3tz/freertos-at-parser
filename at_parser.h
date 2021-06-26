@@ -45,7 +45,9 @@ typedef enum {
 typedef enum {
   AT_PROCESSED_GOOD,
   AT_PROCESSED_TIMEOUT,
-  AT_PROCESSED_DERAIL     //sequence no longer followed
+  AT_PROCESSED_DERAIL,       //sequence no longer followed
+  
+  AT_PROCESSED_LAST = 0xFFFF // used in tests
 } at_processed_status_e;
 
 typedef enum {
@@ -115,7 +117,8 @@ typedef struct {
 
   // The number of lines the command returned
   // IE, for the KBNDCFG example above, this would
-  // be set to 2
+  // be set to 2, it does not include the echo or
+  // termination
   size_t num_lines;
 
   // Parameters, for example on,
@@ -133,6 +136,9 @@ typedef struct {
   // ie one of (ERROR, OK, +CME ERROR)
   at_modem_respond_e response;
 
+  // If the response was a CME error, 
+  // it is stored here
+  uint16_t cme;
 }at_parsed_s;
 
 // Register for URC callbacks
@@ -187,6 +193,7 @@ at_type_t           get_type(char *s);
 bool                verify_urc_and_parse(char * str, int len);
 void                print_parsed();
 void                print_parsed_urc(at_urc_parsed_s * urc);
+void                clear_parsed_struct();
 at_parsed_s        *get_parsed_struct();
 at_urc_parsed_s    *get_urc_parsed_struct();
 at_modem_respond_e  is_status_line(char * line, size_t len, int *cme_error);

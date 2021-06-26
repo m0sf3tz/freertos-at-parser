@@ -20,6 +20,6 @@ build/sim_stream.o: sim_stream.c \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/task.h \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/event_groups.h \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/timers.h \
- sim_stream.h \
+ network_test.h \
  /home/sam/Downloads/FreeRTOSv202104.00/FreeRTOS/Source/include/queue.h \
- at_parser.h global_defines.h
+ sim_stream.h at_parser.h global_defines.h
