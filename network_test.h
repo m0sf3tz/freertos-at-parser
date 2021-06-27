@@ -17,6 +17,7 @@ typedef enum {
   CFUN_TIMEOUT,
   CFUN_ERROR,
   CFUN_CME,
+  CFUN_URC,
 } network_tests_e;
 
 

@@ -206,7 +206,7 @@ static state_init_s* get_network_state_handle() {
     return &(parser_state);
 }
 
-static void set_urc_handler(command_e urc, void (*handler) (void)){
+void set_urc_handler(command_e urc, void (*handler) (void)){
   ASSERT(handler);
 
   at_urc_parsed_s urc_handler;
@@ -219,7 +219,7 @@ static void set_urc_handler(command_e urc, void (*handler) (void)){
   xQueueSendToBack(outgoing_urc_queue, &urc_handler, portMAX_DELAY);
 }
 
-static void pop_urc_handler(command_e urc){
+void pop_urc_handler(command_e urc){
   at_urc_parsed_s urc_handler;
   urc_register_s  urc_reg;
   memset(&urc_reg, 0 , sizeof(urc_reg));
@@ -230,7 +230,7 @@ static void pop_urc_handler(command_e urc){
   xQueueSendToBack(outgoing_urc_queue, &urc_handler, portMAX_DELAY);
 }
 
-static void handle_cereg_urc(){
+void handle_cereg_urc(){
    if (urc_parsed.param_arr[0].val == 1){
      ESP_LOGI(TAG, "Registered! - posting!");
      state_post_event(NETWORK_ATTACHED);
@@ -748,6 +748,7 @@ void network_driver(){
   network_state_init_freertos_objects();
 #ifdef FAKE_INPUT_STREAM_MODE
   xTaskCreate(network_test_thread, "", 1024, "", 5, NULL); 
+  xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
 #else
   network_state_init();
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 

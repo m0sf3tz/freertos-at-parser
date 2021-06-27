@@ -115,6 +115,7 @@ static state_t state_handle_cmd_func () {
 
       if(verify_urc_and_parse(buff, len)){
         ESP_LOGI(TAG, "Waiting for cmd echo - got URC instead");
+        post_urc_to_network_layer(get_urc_parsed_struct());
         continue;
       }
 
@@ -234,6 +235,7 @@ static state_t state_handle_read_func() {
       }
 
       if(verify_urc_and_parse(buff, len)){
+        post_urc_to_network_layer(get_urc_parsed_struct());
         continue;
       }
 
@@ -344,6 +346,7 @@ static state_t state_handle_write_func() {
       }
 
       if(verify_urc_and_parse(buff, len)){
+        post_urc_to_network_layer(get_urc_parsed_struct());
         continue;
       }
 

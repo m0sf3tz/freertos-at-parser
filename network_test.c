@@ -27,9 +27,21 @@
 **********************************************************/
 static const char         TAG[] = "NETWORK TEST";
 static char               misc_buff[150];
+static int                urc_test_val;
+
+/**********************************************************
+*                                                 DEFINES *
+**********************************************************/
+#define URC_TEST_VAL (23)
+
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
+
+static void tets_urc_func(){
+  urc_test_val = URC_TEST_VAL;
+  ESP_LOGI(TAG, "Urc called");
+}
 
 static int verify_cfun_test(){
   return pdTRUE;
@@ -110,4 +122,30 @@ void network_test(){
     ESP_LOGI(TAG, "CFUN(cme) failed!");
     ASSERT(0);   
   }
+  
+  // Test URC
+  urc_test_val = 0;
+  parsed_p->status = AT_PROCESSED_LAST;  
+  set_urc_handler(CEREG, tets_urc_func);
+  vTaskDelay(10);
+  clear_parsed_struct();
+  set_current_cmd(CFUN_URC);
+  send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);
+  if ( parsed_p->status != AT_PROCESSED_GOOD ){
+    ESP_LOGI(TAG, "CFUN(cme) failed!");
+    ASSERT(0);
+  }
+  if (parsed_p->response != LINE_TERMINATION_INDICATION_OK){
+    ESP_LOGI(TAG, "CFUN(URC) failed!");
+    ASSERT(0);   
+  }
+  if (parsed_p->num_lines != 1){
+    ESP_LOGI(TAG, "CFUN(URC) failed!");
+    ASSERT(0);   
+  }
+  if (urc_test_val != URC_TEST_VAL){
+    ESP_LOGI(TAG, "CFUN(URC) failed!");
+    ASSERT(0);   
+  }
+  pop_urc_handler(CEREG);
 }

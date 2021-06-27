@@ -6,50 +6,55 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ASSERT	global_defines.h	22;"	d
 ASSERT	global_defines.h	30;"	d
-ATI	at_parser.h	/^  ATI,$/;"	e	enum:__anon9
+ATI	at_parser.h	/^  ATI,$/;"	e	enum:__anon3
 AT_PORT	uart_core.c	/^static const char  AT_PORT[] = "\/dev\/ttyUSB0";$/;"	v	file:
-AT_PROCESSED_DERAIL	at_parser.h	/^  AT_PROCESSED_DERAIL     \/\/sequence no longer followed$/;"	e	enum:__anon8
-AT_PROCESSED_GOOD	at_parser.h	/^  AT_PROCESSED_GOOD,$/;"	e	enum:__anon8
-AT_PROCESSED_TIMEOUT	at_parser.h	/^  AT_PROCESSED_TIMEOUT,$/;"	e	enum:__anon8
+AT_PROCESSED_DERAIL	at_parser.h	/^  AT_PROCESSED_DERAIL,       \/\/sequence no longer followed$/;"	e	enum:__anon2
+AT_PROCESSED_GOOD	at_parser.h	/^  AT_PROCESSED_GOOD,$/;"	e	enum:__anon2
+AT_PROCESSED_LAST	at_parser.h	/^  AT_PROCESSED_LAST = 0xFFFF \/\/ used in tests$/;"	e	enum:__anon2
+AT_PROCESSED_TIMEOUT	at_parser.h	/^  AT_PROCESSED_TIMEOUT,$/;"	e	enum:__anon2
 BIN	Makefile	/^BIN := posix_demo$/;"	m
 BLINKY_DEMO	main.c	66;"	d	file:
 BUFF_SIZE	at_parser.h	27;"	d
 BUILD_DIR	Makefile	/^BUILD_DIR := build$/;"	m
 CC	Makefile	/^CC := gcc$/;"	m
-CEREG	at_parser.h	/^  CEREG,$/;"	e	enum:__anon9
+CEREG	at_parser.h	/^  CEREG,$/;"	e	enum:__anon3
 CEREG_CONNECTED	threegpp.h	9;"	d
 CEREG_STATUS_INDEX	threegpp.h	8;"	d
 CEREG_STATUS_LINE	threegpp.h	7;"	d
-CESQ	at_parser.h	/^  CESQ,$/;"	e	enum:__anon9
+CESQ	at_parser.h	/^  CESQ,$/;"	e	enum:__anon3
 CFLAGS	Makefile	/^CFLAGS := -ggdb3 -O0 -DprojCOVERAGE_TEST=0 -D_WINDOWS_$/;"	m
-CFUN	at_parser.h	/^  CFUN,$/;"	e	enum:__anon9
+CFUN	at_parser.h	/^  CFUN,$/;"	e	enum:__anon3
 CFUN_CMD_TIMEOUT	parser_state.h	56;"	d
+CFUN_CME	network_test.h	/^  CFUN_CME,$/;"	e	enum:__anon13
 CFUN_ENABLE_STR	network_constants.h	11;"	d
+CFUN_ERROR	network_test.h	/^  CFUN_ERROR,$/;"	e	enum:__anon13
+CFUN_GOOD	network_test.h	/^  CFUN_GOOD,$/;"	e	enum:__anon13
 CFUN_RADIO_ON	threegpp.h	14;"	d
 CFUN_SET_STATUS_LINE	threegpp.h	12;"	d
 CFUN_STATUS_INDEX	threegpp.h	13;"	d
 CFUN_STATUS_INDEX	threegpp.h	17;"	d
 CFUN_STATUS_INDEX	threegpp.h	18;"	d
 CFUN_STATUS_LINE	threegpp.h	11;"	d
-CGACT	at_parser.h	/^  CGACT,$/;"	e	enum:__anon9
+CFUN_TIMEOUT	network_test.h	/^  CFUN_TIMEOUT,$/;"	e	enum:__anon13
+CGACT	at_parser.h	/^  CGACT,$/;"	e	enum:__anon3
 CGACT_STATUS_LINE	threegpp.h	16;"	d
-CGREG	at_parser.h	/^  CGREG,$/;"	e	enum:__anon9
+CGREG	at_parser.h	/^  CGREG,$/;"	e	enum:__anon3
 CONSOLE_H	console.h	28;"	d
 DELAY_UNIT	sim_stream.h	13;"	d
 DEP_FILE	Makefile	/^DEP_FILE = $(OBJ_FILES:%.o=%.d)$/;"	m
 ESP_LOGE	global_defines.h	42;"	d
 ESP_LOGI	global_defines.h	43;"	d
 ESP_LOGW	global_defines.h	44;"	d
-EVENT_A	cellular_state.h	/^    EVENT_A = 100,$/;"	e	enum:__anon6
-EVENT_B	cellular_state.h	/^    EVENT_B,$/;"	e	enum:__anon6
-EVENT_DONE_URC_F	parser_state.h	/^    EVENT_DONE_URC_F,$/;"	e	enum:__anon21
-EVENT_HANDLE_CMD_F	parser_state.h	/^    EVENT_HANDLE_CMD_F,$/;"	e	enum:__anon21
-EVENT_ISSUE_CMD	parser_state.h	/^    EVENT_ISSUE_CMD,$/;"	e	enum:__anon21
-EVENT_ISSUE_READ	parser_state.h	/^    EVENT_ISSUE_READ,$/;"	e	enum:__anon21
-EVENT_ISSUE_WRITE	parser_state.h	/^    EVENT_ISSUE_WRITE,$/;"	e	enum:__anon21
+EVENT_A	cellular_state.h	/^    EVENT_A = 100,$/;"	e	enum:__anon28
+EVENT_B	cellular_state.h	/^    EVENT_B,$/;"	e	enum:__anon28
+EVENT_DONE_URC_F	parser_state.h	/^    EVENT_DONE_URC_F,$/;"	e	enum:__anon15
+EVENT_HANDLE_CMD_F	parser_state.h	/^    EVENT_HANDLE_CMD_F,$/;"	e	enum:__anon15
+EVENT_ISSUE_CMD	parser_state.h	/^    EVENT_ISSUE_CMD,$/;"	e	enum:__anon15
+EVENT_ISSUE_READ	parser_state.h	/^    EVENT_ISSUE_READ,$/;"	e	enum:__anon15
+EVENT_ISSUE_WRITE	parser_state.h	/^    EVENT_ISSUE_WRITE,$/;"	e	enum:__anon15
 EVENT_QUEUE_MAX_DEPTH	state_core.h	87;"	d
-EVENT_URC_F	parser_state.h	/^    EVENT_URC_F = PARSER_CORE_EVENT_START,$/;"	e	enum:__anon21
-EXEC_CMD	at_parser.h	/^  EXEC_CMD,$/;"	e	enum:__anon10
+EVENT_URC_F	parser_state.h	/^    EVENT_URC_F = PARSER_CORE_EVENT_START,$/;"	e	enum:__anon15
+EXEC_CMD	at_parser.h	/^  EXEC_CMD,$/;"	e	enum:__anon4
 FAKE_INPUT_STREAM_MODE	global_defines.h	15;"	d
 FALSE	global_defines.h	39;"	d
 FREERTOS_CONFIG_H	FreeRTOSConfig.h	27;"	d
@@ -82,40 +87,40 @@ INCLUDE_xTimerPendFunctionCall	FreeRTOSConfig.h	111;"	d
 INVALID_EVENT	cellular_state.h	44;"	d
 INVALID_EVENT	parser_state.h	50;"	d
 INVALID_EVENT	state_core.h	86;"	d
-KALTCFG	at_parser.h	/^  KALTCFG,$/;"	e	enum:__anon9
-KBNDCFG	at_parser.h	/^  KBNDCFG,$/;"	e	enum:__anon9
-KCNXCFG	at_parser.h	/^  KCNXCFG,$/;"	e	enum:__anon9
-KUDPCFG	at_parser.h	/^  KUDPCFG,$/;"	e	enum:__anon9
-KUDPRCV	at_parser.h	/^  KUDPRCV,$/;"	e	enum:__anon9
-KUDPSND	at_parser.h	/^  KUDPSND,$/;"	e	enum:__anon9
-KUDP_DATA	at_parser.h	/^  KUDP_DATA,$/;"	e	enum:__anon9
-KUDP_NOTIF	at_parser.h	/^  KUDP_NOTIF,$/;"	e	enum:__anon9
-KUDP_RCV	at_parser.h	/^  KUDP_RCV     = 0,$/;"	e	enum:__anon9
+KALTCFG	at_parser.h	/^  KALTCFG,$/;"	e	enum:__anon3
+KBNDCFG	at_parser.h	/^  KBNDCFG,$/;"	e	enum:__anon3
+KCNXCFG	at_parser.h	/^  KCNXCFG,$/;"	e	enum:__anon3
+KUDPCFG	at_parser.h	/^  KUDPCFG,$/;"	e	enum:__anon3
+KUDPRCV	at_parser.h	/^  KUDPRCV,$/;"	e	enum:__anon3
+KUDPSND	at_parser.h	/^  KUDPSND,$/;"	e	enum:__anon3
+KUDP_DATA	at_parser.h	/^  KUDP_DATA,$/;"	e	enum:__anon3
+KUDP_NOTIF	at_parser.h	/^  KUDP_NOTIF,$/;"	e	enum:__anon3
+KUDP_RCV	at_parser.h	/^  KUDP_RCV     = 0,$/;"	e	enum:__anon3
 LDFLAGS	Makefile	/^LDFLAGS := -ggdb3 -O0 -pthread -lpcap -Wl,-Map=output.map$/;"	m
-LEN_KNOWN_COMMANDS	at_parser.h	/^  LEN_KNOWN_COMMANDS$/;"	e	enum:__anon9
-LINE_TERMINATION_INDICATION_CME_ERROR	at_parser.h	/^ LINE_TERMINATION_INDICATION_CME_ERROR, $/;"	e	enum:__anon7
-LINE_TERMINATION_INDICATION_ERROR	at_parser.h	/^ LINE_TERMINATION_INDICATION_ERROR, $/;"	e	enum:__anon7
-LINE_TERMINATION_INDICATION_NONE	at_parser.h	/^ LINE_TERMINATION_INDICATION_NONE,$/;"	e	enum:__anon7
-LINE_TERMINATION_INDICATION_OK	at_parser.h	/^ LINE_TERMINATION_INDICATION_OK,$/;"	e	enum:__anon7
+LEN_KNOWN_COMMANDS	at_parser.h	/^  LEN_KNOWN_COMMANDS$/;"	e	enum:__anon3
+LINE_TERMINATION_INDICATION_CME_ERROR	at_parser.h	/^ LINE_TERMINATION_INDICATION_CME_ERROR, $/;"	e	enum:__anon1
+LINE_TERMINATION_INDICATION_ERROR	at_parser.h	/^ LINE_TERMINATION_INDICATION_ERROR, $/;"	e	enum:__anon1
+LINE_TERMINATION_INDICATION_NONE	at_parser.h	/^ LINE_TERMINATION_INDICATION_NONE,$/;"	e	enum:__anon1
+LINE_TERMINATION_INDICATION_OK	at_parser.h	/^ LINE_TERMINATION_INDICATION_OK,$/;"	e	enum:__anon1
 LINE_WAS_CONNECT	at_parser.h	20;"	d
 LINE_WAS_DATA_RELATED	at_parser.h	19;"	d
 LINE_WAS_NOT_DATA_RELATED	at_parser.h	18;"	d
 LONG_DELIMITER_FOUND	at_parser.h	25;"	d
 LONG_DELIMITER_LEN	at_parser.h	30;"	d
-MAILBOX_POST_CONNECT	mailbox.h	19;"	d
-MAILBOX_POST_CONSUME	mailbox.h	28;"	d
-MAILBOX_POST_PROCESSED	mailbox.h	25;"	d
-MAILBOX_POST_READY	mailbox.h	16;"	d
-MAILBOX_POST_URC	mailbox.h	31;"	d
-MAILBOX_POST_WRITE	mailbox.h	22;"	d
-MAILBOX_WAIT_CONNECT	mailbox.h	18;"	d
-MAILBOX_WAIT_CONSUME	mailbox.h	27;"	d
-MAILBOX_WAIT_PROCESSED	mailbox.h	24;"	d
-MAILBOX_WAIT_READY	mailbox.h	15;"	d
+MAILBOX_POST_CONNECT	mailbox.h	18;"	d
+MAILBOX_POST_CONSUME	mailbox.h	27;"	d
+MAILBOX_POST_PROCESSED	mailbox.h	24;"	d
+MAILBOX_POST_READY	mailbox.h	15;"	d
+MAILBOX_POST_URC	mailbox.h	30;"	d
+MAILBOX_POST_WRITE	mailbox.h	21;"	d
+MAILBOX_WAIT_CONNECT	mailbox.h	17;"	d
+MAILBOX_WAIT_CONSUME	mailbox.h	26;"	d
+MAILBOX_WAIT_PROCESSED	mailbox.h	23;"	d
+MAILBOX_WAIT_READY	mailbox.h	14;"	d
 MAILBOX_WAIT_TIME_NOMINAL	mailbox.h	11;"	d
 MAILBOX_WAIT_TIME_URC	network_state.h	93;"	d
-MAILBOX_WAIT_URC	mailbox.h	30;"	d
-MAILBOX_WAIT_WRITE	mailbox.h	21;"	d
+MAILBOX_WAIT_URC	mailbox.h	29;"	d
+MAILBOX_WAIT_WRITE	mailbox.h	20;"	d
 MAX_DELAY_UNITS	sim_stream.h	12;"	d
 MAX_DELIMITERS	at_parser.h	13;"	d
 MAX_LEN_PARAM	at_parser.h	15;"	d
@@ -130,12 +135,12 @@ MAX_UDP_Q_LEN	net_adaptor.h	12;"	d
 MAX_URC_OUTSTANDING	parser_state.h	49;"	d
 MAX_WRITE_COMMAND_LEN	uart_core.c	21;"	d	file:
 MISC_BUFF_SIZE	network_state.h	90;"	d
-MUTEX_TIMEOUT_PERIOD	mailbox.h	13;"	d
-NETWORK_ATTACHED	network_state.h	/^  NETWORK_ATTACHED = NETWORK_EVENT_START,$/;"	e	enum:__anon27
-NETWORK_DETACHED	network_state.h	/^  NETWORK_DETACHED,$/;"	e	enum:__anon27
+MUTEX_TIMEOUT_PERIOD	mailbox.h	12;"	d
+NETWORK_ATTACHED	network_state.h	/^  NETWORK_ATTACHED = NETWORK_EVENT_START,$/;"	e	enum:__anon21
+NETWORK_DETACHED	network_state.h	/^  NETWORK_DETACHED,$/;"	e	enum:__anon21
 NETWORK_EVENT_START	global_defines.h	12;"	d
-NETWORK_READ_REQUEST	network_state.h	/^  NETWORK_READ_REQUEST, $/;"	e	enum:__anon27
-NETWORK_WRITE_REQUEST	network_state.h	/^  NETWORK_WRITE_REQUEST, $/;"	e	enum:__anon27
+NETWORK_READ_REQUEST	network_state.h	/^  NETWORK_READ_REQUEST, $/;"	e	enum:__anon21
+NETWORK_WRITE_REQUEST	network_state.h	/^  NETWORK_WRITE_REQUEST, $/;"	e	enum:__anon21
 NET_APN	network_constants.c	/^static const char         NET_APN[] = "m2minternet.apn";$/;"	v	file:
 NET_MUTEX_WAIT	network_state.h	88;"	d
 NET_SATE_MUTEX_WAIT	cellular_state.h	45;"	d
@@ -146,19 +151,19 @@ NEW_LINE_DELIMITER	at_parser.h	22;"	d
 NO_DELIMITER	at_parser.h	23;"	d
 NULL_STATE	state_core.h	89;"	d
 OBJ_FILES	Makefile	/^OBJ_FILES = $(SOURCE_FILES:%.c=$(BUILD_DIR)\/%.o)$/;"	m
-PARSER_CMD_DEL	at_parser.h	/^  PARSER_CMD_DEL,$/;"	e	enum:__anon18
-PARSER_CMD_MODE	at_parser.h	/^  PARSER_CMD_MODE,$/;"	e	enum:__anon17
+PARSER_CMD_DEL	at_parser.h	/^  PARSER_CMD_DEL,$/;"	e	enum:__anon12
+PARSER_CMD_MODE	at_parser.h	/^  PARSER_CMD_MODE,$/;"	e	enum:__anon11
 PARSER_CORE_EVENT_START	global_defines.h	11;"	d
-PARSER_DATA_DEL	at_parser.h	/^  PARSER_DATA_DEL,$/;"	e	enum:__anon18
-PARSER_FULL_MODE	at_parser.h	/^  PARSER_FULL_MODE,$/;"	e	enum:__anon17
-PARSER_QRY_MODE	at_parser.h	/^  PARSER_QRY_MODE,$/;"	e	enum:__anon17
-PARSER_URC_MODE	at_parser.h	/^  PARSER_URC_MODE$/;"	e	enum:__anon17
+PARSER_DATA_DEL	at_parser.h	/^  PARSER_DATA_DEL,$/;"	e	enum:__anon12
+PARSER_FULL_MODE	at_parser.h	/^  PARSER_FULL_MODE,$/;"	e	enum:__anon11
+PARSER_QRY_MODE	at_parser.h	/^  PARSER_QRY_MODE,$/;"	e	enum:__anon11
+PARSER_URC_MODE	at_parser.h	/^  PARSER_URC_MODE$/;"	e	enum:__anon11
 PARSER_WAIT_FOR_ECHO	parser_state.h	54;"	d
 PARSER_WAIT_FOR_UART	parser_state.h	53;"	d
 PARTIAL_DELIMETER_SCANNING	at_parser.h	24;"	d
 PDP_INVALID	network_state.h	89;"	d
 POSIX_FREERTOS_SIM	global_defines.h	9;"	d
-READ_CMD	at_parser.h	/^  READ_CMD,$/;"	e	enum:__anon10
+READ_CMD	at_parser.h	/^  READ_CMD,$/;"	e	enum:__anon4
 REMOTE_SERVER_IP	network_constants.h	12;"	d
 RTOS_DONT_WAIT	global_defines.h	6;"	d
 SOURCE_FILES	Makefile	/^SOURCE_FILES := $(wildcard *.c)$/;"	m
@@ -170,11 +175,11 @@ TAG	network_constants.c	/^static const char         TAG[]     = "NET_CONST";$/;"
 TAG	network_state.c	/^static const char         TAG[] = "NET_STATE";$/;"	v	file:
 TAG	network_test.c	/^static const char         TAG[] = "NETWORK TEST";$/;"	v	file:
 TAG	parser_state.c	/^static const char        TAG[] = "PARSER_STATE";$/;"	v	file:
-TAG	sim_stream.c	/^static const char         TAG[] = "SIM_STREAM";$/;"	v	file:
+TAG	sim_stream.c	/^static const char      TAG[] = "SIM_STREAM";$/;"	v	file:
 TAG	state_core.c	/^static const char        TAG[] = "STATE_CORE";$/;"	v	file:
 TAG	uart_core.c	/^static const char      TAG[] = "UART_CORE";$/;"	v	file:
 TAG	urc_handler.c	/^static const char        TAG[] = "URC_HANDLER";$/;"	v	file:
-TEST_CMD	at_parser.h	/^  TEST_CMD$/;"	e	enum:__anon10
+TEST_CMD	at_parser.h	/^  TEST_CMD$/;"	e	enum:__anon4
 TRC_CFG_EVENT_BUFFER_SIZE	trcSnapshotConfig.h	85;"	d
 TRC_CFG_FREERTOS_VERSION	trcConfig.h	125;"	d
 TRC_CFG_HARDWARE_PORT	trcConfig.h	84;"	d
@@ -228,48 +233,57 @@ TRUE	global_defines.h	38;"	d
 UART_HAL_WRITE_ERROR	uart_core.h	28;"	d
 UART_HAL_WRITE_OK	uart_core.h	27;"	d
 UNKNOWN_TYPE	at_parser.h	10;"	d
-WRITE_CMD	at_parser.h	/^  WRITE_CMD,$/;"	e	enum:__anon10
+WRITE_CMD	at_parser.h	/^  WRITE_CMD,$/;"	e	enum:__anon4
 add_event_consumer	state_core.c	/^void add_event_consumer(state_init_s* thread_info) {$/;"	f
-at_cfun	sim_stream.c	/^static delay_command_s at_cfun = {$/;"	v	file:
-at_cfun_0	sim_stream.c	/^static char at_cfun_0[] = "AT+CFUN?\\r\\n";$/;"	v	file:
-at_cfun_1	sim_stream.c	/^static char at_cfun_1[] = "+CFUN: 1\\r\\n";$/;"	v	file:
-at_cfun_2	sim_stream.c	/^static char at_cfun_2[] = "+CFUN: 2\\r\\n";$/;"	v	file:
-at_cfun_3	sim_stream.c	/^static char at_cfun_3[] = "\\r\\n";$/;"	v	file:
-at_cfun_4	sim_stream.c	/^static char at_cfun_4[] = "OK\\r\\n";$/;"	v	file:
+at_cfun_cme	sim_stream.c	/^static delay_command_s at_cfun_cme = {$/;"	v	file:
+at_cfun_cme_0	sim_stream.c	/^static char at_cfun_cme_0[] = "AT+CFUN=0\\r\\n";$/;"	v	file:
+at_cfun_cme_1	sim_stream.c	/^static char at_cfun_cme_1[] = "+CME ERROR: 16\\r\\n";$/;"	v	file:
+at_cfun_error	sim_stream.c	/^static delay_command_s at_cfun_error = {$/;"	v	file:
+at_cfun_error_0	sim_stream.c	/^static char at_cfun_error_0[] = "AT+CFUN=0\\r\\n";$/;"	v	file:
+at_cfun_error_1	sim_stream.c	/^static char at_cfun_error_1[] = "ERROR\\r\\n";$/;"	v	file:
+at_cfun_good	sim_stream.c	/^static delay_command_s at_cfun_good = {$/;"	v	file:
+at_cfun_good_0	sim_stream.c	/^static char at_cfun_good_0[] = "AT+CFUN?\\r\\n";$/;"	v	file:
+at_cfun_good_1	sim_stream.c	/^static char at_cfun_good_1[] = "+CFUN: 1\\r\\n";$/;"	v	file:
+at_cfun_good_2	sim_stream.c	/^static char at_cfun_good_2[] = "+CFUN: 2\\r\\n";$/;"	v	file:
+at_cfun_good_3	sim_stream.c	/^static char at_cfun_good_3[] = "\\r\\n";$/;"	v	file:
+at_cfun_good_4	sim_stream.c	/^static char at_cfun_good_4[] = "OK\\r\\n";$/;"	v	file:
+at_cfun_timeout	sim_stream.c	/^static delay_command_s at_cfun_timeout = {$/;"	v	file:
 at_command_issue_hal	sim_stream.c	/^int at_command_issue_hal(char *cmd, int len){$/;"	f
 at_command_issue_hal	uart_core.c	/^int at_command_issue_hal(char *cmd, int len){$/;"	f
 at_incomming_get_stream	sim_stream.c	/^uint8_t* at_incomming_get_stream(int *len){$/;"	f
 at_incomming_get_stream	uart_core.c	/^uint8_t* at_incomming_get_stream(int *len){$/;"	f
 at_incomming_peek	uart_core.c	/^bool at_incomming_peek(){$/;"	f
 at_line_explode	at_parser.c	/^int at_line_explode (char * str, const int len, int line) {$/;"	f
-at_modem_respond_e	at_parser.h	/^} at_modem_respond_e;$/;"	t	typeref:enum:__anon7
-at_param_s	at_parser.h	/^}at_param_s;$/;"	t	typeref:struct:__anon12
-at_parsed_s	at_parser.h	/^}at_parsed_s;$/;"	t	typeref:struct:__anon13
+at_modem_respond_e	at_parser.h	/^} at_modem_respond_e;$/;"	t	typeref:enum:__anon1
+at_param_s	at_parser.h	/^}at_param_s;$/;"	t	typeref:struct:__anon6
+at_parsed_s	at_parser.h	/^}at_parsed_s;$/;"	t	typeref:struct:__anon7
 at_parser_delimiter_hunter	at_parser.c	/^int at_parser_delimiter_hunter(const uint8_t c, parser_del_e mode){$/;"	f
 at_parser_stringer	at_parser.c	/^uint8_t * at_parser_stringer(parser_del_e mode, int * len){$/;"	f
 at_parser_stringer_private	at_parser.c	/^static uint8_t * at_parser_stringer_private(parser_del_e mode, int * size){$/;"	f	file:
 at_print_lines	at_parser.c	/^void at_print_lines(uint8_t* line, int len, uint8_t* rest){$/;"	f
-at_processed_status_e	at_parser.h	/^} at_processed_status_e;$/;"	t	typeref:enum:__anon8
-at_response_s	at_parser.h	/^}at_response_s; $/;"	t	typeref:struct:__anon11
+at_processed_status_e	at_parser.h	/^} at_processed_status_e;$/;"	t	typeref:enum:__anon2
+at_response_s	at_parser.h	/^}at_response_s; $/;"	t	typeref:struct:__anon5
 at_status_t	at_parser.h	/^typedef int at_status_t;$/;"	t
 at_type_t	at_parser.h	/^typedef int at_type_t;$/;"	t
-at_urc_parsed_s	at_parser.h	/^}at_urc_parsed_s;$/;"	t	typeref:struct:__anon15
+at_urc_parsed_s	at_parser.h	/^}at_urc_parsed_s;$/;"	t	typeref:struct:__anon9
 atfd	uart_core.c	/^static int atfd;$/;"	v	file:
-buf	at_parser.h	/^     uint8_t  buf[MAX_LINE_SIZE];$/;"	m	struct:__anon16
+buf	at_parser.h	/^     uint8_t  buf[MAX_LINE_SIZE];$/;"	m	struct:__anon10
 buff_s	uart_core.c	/^static uint8_t buff_s[512];$/;"	v	file:
 buffer	at_parser.c	/^static uint8_t         buffer[1024];              \/\/ Internal$/;"	v	file:
-cblk_reg	at_parser.h	/^  urc_register_s * cblk_reg;$/;"	m	struct:__anon15
-cellular_event_e	cellular_state.h	/^} cellular_event_e;$/;"	t	typeref:enum:__anon6
-cellular_running	cellular_state.h	/^    cellular_running,$/;"	e	enum:__anon5
-cellular_state_e	cellular_state.h	/^} cellular_state_e;$/;"	t	typeref:enum:__anon5
-cellular_state_len	cellular_state.h	/^    cellular_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon5
-cellular_waiting_prov	cellular_state.h	/^    cellular_waiting_prov,$/;"	e	enum:__anon5
-cellular_waiting_wifi	cellular_state.h	/^    cellular_waiting_wifi = 0,$/;"	e	enum:__anon5
+cblk_reg	at_parser.h	/^  urc_register_s * cblk_reg;$/;"	m	struct:__anon9
+cellular_event_e	cellular_state.h	/^} cellular_event_e;$/;"	t	typeref:enum:__anon28
+cellular_running	cellular_state.h	/^    cellular_running,$/;"	e	enum:__anon27
+cellular_state_e	cellular_state.h	/^} cellular_state_e;$/;"	t	typeref:enum:__anon27
+cellular_state_len	cellular_state.h	/^    cellular_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon27
+cellular_waiting_prov	cellular_state.h	/^    cellular_waiting_prov,$/;"	e	enum:__anon27
+cellular_waiting_wifi	cellular_state.h	/^    cellular_waiting_wifi = 0,$/;"	e	enum:__anon27
 check_for_type	at_parser.c	/^bool check_for_type(char *str,int len, parser_mode_e mode){$/;"	f
-clb	at_parser.h	/^  void (*clb) (void);$/;"	m	struct:__anon14
+clb	at_parser.h	/^  void (*clb) (void);$/;"	m	struct:__anon8
 clear_at_parsed_struct	at_parser.c	/^void clear_at_parsed_struct(){$/;"	f
-closed	network_state.h	/^  closed,$/;"	e	enum:__anon23
-command_e	at_parser.h	/^} command_e;$/;"	t	typeref:enum:__anon9
+clear_parsed_struct	at_parser.c	/^void clear_parsed_struct(){$/;"	f
+closed	network_state.h	/^  closed,$/;"	e	enum:__anon17
+cme	at_parser.h	/^  uint16_t cme;$/;"	m	struct:__anon7
+command_e	at_parser.h	/^} command_e;$/;"	t	typeref:enum:__anon3
 configASSERT	FreeRTOSConfig.h	148;"	d
 configCHECK_FOR_STACK_OVERFLOW	FreeRTOSConfig.h	53;"	d
 configGENERATE_RUN_TIME_STATS	FreeRTOSConfig.h	77;"	d
@@ -308,8 +322,8 @@ configUSE_TASK_NOTIFICATIONS	FreeRTOSConfig.h	60;"	d
 configUSE_TICK_HOOK	FreeRTOSConfig.h	43;"	d
 configUSE_TIMERS	FreeRTOSConfig.h	67;"	d
 configUSE_TRACE_FACILITY	FreeRTOSConfig.h	49;"	d
-connected	network_state.h	/^  connected,$/;"	e	enum:__anon23
-connecting	network_state.h	/^  connecting,$/;"	e	enum:__anon23
+connected	network_state.h	/^  connected,$/;"	e	enum:__anon17
+connecting	network_state.h	/^  connecting,$/;"	e	enum:__anon17
 console_init	console.c	/^void console_init(void)$/;"	f
 console_print	console.c	/^void console_print(const char *fmt, ...)$/;"	f
 consumer_sem	state_core.c	/^static SemaphoreHandle_t consumer_sem;$/;"	v	file:
@@ -319,17 +333,17 @@ create_kcnxcfg_cmd	network_constants.c	/^void create_kcnxcfg_cmd(char * str, int
 create_kudprcv_cmd	network_constants.c	/^void create_kudprcv_cmd(char * str, int size, size_t bytes){$/;"	f
 create_kudpsend_cmd	network_constants.c	/^void create_kudpsend_cmd(char * str, int size, char * ip, uint16_t port, size_t len){$/;"	f
 create_mailbox_freertos_objects	mailbox.c	/^void create_mailbox_freertos_objects(){$/;"	f
-curr_cmd	network_state.h	/^  command_e          curr_cmd;$/;"	m	struct:__anon25
+curr_cmd	network_state.h	/^  command_e          curr_cmd;$/;"	m	struct:__anon19
 curr_cmd	sim_stream.c	/^static delay_command_s * curr_cmd;$/;"	v	file:
 curr_unit	sim_stream.c	/^static int curr_unit;$/;"	v	file:
-data	net_adaptor.h	/^  uint8_t  data[MAX_PACKET_LEN]; $/;"	m	struct:__anon19
+data	net_adaptor.h	/^  uint8_t  data[MAX_PACKET_LEN]; $/;"	m	struct:__anon26
 debug_print_post	mailbox.c	/^static void debug_print_post(int wait_bits){$/;"	f	file:
 debug_print_wait	mailbox.c	/^static void debug_print_wait(bool set, int wait_bits){$/;"	f	file:
-delay	sim_stream.h	/^  uint32_t delay;$/;"	m	struct:__anon1
-delay_command_s	sim_stream.h	/^}delay_command_s;$/;"	t	typeref:struct:__anon2
-delay_unit_s	sim_stream.h	/^}delay_unit_s;$/;"	t	typeref:struct:__anon1
-disconnected	network_state.h	/^  disconnected,$/;"	e	enum:__anon23
-discovered_form	at_parser.h	/^} discovered_form;$/;"	t	typeref:enum:__anon10
+delay	sim_stream.h	/^  uint32_t delay;$/;"	m	struct:__anon24
+delay_command_s	sim_stream.h	/^}delay_command_s;$/;"	t	typeref:struct:__anon25
+delay_unit_s	sim_stream.h	/^}delay_unit_s;$/;"	t	typeref:struct:__anon24
+disconnected	network_state.h	/^  disconnected,$/;"	e	enum:__anon17
+discovered_form	at_parser.h	/^} discovered_form;$/;"	t	typeref:enum:__anon4
 drain_events	state_core.c	/^static void drain_events(state_init_s * state_ptr){$/;"	f	file:
 driver_b	network_state.c	/^void driver_b(void * arg){$/;"	f
 dummy_callback	network_state.c	/^int dummy_callback(){$/;"	f
@@ -338,14 +352,14 @@ event_filter_func	network_state.c	/^static bool event_filter_func(state_event_t 
 event_filter_func	parser_state.c	/^static bool event_filter_func(state_event_t event) {$/;"	f	file:
 event_group	mailbox.c	/^static EventGroupHandle_t event_group;$/;"	v	file:
 event_multiplexer	state_core.c	/^static void event_multiplexer(void* v) {$/;"	f	file:
-event_print	state_core.h	/^    char* (*event_print)(state_event_t);$/;"	m	struct:__anon4
+event_print	state_core.h	/^    char* (*event_print)(state_event_t);$/;"	m	struct:__anon23
 event_print_func	network_state.c	/^static char* event_print_func(state_event_t event) {$/;"	f	file:
 event_print_func	parser_state.c	/^static char* event_print_func(state_event_t event) {$/;"	f	file:
-failed_to_connect	network_state.h	/^  failed_to_connect,$/;"	e	enum:__anon23
-filter_event	state_core.h	/^    bool (*filter_event)(state_event_t);$/;"	m	struct:__anon4
-form	at_parser.h	/^  discovered_form form;$/;"	m	struct:__anon13
+failed_to_connect	network_state.h	/^  failed_to_connect,$/;"	e	enum:__anon17
+filter_event	state_core.h	/^    bool (*filter_event)(state_event_t);$/;"	m	struct:__anon23
+form	at_parser.h	/^  discovered_form form;$/;"	m	struct:__anon7
 func_ptr	state_core.h	/^typedef state_t (*func_ptr)(void);$/;"	t
-get_cmd_timeout	parser_state.c	/^static uint32_t get_cmd_timeout(command_e cmd){$/;"	f	file:
+get_cmd_timeout	parser_state.c	/^static TickType_t get_cmd_timeout(command_e cmd){$/;"	f	file:
 get_event_generic	state_core.c	/^static state_event_t get_event_generic(QueueHandle_t q_handle, uint32_t timeout) {$/;"	f	file:
 get_mailbox_sem	mailbox.c	/^void get_mailbox_sem(){$/;"	f
 get_net_state_cmd	network_state.c	/^command_e get_net_state_cmd(){$/;"	f
@@ -363,17 +377,17 @@ handle_urc_kudp_notif	network_state.c	/^static void handle_urc_kudp_notif()$/;"	
 head	state_core.c	/^static node_t*           head;$/;"	v	file:
 incoming_events_q	state_core.c	/^static QueueSetHandle_t  incoming_events_q;$/;"	v	file:
 incoming_udp_q	net_adaptor.c	/^QueueSetHandle_t incoming_udp_q;$/;"	v
-info	sim_stream.h	/^  char * info;$/;"	m	struct:__anon1
+info	sim_stream.h	/^  char * info;$/;"	m	struct:__anon24
 ipconfigHAS_DEBUG_PRINTF	FreeRTOSConfig.h	167;"	d
 ipconfigHAS_PRINTF	FreeRTOSConfig.h	176;"	d
 is_connect_line	at_parser.c	/^bool is_connect_line(char * line, size_t len){$/;"	f
-is_number	at_parser.h	/^    bool is_number;          \/\/ If the AT response is a number (ie, +CEREG: 1,2)$/;"	m	struct:__anon12
+is_number	at_parser.h	/^    bool is_number;          \/\/ If the AT response is a number (ie, +CEREG: 1,2)$/;"	m	struct:__anon6
 is_status_line	at_parser.c	/^at_modem_respond_e is_status_line(char * line, size_t len, int *cme_error){$/;"	f
-len	at_parser.h	/^     uint16_t len;$/;"	m	struct:__anon16
-len	at_parser.h	/^  size_t len;$/;"	m	struct:__anon11
-len	net_adaptor.h	/^  uint16_t len; \/\/ len can be 256 - won't fit in uint8.... $/;"	m	struct:__anon19
+len	at_parser.h	/^     uint16_t len;$/;"	m	struct:__anon10
+len	at_parser.h	/^  size_t len;$/;"	m	struct:__anon5
+len	net_adaptor.h	/^  uint16_t len; \/\/ len can be 256 - won't fit in uint8.... $/;"	m	struct:__anon26
 line_found	at_parser.c	/^static uint8_t         line_found[MAX_LINE_SIZE]; \/\/ Returned to higher layers$/;"	v	file:
-loop_timer	state_core.h	/^    uint32_t loop_timer;$/;"	m	struct:__anon3
+loop_timer	state_core.h	/^    uint32_t loop_timer;$/;"	m	struct:__anon22
 mailbox_post	mailbox.c	/^bool mailbox_post(EventBits_t post_bits){$/;"	f
 mailbox_sem	mailbox.c	/^static SemaphoreHandle_t  mailbox_sem;$/;"	v	file:
 mailbox_wait	mailbox.c	/^bool mailbox_wait(EventBits_t wait_bits, TickType_t wait_period) {$/;"	f
@@ -389,67 +403,68 @@ mainVALUE_SENT_FROM_TIMER	main_blinky.c	110;"	d	file:
 main_blinky	main_blinky.c	/^void main_blinky( void )$/;"	f
 misc_buff	network_state.c	/^static char               misc_buff[MISC_BUFF_SIZE]; $/;"	v	file:
 misc_buff	network_test.c	/^static char               misc_buff[150];$/;"	v	file:
-mode	network_state.h	/^  net_mode_t         mode;$/;"	m	struct:__anon25
+mode	network_state.h	/^  net_mode_t         mode;$/;"	m	struct:__anon19
 mtCOVERAGE_TEST_MARKER	FreeRTOSConfig.h	132;"	d
 myatoi	at_parser.c	/^static bool myatoi(char *src, int* result) {$/;"	f	file:
 net_adaptor_init_freertos_objects	net_adaptor.c	/^static void net_adaptor_init_freertos_objects() {$/;"	f	file:
 net_adaptor_spawner	net_adaptor.c	/^void net_adaptor_spawner() {$/;"	f
 net_context	network_state.c	/^static network_state_s    net_context;$/;"	v	file:
 net_mode_t	network_state.h	/^typedef int net_mode_t;$/;"	t
-net_state	network_state.h	/^  network_status_e   net_state;  $/;"	m	struct:__anon25
-network_airplaine_mode_state	network_state.h	/^  network_airplaine_mode_state = 0,$/;"	e	enum:__anon26
-network_attached_state	network_state.h	/^  network_attached_state,$/;"	e	enum:__anon26
-network_attaching_state	network_state.h	/^  network_attaching_state,$/;"	e	enum:__anon26
+net_state	network_state.h	/^  network_status_e   net_state;  $/;"	m	struct:__anon19
+network_airplaine_mode_state	network_state.h	/^  network_airplaine_mode_state = 0,$/;"	e	enum:__anon20
+network_attached_state	network_state.h	/^  network_attached_state,$/;"	e	enum:__anon20
+network_attaching_state	network_state.h	/^  network_attaching_state,$/;"	e	enum:__anon20
 network_driver	network_state.c	/^void network_driver(){$/;"	f
-network_event_e	network_state.h	/^} network_event_e;$/;"	t	typeref:enum:__anon27
-network_event_len	network_state.h	/^  network_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon27
-network_idle_state	network_state.h	/^  network_idle_state,$/;"	e	enum:__anon26
-network_read_state	network_state.h	/^  network_read_state,$/;"	e	enum:__anon26
-network_state_connected	network_state.h	/^  network_state_connected$/;"	e	enum:__anon24
-network_state_e	network_state.h	/^} network_state_e;$/;"	t	typeref:enum:__anon26
+network_event_e	network_state.h	/^} network_event_e;$/;"	t	typeref:enum:__anon21
+network_event_len	network_state.h	/^  network_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon21
+network_idle_state	network_state.h	/^  network_idle_state,$/;"	e	enum:__anon20
+network_read_state	network_state.h	/^  network_read_state,$/;"	e	enum:__anon20
+network_state_connected	network_state.h	/^  network_state_connected$/;"	e	enum:__anon18
+network_state_e	network_state.h	/^} network_state_e;$/;"	t	typeref:enum:__anon20
 network_state_init	network_state.c	/^static void network_state_init(){$/;"	f	file:
 network_state_init_freertos_objects	network_state.c	/^static void network_state_init_freertos_objects() {$/;"	f	file:
-network_state_len	network_state.h	/^  network_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon26
+network_state_len	network_state.h	/^  network_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon20
 network_state_mutex	network_state.c	/^static SemaphoreHandle_t  network_state_mutex;$/;"	v	file:
-network_state_s	network_state.h	/^}network_state_s;$/;"	t	typeref:struct:__anon25
+network_state_s	network_state.h	/^}network_state_s;$/;"	t	typeref:struct:__anon19
 network_state_set_status	network_state.c	/^static void network_state_set_status(network_status_e status){$/;"	f	file:
 network_state_set_timeout	network_state.c	/^static void network_state_set_timeout(uint32_t timeout_ticks){$/;"	f	file:
-network_status_e	network_state.h	/^} network_status_e;$/;"	t	typeref:enum:__anon24
+network_status_e	network_state.h	/^} network_status_e;$/;"	t	typeref:enum:__anon18
 network_test	network_test.c	/^void network_test(){$/;"	f
 network_test_thread	network_state.c	/^void network_test_thread(void * arg){$/;"	f
+network_tests_e	network_test.h	/^} network_tests_e;$/;"	t	typeref:enum:__anon13
 network_translation_table	network_state.c	/^static state_array_s network_translation_table[network_state_len] = {$/;"	v	file:
-network_write_state	network_state.h	/^  network_write_state,$/;"	e	enum:__anon26
-new_line_t	at_parser.h	/^} new_line_t;$/;"	t	typeref:struct:__anon16
+network_write_state	network_state.h	/^  network_write_state,$/;"	e	enum:__anon20
+new_line_t	at_parser.h	/^} new_line_t;$/;"	t	typeref:struct:__anon10
 next	state_core.c	/^    struct node*  next;$/;"	m	struct:node	typeref:struct:node::node	file:
-next_state	state_core.h	/^    void (*next_state)(state_t*, state_event_t);$/;"	m	struct:__anon4
+next_state	state_core.h	/^    void (*next_state)(state_t*, state_event_t);$/;"	m	struct:__anon23
 next_state_func	network_state.c	/^static void next_state_func(state_t* curr_state, state_event_t event) {$/;"	f	file:
 next_state_func	parser_state.c	/^static void next_state_func(state_t* curr_state, state_event_t event) {$/;"	f	file:
 node	state_core.c	/^typedef struct node {$/;"	s	file:
 node_t	state_core.c	/^} node_t;$/;"	t	typeref:struct:node	file:
-num_lines	at_parser.h	/^  size_t num_lines;$/;"	m	struct:__anon13
+num_lines	at_parser.h	/^  size_t num_lines;$/;"	m	struct:__anon7
 outgoing_udp_q	net_adaptor.c	/^QueueSetHandle_t outgoing_udp_q;$/;"	v
 outgoing_urc_queue	parser_state.c	/^QueueSetHandle_t  outgoing_urc_queue;$/;"	v
-param_arr	at_parser.h	/^	at_param_s param_arr[MAX_DELIMITERS];$/;"	m	struct:__anon15
-param_arr	at_parser.h	/^	at_param_s param_arr[MAX_LINES_AT][MAX_DELIMITERS];$/;"	m	struct:__anon13
+param_arr	at_parser.h	/^	at_param_s param_arr[MAX_DELIMITERS];$/;"	m	struct:__anon9
+param_arr	at_parser.h	/^	at_param_s param_arr[MAX_LINES_AT][MAX_DELIMITERS];$/;"	m	struct:__anon7
 parsed	at_parser.c	/^static at_parsed_s     parsed;$/;"	v	file:
-parser_del_e	at_parser.h	/^} parser_del_e;$/;"	t	typeref:enum:__anon18
-parser_event_e	parser_state.h	/^} parser_event_e;$/;"	t	typeref:enum:__anon21
-parser_event_len	parser_state.h	/^    parser_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon21
-parser_handle_cmd_state	parser_state.h	/^    parser_handle_cmd_state,$/;"	e	enum:__anon20
-parser_handle_read_state	parser_state.h	/^    parser_handle_read_state,$/;"	e	enum:__anon20
-parser_handle_write_state	parser_state.h	/^    parser_handle_write_state,$/;"	e	enum:__anon20
-parser_idle_state	parser_state.h	/^    parser_idle_state = 0,$/;"	e	enum:__anon20
-parser_mode_e	at_parser.h	/^} parser_mode_e;$/;"	t	typeref:enum:__anon17
-parser_state_e	parser_state.h	/^} parser_state_e;$/;"	t	typeref:enum:__anon20
+parser_del_e	at_parser.h	/^} parser_del_e;$/;"	t	typeref:enum:__anon12
+parser_event_e	parser_state.h	/^} parser_event_e;$/;"	t	typeref:enum:__anon15
+parser_event_len	parser_state.h	/^    parser_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon15
+parser_handle_cmd_state	parser_state.h	/^    parser_handle_cmd_state,$/;"	e	enum:__anon14
+parser_handle_read_state	parser_state.h	/^    parser_handle_read_state,$/;"	e	enum:__anon14
+parser_handle_write_state	parser_state.h	/^    parser_handle_write_state,$/;"	e	enum:__anon14
+parser_idle_state	parser_state.h	/^    parser_idle_state = 0,$/;"	e	enum:__anon14
+parser_mode_e	at_parser.h	/^} parser_mode_e;$/;"	t	typeref:enum:__anon11
+parser_state_e	parser_state.h	/^} parser_state_e;$/;"	t	typeref:enum:__anon14
 parser_state_init_freertos_objects	parser_state.c	/^static void parser_state_init_freertos_objects() {$/;"	f	file:
-parser_state_len	parser_state.h	/^    parser_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon20
+parser_state_len	parser_state.h	/^    parser_state_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon14
 parser_state_mutex	parser_state.c	/^static SemaphoreHandle_t parser_state_mutex;$/;"	v	file:
 parser_state_spawner	parser_state.c	/^void parser_state_spawner() {$/;"	f
 parser_test	at_parser.c	/^void parser_test(){$/;"	f
 parser_translation_table	parser_state.c	/^static state_array_s parser_translation_table[parser_state_len] = {$/;"	v	file:
-pdp_network_status	network_state.h	/^} pdp_network_status;$/;"	t	typeref:enum:__anon23
-pdp_session	network_state.h	/^  int                pdp_session;        \/\/ expect this to be only == 1 (won't use 2 sessions)$/;"	m	struct:__anon25
-pdp_status	network_state.h	/^  pdp_network_status pdp_status;         \/\/ from KCNX_IND$/;"	m	struct:__anon25
+pdp_network_status	network_state.h	/^} pdp_network_status;$/;"	t	typeref:enum:__anon17
+pdp_session	network_state.h	/^  int                pdp_session;        \/\/ expect this to be only == 1 (won't use 2 sessions)$/;"	m	struct:__anon19
+pdp_status	network_state.h	/^  pdp_network_status pdp_status;         \/\/ from KCNX_IND$/;"	m	struct:__anon19
 pop_urc_handler	network_state.c	/^static void pop_urc_handler(command_e urc){$/;"	f	file:
 portREMOVE_STATIC_QUALIFIER	FreeRTOSConfig.h	141;"	d
 post_urc_to_network_layer	parser_state.c	/^static void post_urc_to_network_layer(at_urc_parsed_s * ptr){$/;"	f	file:
@@ -469,8 +484,8 @@ prvTaskTags	code_coverage_additions.c	/^static BaseType_t prvTaskTags( void )$/;
 prvTimerQuery	code_coverage_additions.c	/^static BaseType_t prvTimerQuery( void )$/;"	f	file:
 prvTraceUtils	code_coverage_additions.c	/^static BaseType_t prvTraceUtils( void )$/;"	f	file:
 put_mailbox_sem	mailbox.c	/^void put_mailbox_sem(){$/;"	f
-read_data	network_state.h	/^  int read_data;$/;"	m	struct:__anon22
-response	at_parser.h	/^  at_modem_respond_e response;$/;"	m	struct:__anon13
+read_data	network_state.h	/^  int read_data;$/;"	m	struct:__anon16
+response	at_parser.h	/^  at_modem_respond_e response;$/;"	m	struct:__anon7
 sbSEND_COMPLETED	FreeRTOSConfig.h	117;"	d
 send_cmd	network_state.c	/^bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){$/;"	f
 send_event_generic	state_core.c	/^static void send_event_generic(QueueHandle_t q_handle, state_event_t event, char * name) {$/;"	f	file:
@@ -485,52 +500,52 @@ sim_stream_test	sim_stream.c	/^void sim_stream_test(){$/;"	f
 spawn_uart_thread	uart_core.c	/^void spawn_uart_thread(){$/;"	f
 start_new_state_machine	state_core.c	/^void start_new_state_machine(state_init_s* state_ptr) {$/;"	f
 start_time	sim_stream.c	/^static int start_time;$/;"	v	file:
-starting_state	state_core.h	/^    state_t starting_state;$/;"	m	struct:__anon4
+starting_state	state_core.h	/^    state_t starting_state;$/;"	m	struct:__anon23
 state_airplain_mode_func	network_state.c	/^static state_t state_airplain_mode_func() {$/;"	f	file:
-state_array_s	state_core.h	/^} state_array_s;$/;"	t	typeref:struct:__anon3
+state_array_s	state_core.h	/^} state_array_s;$/;"	t	typeref:struct:__anon22
 state_attached_func	network_state.c	/^static state_t state_attached_func() {$/;"	f	file:
 state_core_init_freertos_objects	state_core.c	/^static void state_core_init_freertos_objects() {$/;"	f	file:
 state_core_spawner	state_core.c	/^void state_core_spawner() {$/;"	f
 state_detached_func	network_state.c	/^static state_t state_detached_func() {$/;"	f	file:
 state_event_t	state_core.h	/^typedef uint32_t state_event_t; \/\/ Which event$/;"	t
-state_function_pointer	state_core.h	/^    func_ptr state_function_pointer;$/;"	m	struct:__anon3
+state_function_pointer	state_core.h	/^    func_ptr state_function_pointer;$/;"	m	struct:__anon22
 state_handle_cmd_func	parser_state.c	/^static state_t state_handle_cmd_func () {$/;"	f	file:
 state_handle_read_func	parser_state.c	/^static state_t state_handle_read_func() {$/;"	f	file:
 state_handle_write_func	parser_state.c	/^static state_t state_handle_write_func() {$/;"	f	file:
 state_idle_func	network_state.c	/^static state_t state_idle_func() {$/;"	f	file:
 state_idle_func	parser_state.c	/^static state_t state_idle_func() {$/;"	f	file:
-state_init_s	state_core.h	/^} state_init_s;$/;"	t	typeref:struct:__anon4
+state_init_s	state_core.h	/^} state_init_s;$/;"	t	typeref:struct:__anon23
 state_machine	state_core.c	/^static void state_machine(void* arg) {$/;"	f	file:
-state_name_string	state_core.h	/^    char* state_name_string;$/;"	m	struct:__anon4
+state_name_string	state_core.h	/^    char* state_name_string;$/;"	m	struct:__anon23
 state_post_event	state_core.c	/^void state_post_event(state_event_t event) {$/;"	f
-state_queue_input_handle_private	state_core.h	/^    QueueHandle_t state_queue_input_handle_private;  $/;"	m	struct:__anon4
+state_queue_input_handle_private	state_core.h	/^    QueueHandle_t state_queue_input_handle_private;  $/;"	m	struct:__anon23
 state_read_func	network_state.c	/^static state_t state_read_func() {$/;"	f	file:
 state_t	state_core.h	/^typedef uint32_t state_t;       \/\/ Which state in a state machine$/;"	t
 state_write_func	network_state.c	/^static state_t state_write_func() {$/;"	f	file:
-status	at_parser.h	/^  at_processed_status_e status;$/;"	m	struct:__anon13
-str	at_parser.h	/^		char str[MAX_LEN_PARAM]; \/\/ The string form (raw) of each response$/;"	m	struct:__anon12
-str	at_parser.h	/^  char  str[MAX_LEN_RAW];$/;"	m	struct:__anon11
+status	at_parser.h	/^  at_processed_status_e status;$/;"	m	struct:__anon7
+str	at_parser.h	/^		char str[MAX_LEN_PARAM]; \/\/ The string form (raw) of each response$/;"	m	struct:__anon6
+str	at_parser.h	/^  char  str[MAX_LEN_RAW];$/;"	m	struct:__anon5
 test_thread	sim_stream.c	/^static void * test_thread (void * arg){$/;"	f	file:
 thread_info	state_core.c	/^    state_init_s* thread_info;$/;"	m	struct:node	file:
-timeout_in_seconds	network_state.h	/^  uint32_t           timeout_in_seconds; \/\/ each tick is a 1 second$/;"	m	struct:__anon25
-token	at_parser.h	/^  int token;$/;"	m	struct:__anon13
-token	network_state.h	/^  int                token;              \/\/ used to keep parser and network states in sync $/;"	m	struct:__anon25
-total_states	state_core.h	/^    int total_states;$/;"	m	struct:__anon4
+timeout_in_seconds	network_state.h	/^  uint32_t           timeout_in_seconds; \/\/ each tick is a 1 second$/;"	m	struct:__anon19
+token	at_parser.h	/^  int token;$/;"	m	struct:__anon7
+token	network_state.h	/^  int                token;              \/\/ used to keep parser and network states in sync $/;"	m	struct:__anon19
+total_states	state_core.h	/^    int total_states;$/;"	m	struct:__anon23
 traceOnEnter	main.c	/^void traceOnEnter()$/;"	f
-translation_table	state_core.h	/^    state_array_s * translation_table;$/;"	m	struct:__anon4
-type	at_parser.h	/^	at_type_t type;$/;"	m	struct:__anon13
-type	at_parser.h	/^	at_type_t type;$/;"	m	struct:__anon15
+translation_table	state_core.h	/^    state_array_s * translation_table;$/;"	m	struct:__anon23
+type	at_parser.h	/^	at_type_t type;$/;"	m	struct:__anon7
+type	at_parser.h	/^	at_type_t type;$/;"	m	struct:__anon9
 udp_packet	net_adaptor.c	/^static udp_packet_s udp_packet;$/;"	v	file:
-udp_packet_s	net_adaptor.h	/^}udp_packet_s; $/;"	t	typeref:struct:__anon19
-udp_status	network_state.h	/^  bool               udp_status;         \/\/ from KUDP_IND$/;"	m	struct:__anon25
+udp_packet_s	net_adaptor.h	/^}udp_packet_s; $/;"	t	typeref:struct:__anon26
+udp_status	network_state.h	/^  bool               udp_status;         \/\/ from KUDP_IND$/;"	m	struct:__anon19
 ulGetRunTimeCounterValue	run-time-stats-utils.c	/^unsigned long ulGetRunTimeCounterValue( void )$/;"	f
 ulStartTimeNs	run-time-stats-utils.c	/^static unsigned long ulStartTimeNs;$/;"	v	file:
-units	sim_stream.h	/^  delay_unit_s units[MAX_DELAY_UNITS];$/;"	m	struct:__anon2
-urc	at_parser.h	/^  command_e urc;$/;"	m	struct:__anon14
+units	sim_stream.h	/^  delay_unit_s units[MAX_DELAY_UNITS];$/;"	m	struct:__anon25
+urc	at_parser.h	/^  command_e urc;$/;"	m	struct:__anon8
 urc_hanlder	network_state.c	/^static void urc_hanlder(void * arg){$/;"	f	file:
 urc_parsed	at_parser.c	/^static at_urc_parsed_s urc_parsed;$/;"	v	file:
 urc_parsed	network_state.c	/^static at_urc_parsed_s    urc_parsed;$/;"	v	file:
-urc_register_s	at_parser.h	/^}urc_register_s; $/;"	t	typeref:struct:__anon14
+urc_register_s	at_parser.h	/^}urc_register_s; $/;"	t	typeref:struct:__anon8
 uxTimerTaskStack	main.c	/^StackType_t uxTimerTaskStack[ configTIMER_TASK_STACK_DEPTH ];$/;"	v
 vApplicationDaemonTaskStartupHook	main.c	/^void vApplicationDaemonTaskStartupHook( void )$/;"	f
 vApplicationGetIdleTaskMemory	main.c	/^void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer,$/;"	f
@@ -542,7 +557,7 @@ vApplicationTickHook	main.c	/^void vApplicationTickHook( void )$/;"	f
 vAssertCalled	main.c	/^void vAssertCalled( const char * const pcFileName,$/;"	f
 vConfigureTimerForRunTimeStats	run-time-stats-utils.c	/^void vConfigureTimerForRunTimeStats( void )$/;"	f
 vLoggingPrintf	main.c	/^void vLoggingPrintf( const char *pcFormat,$/;"	f
-val	at_parser.h	/^		int  val;                \/\/ If the AT response is a number, the numerical form of that number$/;"	m	struct:__anon12
+val	at_parser.h	/^		int  val;                \/\/ If the AT response is a number, the numerical form of that number$/;"	m	struct:__anon6
 verify_cereg	network_state.c	/^int verify_cereg(){$/;"	f
 verify_cfun	network_state.c	/^int verify_cfun(){$/;"	f
 verify_cfun_test	network_test.c	/^static int verify_cfun_test(){$/;"	f	file:
@@ -550,9 +565,9 @@ verify_cgact	network_state.c	/^int verify_cgact(){$/;"	f
 verify_kcnxfg	network_state.c	/^int verify_kcnxfg(){$/;"	f
 verify_kudpcfg	network_state.c	/^int verify_kudpcfg(){$/;"	f
 verify_urc_and_parse	at_parser.c	/^bool verify_urc_and_parse(char * str, int len){$/;"	f
-wifi_event_len	cellular_state.h	/^    wifi_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon6
+wifi_event_len	cellular_state.h	/^    wifi_event_len \/\/LEAVE AS LAST!$/;"	e	enum:__anon28
 work_order	network_state.c	/^static work_order_s       work_order; $/;"	v	file:
-work_order_s	network_state.h	/^}work_order_s;$/;"	t	typeref:struct:__anon22
+work_order_s	network_state.h	/^}work_order_s;$/;"	t	typeref:struct:__anon16
 xQueue	main_blinky.c	/^static QueueHandle_t xQueue = NULL;$/;"	v	file:
 xRunCodeCoverageTestAdditions	code_coverage_additions.c	/^BaseType_t xRunCodeCoverageTestAdditions( void )$/;"	f
 xStdioMutex	console.c	/^SemaphoreHandle_t xStdioMutex;$/;"	v
