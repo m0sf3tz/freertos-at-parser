@@ -13,6 +13,7 @@
 #include "network_state.h"
 #include "at_parser.h"
 #include "network_test.h"
+#include "sim_stream.h"
 
 /**********************************************************
 *                                        GLOBAL VARIABLES *
@@ -48,14 +49,16 @@ static int verify_cfun_test(){
 }
 
 void network_test(){
+  
   clear_parsed_struct();
   at_parsed_s * parsed_p = get_parsed_struct();
   parsed_p->status = AT_PROCESSED_LAST;  
- 
+#if 1 
   // Test normal condition
   set_current_cmd(CFUN_GOOD);
   create_cfun_en_cmd(misc_buff, 150);
   ESP_LOGI(TAG, "starting send cmd (good case)");
+
   send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);
   if ( parsed_p->status != AT_PROCESSED_GOOD ){
     ESP_LOGI(TAG, "CFUN(good) failed!");
@@ -69,6 +72,8 @@ void network_test(){
     ESP_LOGI(TAG, "CFUN(good) failed!");
     ASSERT(0);
   }
+  ESP_LOGI(TAG, "***Done cfun(good) test!***");
+#endif 
 
   // Test timeout
   vTaskDelay(2000);
@@ -80,6 +85,7 @@ void network_test(){
     ESP_LOGI(TAG, "CFUN(timeout) failed!");
     ASSERT(0);
   }
+  reset_sim_state_machine();
 
   // Test error
   vTaskDelay(2000);
@@ -99,7 +105,8 @@ void network_test(){
     ESP_LOGI(TAG, "CFUN(error) failed!");
     ASSERT(0);   
   }
-
+  ESP_LOGI(TAG, "***Done cfun(error) test!***");
+#if 1
   // Test CME
   vTaskDelay(2000);
   parsed_p->status = AT_PROCESSED_LAST;  
@@ -148,4 +155,5 @@ void network_test(){
     ASSERT(0);   
   }
   pop_urc_handler(CEREG);
+#endif
 }

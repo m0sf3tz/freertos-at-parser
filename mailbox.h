@@ -29,6 +29,9 @@
 #define MAILBOX_WAIT_URC       (1 << 5)
 #define MAILBOX_POST_URC       (1 << 5)
 
+#define MAILBOX_WAIT_SIM       (1 << 6)
+#define MAILBOX_POST_SIM       (1 << 6)
+
 /*********************************************************
 *                                               TYPEDEFS *
 *********************************************************/

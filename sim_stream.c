@@ -12,6 +12,20 @@
 #include "sim_stream.h"
 #include "global_defines.h"
 #include "at_parser.h"
+#include "state_core.h"
+#include "mailbox.h"
+
+/**********************************************************
+*                                    FORWARD DECLERATIONS *
+**********************************************************/
+static state_t state_idle_func();
+static state_t state_handle_cmd_func();
+static QueueSetHandle_t  get_response;
+static QueueSetHandle_t  puts_response;
+
+static delay_command_s * curr_cmd;
+static int curr_unit;
+static int start_time;
 
 /**********************************************************
 *                                        GLOBAL VARIABLES *
@@ -80,18 +94,65 @@ static delay_command_s at_cfun_urc = {
 };
 
 
+// Translation Table
+static state_array_s sim_translation_table[sim_state_len] = {
+       { state_idle_func          ,  portMAX_DELAY },
+       { state_handle_cmd_func    ,  portMAX_DELAY }, 
+};
+
+/**********************************************************
+*                                         STATE FUNCTIONS *
+**********************************************************/
+static state_t state_idle_func() {
+  return NULL_STATE;
+}
+
+
+static state_t state_handle_cmd_func () {
+   ESP_LOGI(TAG, "entering cmd sim");
+   mailbox_post(MAILBOX_POST_SIM);
+
+   int curr_unit = 0;
+   int dont_care;
+   do{
+    xQueueReceive(get_response, &dont_care, portMAX_DELAY);
+    if(dont_care == 2){
+      return sim_idle_state; 
+    }
+    int curr_time = xTaskGetTickCount() - start_time;
+    curr_time     = curr_time / portTICK_PERIOD_MS;  
+
+    delay_unit_s  unit = curr_cmd->units[curr_unit];
+
+    if(curr_time < unit.delay){
+     uint8_t * ptr = NULL;
+     xQueueSend(puts_response, &ptr, 0);
+     continue;
+    }
+
+    xQueueSend(puts_response, &unit.info, 0);
+    curr_unit++;
+    if ( curr_cmd->units[curr_unit].info == NULL)
+    {
+      return sim_idle_state; 
+    }
+
+   }while(true);
+}
+
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
 
 
-static delay_command_s * curr_cmd;
-static int curr_unit;
-static int start_time;
-
 void set_current_cmd(command_e cmd){
   curr_unit = 0;
   start_time = xTaskGetTickCount();
+  state_post_event(EVENT_SIMULATE_CMD);
+  if(!mailbox_wait(MAILBOX_WAIT_SIM,  MAILBOX_WAIT_TIME_NOMINAL)){
+    ESP_LOGI(TAG, "Failed to sync up simulator");
+    ASSERT(0);
+  }
 
   switch(cmd){
     case(CFUN_GOOD):    curr_cmd = &at_cfun_good; return;
@@ -103,13 +164,26 @@ void set_current_cmd(command_e cmd){
 }
 
 #ifdef FAKE_INPUT_STREAM_MODE 
-
-
 uint8_t* at_incomming_get_stream(int *len){
+   int dont_care;
+   uint8_t * ret;
+   xQueueSend(get_response, &dont_care, 0);
+   vTaskDelay(10);
+   BaseType_t rc = xQueueReceive(puts_response, &ret, 0);
+   if(rc == pdFALSE)
+   {
+     return NULL;
+   }
+   if (ret == NULL)
+   {
+     return NULL;
+   }
+   *len = strlen(ret);
+   return(ret);
+/*
    int curr_time = xTaskGetTickCount() - start_time;
    curr_time = curr_time / portTICK_PERIOD_MS;  
-  
-   delay_command_s * tmp = curr_cmd;
+   
    delay_unit_s      unit = curr_cmd->units[curr_unit];
 
    if(curr_time < unit.delay){
@@ -119,8 +193,8 @@ uint8_t* at_incomming_get_stream(int *len){
    curr_unit++;
    *len = strlen(unit.info);
    return (unit.info);
+*/
 }
-
 
 int at_command_issue_hal(char *cmd, int len){
 }
@@ -134,13 +208,50 @@ static void * test_thread (void * arg){
   printf("%s \n", at_incomming_get_stream(&len));
 }
 
+
+static char* event_print_func(state_event_t event) {
+    return NULL;
+}
+
+static void next_state_func(state_t* curr_state, state_event_t event) {
+    if (*curr_state == sim_idle_state) {
+        if (event == EVENT_SIMULATE_CMD){
+            ESP_LOGI(TAG, "Old State: sim_idle_state, Next: sim_handle_cmd_start_state");
+            *curr_state = sim_handle_cmd_state;
+            return;
+        }
+    }
+}
+
+static bool event_filter_func(state_event_t event) {
+  switch(event){
+    case(EVENT_SIMULATE_CMD) : return true; 
+    defaut                   : return false;
+  }
+}
+
+static state_init_s* get_sim_state_handle() {
+    static state_init_s sim_state = {
+        .next_state        = next_state_func,
+        .translation_table = sim_translation_table,
+        .event_print       = event_print_func,
+        .starting_state    = sim_idle_state,
+        .state_name_string = "sim_state",
+        .filter_event      = event_filter_func,
+        .total_states      = sim_state_len,  
+    };
+    return &(sim_state);
+}
+
 void sim_stream_test(){
-BaseType_t rc = xTaskCreate(test_thread,
-                            "stream test",
-                             4096,
-                             NULL,
-                             4,
-                             NULL);
+   get_response = xQueueCreate(1, sizeof(int));  
+   puts_response = xQueueCreate(10, sizeof(uintptr_t));
 
+   start_new_state_machine(get_sim_state_handle());
+}
 
+void reset_sim_state_machine(){
+ int unstuck = 2;
+ ESP_LOGI(TAG, "Unstucking state machine");
+ xQueueSend(get_response, &unstuck, 0); 
 }

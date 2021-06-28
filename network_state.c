@@ -747,6 +747,7 @@ void network_test_thread(void * arg){
 void network_driver(){
   network_state_init_freertos_objects();
 #ifdef FAKE_INPUT_STREAM_MODE
+  sim_stream_test();
   xTaskCreate(network_test_thread, "", 1024, "", 5, NULL); 
   xTaskCreate(urc_hanlder, "", 1024, "", 5, NULL); 
 #else

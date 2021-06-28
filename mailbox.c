@@ -34,6 +34,7 @@ static void debug_print_wait(bool set, int wait_bits){
       wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
       wait_bits != MAILBOX_WAIT_URC       &&
+      wait_bits != MAILBOX_WAIT_SIM       &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -41,7 +42,7 @@ static void debug_print_wait(bool set, int wait_bits){
   }
   char to_s[] = "TIMEOUT!";
   char set_s[] = "SET!";
-
+#if 0
   switch(wait_bits){
     case(MAILBOX_WAIT_READY):
       if(set) 
@@ -80,6 +81,7 @@ static void debug_print_wait(bool set, int wait_bits){
         ESP_LOGI(TAG, "%s: MAILBOX_WAIT_URC", to_s); 
       break;
   }
+#endif
 }
 
 static void debug_print_post(int wait_bits){
@@ -88,6 +90,7 @@ static void debug_print_post(int wait_bits){
       wait_bits != MAILBOX_POST_WRITE     &&
       wait_bits != MAILBOX_POST_PROCESSED &&
       wait_bits != MAILBOX_POST_URC       &&
+      wait_bits != MAILBOX_POST_SIM       &&
       wait_bits != MAILBOX_POST_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -130,6 +133,7 @@ bool mailbox_wait(EventBits_t wait_bits, TickType_t wait_period) {
       wait_bits != MAILBOX_WAIT_WRITE     &&
       wait_bits != MAILBOX_WAIT_PROCESSED &&
       wait_bits != MAILBOX_WAIT_URC       &&
+      wait_bits != MAILBOX_WAIT_SIM       &&
       wait_bits != MAILBOX_WAIT_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted! (%d)", (int)wait_bits);
@@ -144,10 +148,14 @@ bool mailbox_wait(EventBits_t wait_bits, TickType_t wait_period) {
       );
 
   if (uxBits == wait_bits){
+#if 0
     debug_print_wait(true, (int)wait_bits);
+#endif
     return true;
   } else {
+#if 0
     debug_print_wait(false, (int)wait_bits);
+#endif
     return false;
   } 
 }
@@ -158,13 +166,15 @@ bool mailbox_post(EventBits_t post_bits){
       post_bits != MAILBOX_POST_WRITE     &&
       post_bits != MAILBOX_POST_PROCESSED &&
       post_bits != MAILBOX_POST_URC       &&
+      post_bits != MAILBOX_POST_SIM       &&
       post_bits != MAILBOX_POST_CONSUME ) {
     
     ESP_LOGE(TAG, "Unknown bits posted!");
     ASSERT(0);
   }  
-  
+#if 0 
   debug_print_post(post_bits);
+#endif
   xEventGroupSetBits(event_group, post_bits);
   return true;
 }
