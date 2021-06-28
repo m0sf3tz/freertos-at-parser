@@ -13,7 +13,6 @@ bool send_cmd(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 bool send_read(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum);
 
-
 void pop_urc_handler(command_e urc);
 void set_urc_handler(command_e urc, void (*handler) (void));
 

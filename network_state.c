@@ -492,8 +492,10 @@ bool send_write(uint8_t* cmd, int len, int (*clb)(void), command_e cmd_enum){
 
   set_urc_handler(KUDP_NOTIF, handle_urc_kudp_notif);
 
+  puts("here-1");
   get_mailbox_sem();
 
+  puts("here1");
   ESP_LOGI(TAG, "Posting issue write! ");
   state_post_event(EVENT_ISSUE_WRITE);
 

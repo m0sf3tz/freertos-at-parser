@@ -20,8 +20,11 @@
 **********************************************************/
 static state_t state_idle_func();
 static state_t state_handle_cmd_func();
-static QueueSetHandle_t  get_response;
-static QueueSetHandle_t  puts_response;
+static state_t state_handle_write_func();
+
+static QueueSetHandle_t get_response;
+static QueueSetHandle_t puts_response;
+static QueueSetHandle_t uart_rx_q; 
 
 static delay_command_s * curr_cmd;
 static int curr_unit;
@@ -98,6 +101,7 @@ static delay_command_s at_cfun_urc = {
 static state_array_s sim_translation_table[sim_state_len] = {
        { state_idle_func          ,  portMAX_DELAY },
        { state_handle_cmd_func    ,  portMAX_DELAY }, 
+       { state_handle_write_func  ,  portMAX_DELAY }, 
 };
 
 /**********************************************************
@@ -140,10 +144,31 @@ static state_t state_handle_cmd_func () {
    }while(true);
 }
 
+
+static state_t state_handle_write_func () {
+   ESP_LOGI(TAG, "entering write sim");
+   mailbox_post(MAILBOX_POST_SIM);
+
+   int magic;
+   xQueueReceive(uart_rx_q, &magic, portMAX_DELAY);
+   if(magic == 2){
+    puts("AT+KUDPSND");
+   }
+    
+   return sim_idle_state;
+}
+
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
 
+void start_sim_write(){
+  state_post_event(EVENT_SIMULATE_WRITE);
+  if(!mailbox_wait(MAILBOX_WAIT_SIM,  MAILBOX_WAIT_TIME_NOMINAL)){
+    ESP_LOGI(TAG, "Failed to sync up simulator");
+    ASSERT(0);
+  }
+}
 
 void set_current_cmd(command_e cmd){
   curr_unit = 0;
@@ -180,23 +205,15 @@ uint8_t* at_incomming_get_stream(int *len){
    }
    *len = strlen(ret);
    return(ret);
-/*
-   int curr_time = xTaskGetTickCount() - start_time;
-   curr_time = curr_time / portTICK_PERIOD_MS;  
-   
-   delay_unit_s      unit = curr_cmd->units[curr_unit];
-
-   if(curr_time < unit.delay){
-    return NULL;
-   }
-
-   curr_unit++;
-   *len = strlen(unit.info);
-   return (unit.info);
-*/
 }
 
 int at_command_issue_hal(char *cmd, int len){
+  int magic;
+  if(memcmp(cmd, "AT+KUDPSND", 10) == 0){
+    puts("issued");
+    magic = 1;
+    xQueueSend(uart_rx_q, &magic, 0);
+  }
 }
 
 #endif
@@ -216,8 +233,13 @@ static char* event_print_func(state_event_t event) {
 static void next_state_func(state_t* curr_state, state_event_t event) {
     if (*curr_state == sim_idle_state) {
         if (event == EVENT_SIMULATE_CMD){
-            ESP_LOGI(TAG, "Old State: sim_idle_state, Next: sim_handle_cmd_start_state");
+            ESP_LOGI(TAG, "Old State: sim_idle_state, Next: sim_handle_cmd_state");
             *curr_state = sim_handle_cmd_state;
+            return;
+        }
+        if (event == EVENT_SIMULATE_WRITE){
+            ESP_LOGI(TAG, "Old State: sim_idle_state, Next: sim_handle_write_state");
+            *curr_state = sim_handle_write_state;
             return;
         }
     }
@@ -225,8 +247,9 @@ static void next_state_func(state_t* curr_state, state_event_t event) {
 
 static bool event_filter_func(state_event_t event) {
   switch(event){
-    case(EVENT_SIMULATE_CMD) : return true; 
-    defaut                   : return false;
+    case(EVENT_SIMULATE_CMD)   : return true; 
+    case(EVENT_SIMULATE_WRITE) : return true; 
+    defaut                     : return false;
   }
 }
 
@@ -244,8 +267,9 @@ static state_init_s* get_sim_state_handle() {
 }
 
 void sim_stream_test(){
-   get_response = xQueueCreate(1, sizeof(int));  
-   puts_response = xQueueCreate(10, sizeof(uintptr_t));
+   get_response  =  xQueueCreate(1, sizeof(int));  
+   puts_response =  xQueueCreate(10, sizeof(uintptr_t));
+   uart_rx_q     =  xQueueCreate(10, sizeof(int)); 
 
    start_new_state_machine(get_sim_state_handle());
 }

@@ -120,6 +120,7 @@ static void debug_print_post(int wait_bits){
 }
 
 void create_mailbox_freertos_objects(){
+  ESP_LOGI(TAG, "Initting mailbox objects!");
   event_group = xEventGroupCreate();
   mailbox_sem = xSemaphoreCreateMutex();
 

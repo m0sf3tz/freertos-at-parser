@@ -1,0 +1,4 @@
+AT+KUDSND...
+CONNECT
+                 <---cmd goes here
+OK

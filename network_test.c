@@ -14,6 +14,7 @@
 #include "at_parser.h"
 #include "network_test.h"
 #include "sim_stream.h"
+#include "network_constants.h"
 
 /**********************************************************
 *                                        GLOBAL VARIABLES *
@@ -24,24 +25,28 @@
 **********************************************************/
 
 /**********************************************************
-*                                        STATIC VARIABLES *
-**********************************************************/
-static const char         TAG[] = "NETWORK TEST";
-static char               misc_buff[150];
-static int                urc_test_val;
-
-/**********************************************************
 *                                                 DEFINES *
 **********************************************************/
 #define URC_TEST_VAL (23)
+#define MISC_TEST_BUFF_SIZE (150)
+
+/**********************************************************
+*                                        STATIC VARIABLES *
+**********************************************************/
+static const char         TAG[] = "NETWORK TEST";
+static char               misc_buff[MISC_TEST_BUFF_SIZE];
+static int                urc_test_val;
 
 /**********************************************************
 *                                               FUNCTIONS *
 **********************************************************/
-
 static void tets_urc_func(){
   urc_test_val = URC_TEST_VAL;
   ESP_LOGI(TAG, "Urc called");
+}
+
+static int dummy(){
+  puts("dumy callback");
 }
 
 static int verify_cfun_test(){
@@ -49,14 +54,19 @@ static int verify_cfun_test(){
 }
 
 void network_test(){
-  
+  start_sim_write();
+  create_kudpsend_cmd(misc_buff, MISC_TEST_BUFF_SIZE, "127.0.0.1", 3333, 100);
+  send_write(misc_buff, strlen(misc_buff), dummy, KUDPSND);
+}
+
+void network_test_cmd(){  
   clear_parsed_struct();
   at_parsed_s * parsed_p = get_parsed_struct();
   parsed_p->status = AT_PROCESSED_LAST;  
 #if 1 
   // Test normal condition
   set_current_cmd(CFUN_GOOD);
-  create_cfun_en_cmd(misc_buff, 150);
+  create_cfun_en_cmd(misc_buff, MISC_TEST_BUFF_SIZE);
   ESP_LOGI(TAG, "starting send cmd (good case)");
 
   send_cmd(misc_buff, strlen(misc_buff), verify_cfun_test, CFUN);

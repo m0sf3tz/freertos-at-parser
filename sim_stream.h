@@ -26,24 +26,21 @@ typedef struct{
   delay_unit_s units[MAX_DELAY_UNITS];
 }delay_command_s;
 
-
-
 // simulation state machine
 typedef enum {
     sim_idle_state = 0,
     sim_handle_cmd_state,
+    sim_handle_write_state,
 
     sim_state_len //LEAVE AS LAST!
 } parser_state_e;
 
 typedef enum {
     EVENT_SIMULATE_CMD = SIM_EVENT_START,
+    EVENT_SIMULATE_WRITE,
 
     sim_event_len //LEAVE AS LAST!
 } sim_event_e;
-
-
-
 
 /*********************************************************
 *                                       GLOBAL FUNCTIONS *
@@ -53,9 +50,10 @@ uint8_t * at_incomming_get_stream(int *len);
 int       at_command_issue_hal(char *cmd, int len);
 #endif
 
-void      reset_sim_state_machine();
-void      set_current_cmd(command_e cmd);
-void      sim_sream_test();
+void reset_sim_state_machine();
+void set_current_cmd(command_e cmd);
+void sim_sream_test();
+void start_sim_write();
 /*********************************************************
 *                                                GLOBALS *   
 *********************************************************/
