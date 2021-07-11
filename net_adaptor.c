@@ -56,7 +56,14 @@ void enqueue_udp_write(udp_packet_s * udp){
 }
 
 
-static void net_adaptor_init_freertos_objects() {
+void net_adaptor_init_freertos_objects() {
+    static bool init;
+    
+    if(init){
+      return;
+    }
+    init = true;
+  
     incoming_udp_q = xQueueCreate(MAX_UDP_Q_LEN, sizeof(udp_packet_s));
     outgoing_udp_q = xQueueCreate(MAX_UDP_Q_LEN, sizeof(udp_packet_s));
 

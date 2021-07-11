@@ -54,6 +54,8 @@ static int verify_cfun_test(){
 }
 
 void network_test(){
+  net_adaptor_init_freertos_objects();
+
   start_sim_write();
   create_kudpsend_cmd(misc_buff, MISC_TEST_BUFF_SIZE, "127.0.0.1", 3333, 100);
   send_write(misc_buff, strlen(misc_buff), dummy, KUDPSND);

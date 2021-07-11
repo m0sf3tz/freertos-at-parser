@@ -61,6 +61,8 @@ static char at_cfun_urc_2[] = "+CFUN: 1\r\n";
 static char at_cfun_urc_3[] = "\r\n";
 static char at_cfun_urc_4[] = "OK\r\n";
 
+static char at_kupdsnd_echo[] = "AT+KUDPSND=\r\n";
+static char at_kupdsnd_connect[] = "CONNECT\r\n";
 
 static delay_command_s at_cfun_good = {
   .units[0] = {10, at_cfun_good_0},
@@ -152,9 +154,11 @@ static state_t state_handle_write_func () {
    int magic;
    xQueueReceive(uart_rx_q, &magic, portMAX_DELAY);
    if(magic == 2){
-    puts("AT+KUDPSND");
-   }
-    
+    puts("AT+KUDPSND rxed");
+    xQueueSend(puts_response, &at_kupdsnd_echo, 0);
+    xQueueSend(puts_response, &at_kupdsnd_connect, 0);
+  }
+  
    return sim_idle_state;
 }
 
@@ -211,7 +215,7 @@ int at_command_issue_hal(char *cmd, int len){
   int magic;
   if(memcmp(cmd, "AT+KUDPSND", 10) == 0){
     puts("issued");
-    magic = 1;
+    magic = 2;
     xQueueSend(uart_rx_q, &magic, 0);
   }
 }

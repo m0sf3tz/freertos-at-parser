@@ -24,6 +24,7 @@ typedef struct{
 *********************************************************/
 void net_adaptor_spawner();
 void enqueue_udp_write(udp_packet_s * udp);
+void net_adaptor_init_freertos_objects();
 
 /*********************************************************
 *                                                GLOBALS *   
